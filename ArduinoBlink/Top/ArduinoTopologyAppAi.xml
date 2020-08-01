@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../Autocoders/schema/ISF/topology_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<assembly name = "Arduino">
+
+    <!-- Immport component declarations -->
+
+   <import_component_type>Svc/FatalHandler/FatalHandlerComponentAi.xml</import_component_type>
+   <import_component_type>Svc/ActiveRateGroup/ActiveRateGroupComponentAi.xml</import_component_type>
+   <import_component_type>Svc/TlmChan/TlmChanComponentAi.xml</import_component_type>
+   <import_component_type>Svc/CmdDispatcher/CommandDispatcherComponentAi.xml</import_component_type>
+   <import_component_type>Svc/PrmDb/PrmDbComponentAi.xml</import_component_type>
+   <import_component_type>Svc/ActiveRateGroup/ActiveRateGroupComponentAi.xml</import_component_type>
+   <import_component_type>Svc/CmdSequencer/CmdSequencerComponentAi.xml</import_component_type>
+   <import_component_type>Svc/ActiveRateGroup/ActiveRateGroupComponentAi.xml</import_component_type>
+   <import_component_type>Svc/FileUplink/FileUplinkComponentAi.xml</import_component_type>
+   <import_component_type>Svc/BufferManager/BufferManagerComponentAi.xml</import_component_type>
+   <import_component_type>Svc/AssertFatalAdapter/AssertFatalAdapterComponentAi.xml</import_component_type>
+   <import_component_type>Svc/Health/HealthComponentAi.xml</import_component_type>
+   <import_component_type>Svc/GroundInterface/GroundInterfaceComponentAi.xml</import_component_type>
+   <import_component_type>Svc/BufferManager/BufferManagerComponentAi.xml</import_component_type>
+   <import_component_type>Svc/ActiveLogger/ActiveLoggerComponentAi.xml</import_component_type>
+   <!--import_component_type>Svc/LinuxTimer/LinuxTimerComponentAi.xml</import_component_type-->
+   <import_component_type>Svc/Time/TimeComponentAi.xml</import_component_type>
+   <import_component_type>Svc/RateGroupDriver/RateGroupDriverComponentAi.xml</import_component_type>
+   <import_component_type>Svc/FileDownlink/FileDownlinkComponentAi.xml</import_component_type>
+   <import_component_type>examples/ArduinoGpsTracker/HardwareRateDriver/HardwareRateDriverComponentAi.xml</import_component_type>
+   <import_component_type>examples/ArduinoGpsTracker/LedBlinker/LedBlinkerComponentAi.xml</import_component_type>
+   <import_component_type>examples/ArduinoGpsTracker/SerialDriver/SerialDriverComponentAi.xml</import_component_type>
+
+   <!-- Declare component instances - must match names in Components.hpp -->
+
+   <!-- instance namespace="Svc" name="fatalHandler" type="FatalHandler" base_id="100"  base_id_window="20" /-->
+   
+   <instance namespace="Svc" name="rateGroup10HzComp" type="ActiveRateGroup" base_id="200"  base_id_window="20" />
+   
+   <instance namespace="Svc" name="rateGroup1HzComp" type="ActiveRateGroup" base_id="300"  base_id_window="20" />
+
+   <instance namespace="Svc" name="chanTlm" type="TlmChan" base_id="400"  base_id_window="20" />
+   
+   <instance namespace="Svc" name="cmdDisp" type="CommandDispatcher" base_id="500"  base_id_window="20" />
+   
+   <!-- instance namespace="Svc" name="fatalAdapter" type="AssertFatalAdapter" base_id="1000"  base_id_window="20" /-->
+   
+   <instance namespace="Svc" name="health" type="Health" base_id="1100"  base_id_window="20" />
+   
+   <instance namespace="Svc" name="eventLogger" type="ActiveLogger" base_id="1400"  base_id_window="20" />
+   
+   <!--instance namespace="Svc" name="linuxTime" type="Time" base_id="1500"  base_id_window="20" />
+   
+   <instance namespace="Svc" name="linuxTimer" type="LinuxTimer" base_id="1600"  base_id_window="20" />-->
+
+   <instance namespace="Svc" name="rateGroupDriverComp" type="RateGroupDriver" base_id="1700"  base_id_window="20" />
+
+   <instance namespace="Svc" name="groundInterface" type="GroundInterface" base_id="1800"  base_id_window="20" />
+
+   <instance namespace="Arduino" name="ledBlinker" type="LedBlinker" base_id="1900"  base_id_window="20" />
+
+   <instance namespace="Arduino" name="hardwareRateDriver" type="HardwareRateDriver" base_id="2000"  base_id_window="20" />
+
+   <!--  Choose one of the following -->
+   <instance namespace="Arduino" name="comm" type="SerialDriver" base_id="2100"  base_id_window="20" />
+
+
+   <!-- Command Registration/Dispatch/Reply Connections -->
+   
+   <!-- Command Registration Ports - Registration port number must match dispatch port for each component -->
+
+   <connection name = "EventLoggerReg">
+        <source component = "eventLogger" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "0"/>
+   </connection>
+   <connection name = "CmdDispReg">
+        <source component = "cmdDisp" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "1"/>
+   </connection>
+   <connection name = "HealthReg">
+        <source component = "health" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "2"/>
+   </connection>
+
+    <!-- Command Dispatch Ports - Dispatch port number must match registration port for each component -->
+
+   <connection name = "EventLoggerDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "0"/>
+        <target component = "eventLogger" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+   <connection name = "CmdDispDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "1"/>
+        <target component = "cmdDisp" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+   <connection name = "HealthDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "2"/>
+        <target component = "health" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+
+    <!-- Command Reply Ports - Go to the same response port on the dispatcher -->
+
+   <connection name = "EventLoggerReply">
+      <source component = "eventLogger" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+      <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+   <connection name = "CmdDispReply">
+       <source component = "cmdDisp" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+   <connection name = "HealthReply">
+       <source component = "health" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+
+   <!-- Event Logger Binary Connections -->
+   
+   <connection name = "EventLoggerLog">
+       <source component = "eventLogger" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+   <connection name = "CmdDispLog">
+       <source component = "cmdDisp" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+   <!-- connection name = "FatalAdapterLog">
+       <source component = "fatalAdapter" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection-->
+   <connection name = "HealthLog">
+       <source component = "health" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+   <connection name = "RateGroup10HzCompLog">
+       <source component = "rateGroup10HzComp" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+   <connection name = "RateGroup1HzCompLog">
+       <source component = "rateGroup1HzComp" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+
+   <!-- Event Logger Text Connections -->
+   
+   <!-- Telemetry Connections -->
+   <connection name = "cmdDispTlm">
+       <source component = "cmdDisp" port = "Tlm" type = "Tlm" num = "0"/>
+       <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+   <connection name = "rateGroup1HzCompTlm">
+       <source component = "rateGroup1HzComp" port = "Tlm" type = "Tlm" num = "0"/>
+       <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+   <connection name = "rateGroup10HzCompTlm">
+       <source component = "rateGroup10HzComp" port = "Tlm" type = "Tlm" num = "0"/>
+       <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+   <connection name = "healthTlm">
+       <source component = "health" port = "Tlm" type = "Tlm" num = "0"/>
+       <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+ 
+   <!-- Time Connections -->
+   <!--
+   <connection name = "eventLoggerTime">
+       <source component = "eventLogger" port = "Time" type = "Time" num = "0"/>
+       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+   <connection name = "rateGroup10HzCompTime">
+       <source component = "rateGroup10HzComp" port = "Time" type = "Time" num = "0"/>
+       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+   <connection name = "healthTime">
+       <source component = "health" port = "Time" type = "Time" num = "0"/>
+       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+   <connection name = "cmdDispTime">
+       <source component = "cmdDisp" port = "Time" type = "Time" num = "0"/>
+       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+   <connection name = "fatalAdapterTime">
+       <source component = "fatalAdapter" port = "Time" type = "Time" num = "0"/>
+       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection> -->
+
+   <!-- Rate Group Connections -->
+   
+   <!-- Linux Timer Connection -->
+   <!--<connection name = "LinuxTimer">
+       <source component = "linuxTimer" port = "CycleOut" type = "Cycle" num = "0"/>
+       <target component = "rateGroupDriverComp" port = "CycleIn" type = "Cycle" num = "0"/>
+   </connection>-->
+
+   <!-- Connect the Hardware Driver to the rate group driver -->
+   <connection name = "hardwareDriveConn">
+       <source component = "hardwareRateDriver" port = "CycleOut" type = "Cycle" num = "0"/>
+       <target component = "rateGroupDriverComp" port = "CycleIn" type = "Cycle" num = "0"/>
+   </connection>
+
+   <!-- 10Hz Rate Group -->
+   <connection name = "rateGroupDriverComp10Hz">
+       <source component = "rateGroupDriverComp" port = "CycleOut" type = "Cycle" num = "0"/>
+       <target component = "rateGroup10HzComp" port = "CycleIn" type = "Cycle" num = "0"/>
+   </connection>
+   <connection name = "groundInterfaceRg">
+       <source component = "rateGroup10HzComp" port = "RateGroupMemberOut" type = "Sched" num = "0"/>
+       <target component = "groundInterface" port = "schedIn" type = "Sched" num = "0"/>
+   </connection>
+   <connection name = "ledBlinkerRg">
+       <source component = "rateGroup10HzComp" port = "RateGroupMemberOut" type = "Sched" num = "1"/>
+       <target component = "ledBlinker" port = "schedIn" type = "Sched" num = "0"/>
+   </connection>
+
+   <!-- 1Hz Rate Group -->
+   <connection name = "rateGroupDriverCompRg1Hz">
+       <source component = "rateGroupDriverComp" port = "CycleOut" type = "Cycle" num = "1"/>
+       <target component = "rateGroup1HzComp" port = "CycleIn" type = "Cycle" num = "0"/>
+   </connection>
+   <connection name = "chanTlmRg">
+       <source component = "rateGroup1HzComp" port = "RateGroupMemberOut" type = "Sched" num = "0"/>
+       <target component = "chanTlm" port = "Run" type = "Sched" num = "0"/>
+   </connection>
+   <connection name = "healthRg">
+       <source component = "rateGroup1HzComp" port = "RateGroupMemberOut" type = "Sched" num = "1"/>
+       <target component = "health" port = "Run" type = "Sched" num = "0"/>
+   </connection>
+
+   <!-- Health Connections -->
+   
+   <!-- The PingSend output port number should match the PingReturn input port number -->
+   <!-- Each port number pair must be unique -->
+   <!-- This order must match the table in Topology.cpp -->
+
+   <connection name = "rateGroup10HzCompPingIn">
+       <source component = "health" port = "PingSend" type = "Ping" num = "0"/>
+       <target component = "rateGroup10HzComp" port = "PingIn" type = "Ping" num = "0"/>
+   </connection>
+   <connection name = "rateGroup10HzCompPingOut">
+       <source component = "rateGroup10HzComp" port = "PingOut" type = "Ping" num = "0"/>
+       <target component = "health" port = "PingReturn" type = "Ping" num = "0"/>
+   </connection>
+
+   <connection name = "rateGroup1HzCompPingIn">
+       <source component = "health" port = "PingSend" type = "Ping" num = "1"/>
+       <target component = "rateGroup1HzComp" port = "PingIn" type = "Ping" num = "0"/>
+   </connection>
+   <connection name = "rateGroup1HzCompPingOut">
+       <source component = "rateGroup1HzComp" port = "PingOut" type = "Ping" num = "0"/>
+       <target component = "health" port = "PingReturn" type = "Ping" num = "1"/>
+   </connection>
+
+   <connection name = "cmdDispPingIn">
+       <source component = "health" port = "PingSend" type = "Ping" num = "2"/>
+       <target component = "cmdDisp" port = "pingIn" type = "Ping" num = "0"/>
+   </connection>
+   <connection name = "cmdDispPingOut">
+       <source component = "cmdDisp" port = "pingOut" type = "Ping" num = "0"/>
+       <target component = "health" port = "PingReturn" type = "Ping" num = "2"/>
+   </connection>
+   
+   <connection name = "chanTlmPingIn">
+       <source component = "health" port = "PingSend" type = "Ping" num = "3"/>
+       <target component = "chanTlm" port = "pingIn" type = "Ping" num = "0"/>
+   </connection>
+   <connection name = "chanTlmPingOut">
+       <source component = "chanTlm" port = "pingOut" type = "Ping" num = "0"/>
+       <target component = "health" port = "PingReturn" type = "Ping" num = "3"/>
+   </connection>
+
+   <connection name = "eventLoggerPingIn">
+       <source component = "health" port = "PingSend" type = "Ping" num = "4"/>
+       <target component = "eventLogger" port = "pingIn" type = "Ping" num = "0"/>
+   </connection>
+   <connection name = "eventLoggerPingOut">
+       <source component = "eventLogger" port = "pingOut" type = "Ping" num = "0"/>
+       <target component = "health" port = "PingReturn" type = "Ping" num = "4"/>
+   </connection>
+
+   <!-- Ground Interface Connections -->
+   <connection name = "cmdDispPkts">
+       <source component = "groundInterface" port = "uplinkPort" type = "Com" num = "0"/>
+        <target component = "cmdDisp" port = "seqCmdBuff" type = "Com" num = "0"/>
+   </connection>
+
+   <connection name = "eventLoggerPkts">
+       <source component = "eventLogger" port = "PktSend" type = "Com" num = "0"/>
+        <target component = "groundInterface" port = "downlinkPort" type = "Com" num = "0"/>
+   </connection>
+   
+   <connection name = "chanTlmPkts">
+       <source component = "chanTlm" port = "PktSend" type = "Com" num = "0"/>
+        <target component = "groundInterface" port = "downlinkPort" type = "Com" num = "0"/>
+   </connection>
+
+   <connection name = "groundInterWrite">
+       <source component = "groundInterface" port = "write" type = "BufferSend" num = "0"/>
+        <target component = "comm" port = "write" type = "BufferSend" num = "0"/>
+   </connection>
+
+   <connection name = "groundInterRead">
+       <source component = "groundInterface" port = "readPoll" type = "BufferSend" num = "0"/>
+        <target component = "comm" port = "readPoll" type = "BufferSend" num = "0"/>
+   </connection>
+
+
+   <!-- Fault Connectionss -->
+   <!-- connection name = "eventLoggerFatalOut">
+       <source component = "eventLogger" port = "FatalAnnounce" type = "FatalEvent" num = "0"/>
+        <target component = "fatalHandler" port = "FatalReceive" type = "FatalEvent" num = "0"/>
+   </connection -->
+   
+</assembly>

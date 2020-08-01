@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../Autocoders/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
+<component name="LedBlinker" kind="passive" namespace="Arduino" modeler="true">
+    <import_port_type>Svc/Sched/SchedPortAi.xml</import_port_type>
+    <ports>
+        <port name="schedIn" data_type="Svc::Sched"  kind="sync_input"    max_number="1">
+        </port>
+    </ports>
+
+</component>
