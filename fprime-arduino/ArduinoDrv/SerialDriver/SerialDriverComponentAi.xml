@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="file:../xml/ISF_Component_Schema.rnc" type="compact"?>
+
+<component name="SerialDriver" kind="passive" namespace="Arduino" modeler="true">
+    <import_port_type>Fw/Buffer/BufferSendPortAi.xml</import_port_type>
+    <import_port_type>Svc/Sched/SchedPortAi.xml</import_port_type>
+    <ports>
+        <port name="write" data_type="Fw::BufferSend" kind="sync_input" max_number="1">
+        </port>
+
+        <port name="readPoll" data_type="Fw::BufferSend" kind="sync_input" max_number="1">
+        </port>
+
+        <port name="readCallback" data_type="Fw::BufferSend" kind="output" max_number="1">
+        </port>
+
+        <port name="schedIn" data_type="Svc::Sched"  kind="sync_input"    max_number="1">
+        </port>
+    </ports>
+</component>

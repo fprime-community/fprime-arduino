@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="file:../xml/ISF_Component_Schema.rnc" type="compact"?>
+<component name="HardwareRateDriver" kind="passive" namespace="Arduino">
+    <import_port_type>Svc/Cycle/CyclePortAi.xml</import_port_type>
+    <comment>An interrupt based driver for Arduino rate groups.</comment>
+    <ports>
+        <!-- Output cycle port -->
+        <port name="CycleOut" data_type="Cycle" kind="output" max_number="1">
+            <comment>
+            The cycle outputs. Meant to be connected to rate group driver
+            </comment>
+        </port>
+    </ports>
+</component>
+
