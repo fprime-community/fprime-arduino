@@ -16,7 +16,8 @@ set(SOURCE_FILES
 set(MOD_DEPS
   Fw/Logger
   Svc/GroundInterface
-  Svc/LinuxTime
+  fprime-arduino/ArduinoTime
+  fprime-arduino/ArduinoOs
   Os
   Os/Baremetal/TaskRunner
 )

@@ -14,12 +14,15 @@
 # This contains the basic project information. Specifically, a cmake version and
 # project definition.
 ##
-project(Rover C CXX)
+project(ArduinoBlink C CXX)
 cmake_minimum_required(VERSION 3.13)
+# Must set baremetal scheduler
+set(BAREMETAL_SCHEDULER "ON")
 
 # Include the two parts of the build system. Not needing to register separate targets
 include("${FPRIME_FRAMEWORK_PATH}/cmake/FPrime.cmake")
 include("${FPRIME_FRAMEWORK_PATH}/cmake/FPrime-Code.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/../fprime-arduino.cmake")
 
 ##
 # Section 3: Components and Topology
@@ -28,11 +31,8 @@ include("${FPRIME_FRAMEWORK_PATH}/cmake/FPrime-Code.cmake")
 # core components in the topology, which is also added here.
 ##
 # Add component subdirectories
-# Add component subdirectories
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/../ArduinoGpsTracker/SerialDriver/")
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/../ArduinoGpsTracker/HardwareRateDriver/")
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/../ArduinoGpsTracker/LedBlinker/")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/LedBlinker")
 
 # Add Topology subdirectory
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Top/")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Top")
 

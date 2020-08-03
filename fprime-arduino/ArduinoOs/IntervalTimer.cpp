@@ -7,13 +7,13 @@
 
 namespace Os {
     
-    IntervalTimer::IntervalTimer() {
+    /*IntervalTimer::IntervalTimer() {
         memset(&this->m_startTime,0,sizeof(this->m_startTime));
         memset(&this->m_stopTime,0,sizeof(this->m_stopTime));
     }
 
     IntervalTimer::~IntervalTimer() {
-    }
+    }*/
 
     void IntervalTimer::getRawTime(RawTime& time) {
         U32 msec = millis();

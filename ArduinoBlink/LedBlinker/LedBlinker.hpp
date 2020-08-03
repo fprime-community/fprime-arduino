@@ -8,7 +8,7 @@
 #ifndef LedBlinker_HPP
 #define LedBlinker_HPP
 
-#include "examples/ArduinoGpsTracker/LedBlinker/LedBlinkerComponentAc.hpp"
+#include "ArduinoBlink/LedBlinker/LedBlinkerComponentAc.hpp"
 
 namespace Arduino {
 

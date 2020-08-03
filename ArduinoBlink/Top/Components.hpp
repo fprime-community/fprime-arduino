@@ -23,9 +23,9 @@ void constructApp();
 #include <Svc/AssertFatalAdapter/AssertFatalAdapterComponentImpl.hpp>
 #include <Svc/FatalHandler/FatalHandlerComponentImpl.hpp>
 
-#include <examples/ArduinoGpsTracker/LedBlinker/LedBlinker.hpp>
-#include <examples/ArduinoGpsTracker/HardwareRateDriver/HardwareRateDriver.hpp>
-#include <examples/ArduinoGpsTracker/SerialDriver/SerialDriver.hpp>
+#include <ArduinoBlink/LedBlinker/LedBlinker.hpp>
+#include <fprime-arduino/ArduinoDrv/HardwareRateDriver/HardwareRateDriver.hpp>
+#include <fprime-arduino/ArduinoDrv/SerialDriver/SerialDriver.hpp>
 
 //Core components. Gotta run them all
 extern Svc::RateGroupDriverImpl rateGroupDriverComp;

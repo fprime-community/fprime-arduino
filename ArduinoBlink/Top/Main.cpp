@@ -1,11 +1,11 @@
-#include <examples/ArduinoBlink/Top/Components.hpp>
-#include <Fw/Types/Generic/GenericLogAssert.hpp>
+#include <ArduinoBlink/Top/Components.hpp>
+#include <fprime-arduino/ArduinoTypes/GenericLogAssert.hpp>
 #include <Os/Log.hpp>
 #ifdef ARDUINO
-    #include <Os/Arduino/StreamLog.hpp>
+    #include <fprime-arduino/ArduinoOs/StreamLog.hpp>
     #include <Arduino.h>
 #else
-    #include <examples/ArduinoGpsTracker/SerialDriver/SerialDriver.hpp>
+    #include <fprime-arduino/ArduinoDrv/SerialDriver/SerialDriver.hpp>
 #endif
 
 // Global handlers for this Topology

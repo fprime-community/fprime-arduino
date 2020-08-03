@@ -4,8 +4,8 @@
 #include <Os/File.hpp>
 #include <Os/Baremetal/TaskRunner/TaskRunner.hpp>
 #include <Fw/Types/MallocAllocator.hpp>
-#include <examples/ArduinoBlink/Top/ArduinoSchedContexts.hpp>
-#include "..//Top/Components.hpp"
+#include <ArduinoBlink/Top/ArduinoSchedContexts.hpp>
+#include "ArduinoBlink/Top/Components.hpp"
 
 // Setup the rate group driver used to drive all the ActiveRateGroups connected to it.
 // For each active rate group, there is a rate divisor that represents how often it is run.

@@ -23,9 +23,9 @@
    <import_component_type>Svc/Time/TimeComponentAi.xml</import_component_type>
    <import_component_type>Svc/RateGroupDriver/RateGroupDriverComponentAi.xml</import_component_type>
    <import_component_type>Svc/FileDownlink/FileDownlinkComponentAi.xml</import_component_type>
-   <import_component_type>examples/ArduinoGpsTracker/HardwareRateDriver/HardwareRateDriverComponentAi.xml</import_component_type>
-   <import_component_type>examples/ArduinoGpsTracker/LedBlinker/LedBlinkerComponentAi.xml</import_component_type>
-   <import_component_type>examples/ArduinoGpsTracker/SerialDriver/SerialDriverComponentAi.xml</import_component_type>
+   <import_component_type>fprime-arduino/ArduinoDrv/HardwareRateDriver/HardwareRateDriverComponentAi.xml</import_component_type>
+   <import_component_type>fprime-arduino/ArduinoDrv/SerialDriver/SerialDriverComponentAi.xml</import_component_type>
+   <import_component_type>ArduinoBlink/LedBlinker/LedBlinkerComponentAi.xml</import_component_type>
 
    <!-- Declare component instances - must match names in Components.hpp -->
 

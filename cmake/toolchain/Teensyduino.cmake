@@ -15,7 +15,7 @@ set(CMAKE_ASM_COMPILER_WORKS 1)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY" CACHE STRING "Try Static Lib Type" FORCE)
 
 # Check if ARDUINO_SDK_PATH is set, otherwise set it to /opt/arduino-1.8.9/
-SET(ARDUINO_SDK_PATH "/opt/arduino-1.8.9" CACHE PATH "Path to Arduino SDK")
+SET(ARDUINO_SDK_PATH "/opt/arduino-1.8.13" CACHE PATH "Path to Arduino SDK")
 SET(TEENSY_VERSION "teensy32" CACHE STRING "Version of TEENSY to use")
 string(REGEX MATCH "teensy[0-9]" TEENSY_CORE_DIR "${TEENSY_VERSION}")
 include("${CMAKE_CURRENT_LIST_DIR}/ArduinoSupport/${TEENSY_VERSION}.cmake")

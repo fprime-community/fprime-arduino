@@ -5,7 +5,7 @@
 // ====================================================================== 
 
 
-#include <examples/ArduinoGpsTracker/LedBlinker/LedBlinker.hpp>
+#include <ArduinoBlink/LedBlinker/LedBlinker.hpp>
 #include "Fw/Types/BasicTypes.hpp"
 
 #define LED_PIN 13
@@ -16,13 +16,15 @@ namespace Arduino {
   // ----------------------------------------------------------------------
 
   LedBlinkerComponentImpl ::
-#if FW_OBJECT_NAMES == 1
     LedBlinkerComponentImpl(
+#if FW_OBJECT_NAMES == 1
         const char *const compName
+#endif
     ) :
+#if FW_OBJECT_NAMES == 1
       LedBlinkerComponentBase(compName), 
 #else
-    LedBlinkerComponentBase(void),
+      LedBlinkerComponentBase(),
 #endif
     m_pin(LED_PIN),
     m_state(false)

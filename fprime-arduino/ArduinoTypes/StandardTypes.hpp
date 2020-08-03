@@ -1,3 +1,5 @@
-extern "C" {
-    #include <stdint.h>
-} // extern "C"
+#include <stdint.h>
+typedef int TaskIdRepr;
+#define FPRIME_OVERRIDE_NATIVE_TYPES
+typedef int32_t NATIVE_INT_TYPE;
+typedef uint32_t NATIVE_UINT_TYPE;
