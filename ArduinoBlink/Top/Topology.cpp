@@ -2,7 +2,6 @@
 #include <Os/Task.hpp>
 #include <Os/Log.hpp>
 #include <Os/File.hpp>
-#include <Os/Baremetal/TaskRunner/TaskRunner.hpp>
 #include <Fw/Types/MallocAllocator.hpp>
 #include <ArduinoBlink/Top/ArduinoSchedContexts.hpp>
 #include "ArduinoBlink/Top/Components.hpp"
@@ -30,11 +29,7 @@ Svc::GroundInterfaceComponentImpl groundInterface("GIF");
 // Arduino specific components
 Arduino::LedBlinkerComponentImpl ledBlinker("Blinker");
 Arduino::HardwareRateDriver hardwareRateDriver("RateDr", 100);
-#ifdef COMM_SERIAL
-  Arduino::SerialDriverComponentImpl comm("COMM", 1);
-#else
-  Arduino::RadioWrapperComponentImpl comm("COMM");
-#endif
+Arduino::SerialDriverComponentImpl comm("COMM", 1);
 
 // Baremetal setup for the task runner
 Os::TaskRunner taskRunner;
@@ -60,11 +55,7 @@ void constructApp() {
     health.init(25,0);
     groundInterface.init(0);
     ledBlinker.init(0);
-#ifdef COMM_SERIAL
     comm.init(0, 115200);
-#else
-    comm.init(0);
-#endif
 
     // Callback to initialize architecture, connect ports, etc.
     constructArduinoArchitecture();
@@ -92,9 +83,6 @@ void constructApp() {
     cmdDisp.start(0, 101, 10 * 1024);
     eventLogger.start(0, 98, 10 * 1024);
     chanTlm.start(0, 97, 10 * 1024);
-    Fw::Logger::logMsg("[SETUP] Lanuching rate groups\n", 0, 0, 0, 0, 0, 0);
-    // Start the task for the rate group
-    taskRunner.run();
 }
 /**
  * Exit Tasks:

@@ -1,8 +1,6 @@
 #ifndef __ARD_COMPONENTS_HEADER__
 #define __ARD_COMPONENTS_HEADER__
 
-#define COMM_SERIAL
-
 void constructArduinoArchitecture(void);
 void exitTasks(void);
 void constructApp();
@@ -26,6 +24,7 @@ void constructApp();
 #include <ArduinoBlink/LedBlinker/LedBlinker.hpp>
 #include <fprime-arduino/ArduinoDrv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <fprime-arduino/ArduinoDrv/SerialDriver/SerialDriver.hpp>
+#include <Os/Baremetal/TaskRunner/TaskRunner.hpp>
 
 //Core components. Gotta run them all
 extern Svc::RateGroupDriverImpl rateGroupDriverComp;
@@ -43,7 +42,7 @@ extern Svc::FatalHandlerComponentImpl fatalHandler;
 extern Svc::HealthImpl health;
 extern Arduino::LedBlinkerComponentImpl ledBlinker;
 extern Arduino::HardwareRateDriver hardwareRateDriver;
-#ifdef COMM_SERIAL
-  extern Arduino::SerialDriverComponentImpl comm;
-#endif
+extern Arduino::SerialDriverComponentImpl comm;
+// Scheduler definition
+extern Os::TaskRunner taskRunner;
 #endif

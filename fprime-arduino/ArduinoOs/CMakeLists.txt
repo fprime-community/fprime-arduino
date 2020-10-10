@@ -46,9 +46,9 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Teensyduino")
 endif()
 
 # Check for default logger and add it to the source list if needed
-if (NOT FPRIME_DISABLE_DEFAULT_LOGGER)
-    list(APPEND SOURCE_FILES "${FPRIME_FRAMEWORK_PATH}/Os/LogDefault.cpp")
-endif()
+#if (NOT FPRIME_DISABLE_DEFAULT_LOGGER)
+#    list(APPEND SOURCE_FILES "${FPRIME_FRAMEWORK_PATH}/Os/LogDefault.cpp")
+#endif()
 
 register_fprime_module()
 ####

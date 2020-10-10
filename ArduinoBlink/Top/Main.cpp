@@ -9,7 +9,7 @@
 #endif
 
 // Global handlers for this Topology
-Fw::LogAssertHook assert;
+//Fw::LogAssertHook assert;
 
 #define STARTUP_DELAY_MS 2000
 
@@ -17,13 +17,15 @@ Fw::LogAssertHook assert;
  * Main function.
  */
 int main(int argc, char* argv[]) {
-	assert.registerHook();
+    Os::Log logger;
+    //assert.registerHook();
 #ifdef ARDUINO
     // Start Serial for logging, and give logger time to connect
     Serial.begin(9600);
     delay(STARTUP_DELAY_MS);
     // Setup log handler
     Os::setArduinoStreamLogHandler(&Serial);
+    Fw::Logger::logMsg("[SETUP] Logger registered, hello world!\n", 0, 0, 0, 0, 0, 0);
 #else
     // Set serial port
     FW_ASSERT(argc <= 2);
@@ -33,8 +35,10 @@ int main(int argc, char* argv[]) {
 #endif
     Fw::Logger::logMsg("[SETUP] Constructing system\n", 0, 0, 0, 0, 0, 0);
     constructApp();
-#ifndef ARDUINO
-    while (1) {}
-#endif
+    Fw::Logger::logMsg("[SETUP] Lanuching rate groups\n", 0, 0, 0, 0, 0, 0);
+    // Start the task for the rate group
+    while (1) {
+        taskRunner.run();
+    }
     return 0;
 }
