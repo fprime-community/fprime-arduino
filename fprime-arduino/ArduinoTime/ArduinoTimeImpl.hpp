@@ -12,14 +12,10 @@
 
 namespace Svc {
 
-class LinuxTimeImpl: public TimeComponentBase {
+class ArduinoTimeImpl: public TimeComponentBase {
     public:
-#if FW_OBJECT_NAMES == 1
-        LinuxTimeImpl(const char* compName);
-#else
-        LinuxTimeImpl();
-#endif
-        virtual ~LinuxTimeImpl();
+        ArduinoTimeImpl(const char* compName);
+        virtual ~ArduinoTimeImpl();
         void init(NATIVE_INT_TYPE instance);
     protected:
         void timeGetPort_handler(

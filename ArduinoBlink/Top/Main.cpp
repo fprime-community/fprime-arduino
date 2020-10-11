@@ -9,7 +9,7 @@
 #endif
 
 // Global handlers for this Topology
-//Fw::LogAssertHook assert;
+Fw::LogAssertHook assert;
 
 #define STARTUP_DELAY_MS 2000
 
@@ -18,7 +18,7 @@
  */
 int main(int argc, char* argv[]) {
     Os::Log logger;
-    //assert.registerHook();
+    assert.registerHook();
 #ifdef ARDUINO
     // Start Serial for logging, and give logger time to connect
     Serial.begin(9600);

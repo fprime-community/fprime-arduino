@@ -1,30 +1,23 @@
 /*
  * ArduinoTimeImpl.cpp:
  *
- * An implementation of LinuxTime used on Arduino so that standard system components can be run as
+ * An implementation of ArduinoTime used on Arduino so that standard system components can be run as
  * expected. The time format is (U32 seconds, U32 microseconds) and must be mapped to the Arduino
  * supplied "millis()" and "micros()" functions. Thus, the limitation is that this time will roll
  * over after 49 days of continuous use.
  *
  * @author lestarch
  */
-
-#include <Svc/LinuxTime/LinuxTimeImpl.hpp>
+#include <fprime-arduino/ArduinoTime/ArduinoTimeImpl.hpp>
 #include <Fw/Time/Time.hpp>
 #include <Arduino.h>
 
 namespace Svc {
 
-#if FW_OBJECT_NAMES == 1
-    LinuxTimeImpl::LinuxTimeImpl(const char* name) : TimeComponentBase(name)
-#else
-    LinuxTimeImpl::LinuxTimeImpl()
-#endif
-    {}
+    ArduinoTimeImpl::ArduinoTimeImpl(const char* name) : TimeComponentBase(name) {} 
+    ArduinoTimeImpl::~ArduinoTimeImpl() {}
 
-    LinuxTimeImpl::~LinuxTimeImpl() {}
-
-    void LinuxTimeImpl::timeGetPort_handler(
+    void ArduinoTimeImpl::timeGetPort_handler(
         NATIVE_INT_TYPE portNum, /*!< The port number*/
         Fw::Time &time /*!< The time to set */
     ) {
@@ -33,7 +26,7 @@ namespace Svc {
         time.set(msec/1000, usec);
     }
 
-    void LinuxTimeImpl::init(NATIVE_INT_TYPE instance) {
+    void ArduinoTimeImpl::init(NATIVE_INT_TYPE instance) {
         TimeComponentBase::init(instance);
     }
 }

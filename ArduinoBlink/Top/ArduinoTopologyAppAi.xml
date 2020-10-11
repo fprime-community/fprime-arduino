@@ -19,7 +19,7 @@
    <import_component_type>Svc/GroundInterface/GroundInterfaceComponentAi.xml</import_component_type>
    <import_component_type>Svc/BufferManager/BufferManagerComponentAi.xml</import_component_type>
    <import_component_type>Svc/ActiveLogger/ActiveLoggerComponentAi.xml</import_component_type>
-   <!--import_component_type>Svc/LinuxTimer/LinuxTimerComponentAi.xml</import_component_type-->
+   <import_component_type>Svc/LinuxTimer/LinuxTimerComponentAi.xml</import_component_type>
    <import_component_type>Svc/Time/TimeComponentAi.xml</import_component_type>
    <import_component_type>Svc/RateGroupDriver/RateGroupDriverComponentAi.xml</import_component_type>
    <import_component_type>Svc/FileDownlink/FileDownlinkComponentAi.xml</import_component_type>
@@ -28,8 +28,6 @@
    <import_component_type>ArduinoBlink/LedBlinker/LedBlinkerComponentAi.xml</import_component_type>
 
    <!-- Declare component instances - must match names in Components.hpp -->
-
-   <!-- instance namespace="Svc" name="fatalHandler" type="FatalHandler" base_id="100"  base_id_window="20" /-->
    
    <instance namespace="Svc" name="rateGroup10HzComp" type="ActiveRateGroup" base_id="200"  base_id_window="20" />
    
@@ -39,16 +37,12 @@
    
    <instance namespace="Svc" name="cmdDisp" type="CommandDispatcher" base_id="500"  base_id_window="20" />
    
-   <!-- instance namespace="Svc" name="fatalAdapter" type="AssertFatalAdapter" base_id="1000"  base_id_window="20" /-->
-   
    <instance namespace="Svc" name="health" type="Health" base_id="1100"  base_id_window="20" />
    
    <instance namespace="Svc" name="eventLogger" type="ActiveLogger" base_id="1400"  base_id_window="20" />
    
-   <!--instance namespace="Svc" name="linuxTime" type="Time" base_id="1500"  base_id_window="20" />
+   <instance namespace="Svc" name="time" type="Time" base_id="1500"  base_id_window="20" />
    
-   <instance namespace="Svc" name="linuxTimer" type="LinuxTimer" base_id="1600"  base_id_window="20" />-->
-
    <instance namespace="Svc" name="rateGroupDriverComp" type="RateGroupDriver" base_id="1700"  base_id_window="20" />
 
    <instance namespace="Svc" name="groundInterface" type="GroundInterface" base_id="1800"  base_id_window="20" />
@@ -57,7 +51,6 @@
 
    <instance namespace="Arduino" name="hardwareRateDriver" type="HardwareRateDriver" base_id="2000"  base_id_window="20" />
 
-   <!--  Choose one of the following -->
    <instance namespace="Arduino" name="comm" type="SerialDriver" base_id="2100"  base_id_window="20" />
 
 
@@ -118,10 +111,6 @@
        <source component = "cmdDisp" port = "Log" type = "Log" num = "0"/>
         <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
    </connection>
-   <!-- connection name = "FatalAdapterLog">
-       <source component = "fatalAdapter" port = "Log" type = "Log" num = "0"/>
-        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
-   </connection-->
    <connection name = "HealthLog">
        <source component = "health" port = "Log" type = "Log" num = "0"/>
         <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
@@ -156,27 +145,26 @@
    </connection>
  
    <!-- Time Connections -->
-   <!--
    <connection name = "eventLoggerTime">
        <source component = "eventLogger" port = "Time" type = "Time" num = "0"/>
-       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+       <target component = "time" port = "timeGetPort" type = "Time" num = "0"/>
    </connection>
    <connection name = "rateGroup10HzCompTime">
        <source component = "rateGroup10HzComp" port = "Time" type = "Time" num = "0"/>
-       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+       <target component = "time" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+   <connection name = "rateGroup1HzCompTime">
+       <source component = "rateGroup1HzComp" port = "Time" type = "Time" num = "0"/>
+       <target component = "time" port = "timeGetPort" type = "Time" num = "0"/>
    </connection>
    <connection name = "healthTime">
        <source component = "health" port = "Time" type = "Time" num = "0"/>
-       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+       <target component = "time" port = "timeGetPort" type = "Time" num = "0"/>
    </connection>
    <connection name = "cmdDispTime">
        <source component = "cmdDisp" port = "Time" type = "Time" num = "0"/>
-       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+       <target component = "time" port = "timeGetPort" type = "Time" num = "0"/>
    </connection>
-   <connection name = "fatalAdapterTime">
-       <source component = "fatalAdapter" port = "Time" type = "Time" num = "0"/>
-       <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
-   </connection> -->
 
    <!-- Rate Group Connections -->
    

@@ -28,9 +28,7 @@ namespace Arduino {
       //! Construct object SerialDriver
       //!
       SerialDriverComponentImpl(
-#if FW_OBJECT_NAMES == 1
           const char *const compName, /*!< The component name*/
-#endif
           NATIVE_UINT_TYPE portNumber
       );
 

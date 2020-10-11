@@ -17,15 +17,9 @@ namespace Arduino {
 
   LedBlinkerComponentImpl ::
     LedBlinkerComponentImpl(
-#if FW_OBJECT_NAMES == 1
         const char *const compName
-#endif
     ) :
-#if FW_OBJECT_NAMES == 1
       LedBlinkerComponentBase(compName), 
-#else
-      LedBlinkerComponentBase(),
-#endif
     m_pin(LED_PIN),
     m_state(false)
   {}

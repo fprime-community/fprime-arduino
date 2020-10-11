@@ -6,12 +6,8 @@ namespace Arduino {
 
 HardwareRateDriver* HardwareRateDriver::s_driver = NULL;
 
-#if FW_OBJECT_NAMES == 1
     HardwareRateDriver::HardwareRateDriver(const char* compName, U32 intervalMs) :
         HardwareRateDriverComponentBase(compName),
-#else
-    HardwareRateDriver::HardwareRateDriver(U32 intervalMs),
-#endif
         m_interval(intervalMs)
     {
         s_driver = this;

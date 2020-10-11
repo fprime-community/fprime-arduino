@@ -16,9 +16,7 @@ namespace Arduino {
 
   SerialDriverComponentImpl ::
     SerialDriverComponentImpl(
-#if FW_OBJECT_NAMES == 1
         const char *const compName,
-#endif
         NATIVE_UINT_TYPE portNum
     ) :
       SerialDriverComponentBase(compName),
