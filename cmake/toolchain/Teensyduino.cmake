@@ -30,6 +30,7 @@ message(STATUS "Teensy Source Dir: ${TEENSY_SRC_DIR}")
 # Setup the cross compiling tools path
 set(ARDUINO_TOOLS_PATH "${ARDUINO_SDK_PATH}/hardware/tools/${CMAKE_SYSTEM_PROCESSOR}/bin")
 message(STATUS "Teensy Tools Dir:  ${ARDUINO_TOOLS_PATH}")
+string(TOUPPER "${TEENSY_VERSION}" TEENSY_VERSION_UPPER)
 
 # Grab a suffix for tools
 if(WIN32)
@@ -51,7 +52,7 @@ set(CMAKE_SIZE         "${ARDUINO_TOOLS_PATH}/arm-none-eabi-size${TOOL_SUFFIX}" 
 set(CMAKE_RANLIB       "${ARDUINO_TOOLS_PATH}/arm-none-eabi-gcc-ranlib${TOOL_SUFFIX}"  CACHE PATH "ranlib"    FORCE)
 
 # Teensy common defines
-set(TEENSY_DEF "-DF_CPU=${TEENSY_FREQ} -DUSB_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE -D__${TEENSY_MCU}__")
+set(TEENSY_DEF "-DF_CPU=${TEENSY_FREQ} -DUSB_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE -D__${TEENSY_MCU}__ -DARDUINO_${TEENSY_VERSION_UPPER}")
 set(TEENSY_DEF "${TEENSY_DEF} -DARDUINO=${TEENSY_ARDUINO_NUM} -DTEENSYDUINO=${TEENSY_TEENSYDUINO_NUM}")
 # Teensy flags for each language
 set(TEENSY_COM "-Wall -g -Os -MMD -ffunction-sections -fdata-sections")

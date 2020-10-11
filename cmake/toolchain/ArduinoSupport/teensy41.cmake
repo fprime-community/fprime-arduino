@@ -3,7 +3,7 @@
 # MCU unit and loader script used by the Teensy 4.0
 set(TEENSY_MCU "IMXRT1062")
 string(TOLOWER "${TEENSY_MCU}" TEENSY_MCU_LOWER)
-set(MCU_LD "${TEENSY_MCU_LOWER}.ld")
+set(MCU_LD "${TEENSY_MCU_LOWER}_t41.ld")
 
 set(TEENSY_FREQ 600000000)
 set(TEENSY_ARDUINO_NUM 10808)
