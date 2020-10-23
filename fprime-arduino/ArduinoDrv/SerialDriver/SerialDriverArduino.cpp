@@ -1,8 +1,8 @@
-// ====================================================================== 
+// ======================================================================
 // \title  SerialDriverImpl.cpp
 // \author lestarch
 // \brief  cpp file for SerialDriver component implementation class
-// ====================================================================== 
+// ======================================================================
 
 
 #include <fprime-arduino/ArduinoDrv/SerialDriver/SerialDriver.hpp>
@@ -34,7 +34,6 @@ namespace Arduino {
               break;
       }
       reinterpret_cast<HardwareSerial*>(m_port_pointer)->begin(baud);
-      reinterpret_cast<HardwareSerial*>(m_port_pointer)->setTimeout(4);
   }
 
 
@@ -53,8 +52,16 @@ namespace Arduino {
   void SerialDriverComponentImpl ::
     read_data(Fw::Buffer& fwBuffer)
   {
-      NATIVE_UINT_TYPE read = reinterpret_cast<HardwareSerial*>(m_port_pointer)->
-                              readBytes(reinterpret_cast<U8*>(fwBuffer.getdata()), fwBuffer.getsize());
-      fwBuffer.setsize(read);
+
+      HardwareSerial* serial_ptr = reinterpret_cast<HardwareSerial*>(m_port_pointer);
+      int byte = 0;
+      NATIVE_UINT_TYPE count = 0;
+      U8* raw_data = reinterpret_cast<U8*>(fwBuffer.getdata());
+      while ((serial_ptr->available() > 0) && (count < fwBuffer.getsize()) &&
+             ((byte = serial_ptr->read()) != -1)) {
+          *(raw_data + count) = static_cast<U8>(byte);
+          count++;
+      }
+      fwBuffer.setsize(count);
   }
 } // end namespace Svc

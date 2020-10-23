@@ -20,7 +20,7 @@ namespace Arduino {
   {
 
     public:
-      const static NATIVE_UINT_TYPE SERIAL_BUFFER_SIZE = 200; //115200 / 10 / 10 + 1;
+      const static NATIVE_UINT_TYPE SERIAL_BUFFER_SIZE = 64; // Maximum Arduino Serial buffer size
       // ----------------------------------------------------------------------
       // Construction, initialization, and destruction
       // ----------------------------------------------------------------------

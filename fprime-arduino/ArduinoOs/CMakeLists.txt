@@ -43,6 +43,7 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Teensyduino")
         "${CMAKE_CURRENT_LIST_DIR}/IntervalTimer.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/StreamLog.cpp"
     )
+    register_fprime_module()
 endif()
 
 # Check for default logger and add it to the source list if needed
@@ -50,7 +51,6 @@ endif()
 #    list(APPEND SOURCE_FILES "${FPRIME_FRAMEWORK_PATH}/Os/LogDefault.cpp")
 #endif()
 
-register_fprime_module()
 ####
 # Dependency Melding:
 #
