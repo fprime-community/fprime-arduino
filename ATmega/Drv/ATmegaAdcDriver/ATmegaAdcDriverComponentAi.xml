@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-model href="../../../fprime/Autocoders/Python/default/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
+<component name="ATmegaAdcDriver" kind="passive" namespace="Drv">
+
+	<import_port_type>Svc/Sched/SchedPortAi.xml</import_port_type>
+    <import_port_type>ATmega/Drv/U16Array/U16ArrayPortAi.xml</import_port_type>
+
+
+	<comment>ATmega ADC reader component.</comment>
+	
+	<ports>
+	    <port name = "tlmSched" data_type = "Svc::Sched" kind="sync_input">
+	        <comment>
+	            Schedule from rate group to determine when to take readings and report
+	        </comment>
+	    </port>
+        <port name = "Report" data_type = "U16Array" kind="output"  max_number="10">
+            <comment>
+                Sends ADC reading multiplied by gains to components which use them
+            </comment>
+        </port>
+	</ports>
+    <telemetry>
+        <channel id="0" name="ADC_CNTS" data_type="U16*">
+            <comment>
+                Pointer to raw ADC counts array
+            </comment>
+        </channel>
+        <channel id="1" name="ADC_VAL" data_type="U16*">
+            <comment>
+                Pointer to ADC readings multiplied by gains
+            </comment>
+        </channel>
+    </telemetry>
+    <!-- TODO: Figure out why parameters won't parse -->
+    <!-- <parameters>
+        <parameter id="0"  set_opcode="10" save_opcode="11" name="SCALE" data_type="U16" default="1">
+            <comments>
+                Scale value to multiply by ADC reading before reporting to external components
+            </comments>
+        </parameter>
+        <parameter id="1"  set_opcode="12" save_opcode="13" name="OFFSET" data_type="I16" default="0">
+            <comments>
+                Offset to add to ADC reading AFTER multiplying by SCALE and before reporting to external components
+            </comments>
+        </parameter>
+    </parameters> -->
+</component>

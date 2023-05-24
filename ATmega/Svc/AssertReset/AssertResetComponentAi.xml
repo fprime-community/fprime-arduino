@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-model href="../../../Autocoders/Python/schema/default/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<component name="AssertReset" kind="passive" namespace="ATmega">
+    <comment>Reset the ATmega via the internal watchdog timer after a FW_ASSERT().</comment>
+</component>

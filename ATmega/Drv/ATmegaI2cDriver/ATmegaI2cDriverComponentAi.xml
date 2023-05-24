@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../fprime/Autocoders/Python/default/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<component name="ATmegaI2cDriver" kind="passive" namespace="Drv">
+    <!-- Example of importing a port type -->
+    <import_port_type>Drv/I2cDriverPorts/I2cWriteReadPortAi.xml</import_port_type>
+    <comment>I2C driver for operating the I2C bus on an ATmega hardware platform (such as ATmega128).</comment>
+    <ports>
+        <!-- Input ports must be of kind "sync_input" or "async_input" -->
+        <port name="i2cTransaction" data_type="Drv::I2cWriteRead" kind="sync_input" max_number="1">
+            <comment>Transaction buffer pair for sending and recieving i2c data</comment>
+        </port>
+    </ports>
+</component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../fprime/Autocoders/Python/default/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
+<component name="ATmegaSpiDriver" kind="passive" namespace="Drv" modeler="true">
+
+    <import_port_type>Drv/SpiDriverPorts/SpiReadWritePortAi.xml</import_port_type>
+    <ports>
+        <port name="spiReadWrite" data_type="Drv::SpiReadWrite"  kind="sync_input"    max_number="1">
+        </port>
+    </ports>
+
+</component>
