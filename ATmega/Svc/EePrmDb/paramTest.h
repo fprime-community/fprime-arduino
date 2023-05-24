@@ -1,0 +1,1 @@
+extern U16 paramSaveCounter;

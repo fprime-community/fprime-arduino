@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../fprime/Autocoders/Python/default/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
+<component name="ATmegaSerialDriver" kind="passive" namespace="Drv">
+    <import_port_type>Drv/SerialDriverPorts/SerialReadPortAi.xml</import_port_type>
+    <import_port_type>Drv/SerialDriverPorts/SerialWritePortAi.xml</import_port_type>
+    <import_port_type>Fw/Buffer/BufferSendPortAi.xml</import_port_type>
+    <import_port_type>Svc/Sched/SchedPortAi.xml</import_port_type>
+    <comment>UART driver for operating the hardware UARTs on an ATmega hardware platform (such as ATmega128).</comment>
+    <ports>
+        <port name="reportTlm" data_type="Svc::Sched" kind="sync_input" max_number="1">
+        </port>
+        <port name="serialRecv" data_type="Drv::SerialRead" kind="sync_input" max_number="2">
+        </port>
+        <port name="serialSend" data_type="Drv::SerialWrite" kind="sync_input" max_number="2">
+        </port>
+        <port name="serialRecvFwBuf" data_type="Fw::BufferSend" kind="sync_input" max_number="2">
+        </port>
+        <port name="serialSendFwBuf" data_type="Fw::BufferSend" kind="sync_input" max_number="2">
+        </port>
+    </ports>
+    <telemetry>
+        <channel id="0" name="UART0_Bytes_Sent" data_type="U32">
+            <comment>
+            Number of bytes sent out of UART0
+            </comment>
+        </channel>
+        <channel id="1" name="UART0_Bytes_Recv" data_type="U32">
+            <comment>
+            Number of bytes received into UART0
+            </comment>
+        </channel>
+        <channel id="2" name="UART1_Bytes_Sent" data_type="U32">
+            <comment>
+            Number of bytes sent out of UART1
+            </comment>
+        </channel>
+        <channel id="3" name="UART1_Bytes_Recv" data_type="U32">
+            <comment>
+            Number of bytes received into UART1
+            </comment>
+        </channel>
+    </telemetry>
+</component>

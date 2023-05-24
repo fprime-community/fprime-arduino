@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../fprime/Autocoders/Python/default/schema/ISF/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
+<component name="ATmegaGpioDriver" kind="passive" namespace="Drv" modeler="true">
+
+    <import_port_type>Drv/GpioDriverPorts/GpioWritePortAi.xml</import_port_type>
+    <import_port_type>Drv/GpioDriverPorts/GpioReadPortAi.xml</import_port_type>
+    <import_port_type>Fw/Time/TimePortAi.xml</import_port_type>
+    <ports>
+        <port name="gpioWrite" data_type="Drv::GpioWrite"  kind="sync_input"    max_number="1">
+        </port>
+
+        <port name="gpioRead" data_type="Drv::GpioRead"  kind="sync_input"    max_number="1">
+        </port>
+    </ports>
+
+</component>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-model href="../../../Autocoders/Python/schema/default/component_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<component name="ATmegaInternalAdcDriver" kind="passive" namespace="Drv">
+    <import_port_type>ATmega/Drv/AdcDriverPorts/AdcReadPortAi.xml</import_port_type>
+
+    <comment>ATmega Internal ADC reader component.</comment>
+    
+    <ports>
+        <port name="Read_ADC" data_type="Drv::AdcRead" kind="sync_input" max_number="8">
+            <comment>
+                Sends ADC reading to components which use them
+            </comment>
+        </port>
+    </ports>
+
+</component>

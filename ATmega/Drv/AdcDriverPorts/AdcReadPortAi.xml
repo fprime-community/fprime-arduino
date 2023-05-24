@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-model href="../../../Autocoders/Python/schema/default/interface_schema.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<interface name="AdcRead" namespace="Drv">
+   <args>
+       <arg name="adc_counts" type="U16" pass_by="reference">
+       </arg>
+   </args>
+   <return type="ENUM" pass_by="value">
+   	<enum name="AdcStatus">
+   		<item name="CONVERSION_OK" comment="conversion occured as normal"/>
+   		<item name="CONVERSION_TIMEOUT" comment="conversion took too long"/>
+   	</enum>
+   </return>
+</interface>

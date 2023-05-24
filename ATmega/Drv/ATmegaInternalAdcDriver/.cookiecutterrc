@@ -1,0 +1,34 @@
+# This file exists so you can easily regenerate your project.
+#
+# `cookiepatcher` is a convenient shim around `cookiecutter`
+# for regenerating projects (it will generate a .cookiecutterrc
+# automatically for any template). To use it:
+#
+#    pip install cookiepatcher
+#    cookiepatcher gh:sterlingpeet/cookiecutter-fprime-component ATmegaInternalAdcDriver
+#
+# See:
+#    https://pypi.org/project/cookiepatcher
+#
+# Alternatively, you can run:
+#
+#    cookiecutter --overwrite-if-exists --config-file=ATmegaInternalAdcDriver/.cookiecutterrc gh:sterlingpeet/cookiecutter-fprime-component
+
+default_context:
+
+    _template:                 'gh:SterlingPeet/cookiecutter-fprime-component'
+    component_dir_name:        'ATmegaInternalAdcDriver'
+    component_explicit_common: ''
+    component_explicit_component_suffix: 'Component'
+    component_impl_suffix:     'Impl'
+    component_kind:            'passive'
+    component_multiplatform_support: 'no'
+    component_name:            'ATmegaInternalAdcDriver'
+    component_namespace:       'Drv'
+    component_path:            'Drv'
+    component_path_to_fprime_root: '../..'
+    component_short_description: 'Reads the value from a register in the ATmega Internal ADC'
+    component_slug:            'ATmegaInternalAdcDriver'
+    email:                     'kmanchikanti6@gatech.edu'
+    full_name:                 'Kaushik Manchikanti'
+    license:                   'None'

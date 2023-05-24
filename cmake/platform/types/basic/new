@@ -1,0 +1,40 @@
+#include <stddef.h>
+#include <stdlib.h>
+
+namespace std {
+    struct nothrow_t {};
+    const nothrow_t nothrow;
+    typedef size_t size_t;
+};
+
+inline void* operator new(std::size_t size) noexcept {
+    return malloc(size);
+}
+
+inline void* operator new(std::size_t size, const std::nothrow_t&) noexcept {
+    return malloc(size); 
+}
+
+inline void* operator new [](std::size_t size, const std::nothrow_t&) noexcept {
+    return malloc(size);
+}
+
+inline void* operator new(std::size_t, void* __p) noexcept {
+    return __p;
+}
+
+inline void* operator new [](std::size_t, void* __p) noexcept {
+    return __p;
+}
+
+inline void operator delete(void* ptr) {
+    free(ptr);
+}
+
+inline void operator delete [](void* ptr) {
+    free(ptr);
+}
+
+inline void operator delete(void*, void*) noexcept { }
+
+inline void operator delete [](void*, void*) noexcept { }

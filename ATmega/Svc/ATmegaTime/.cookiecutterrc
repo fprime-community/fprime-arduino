@@ -1,0 +1,34 @@
+# This file exists so you can easily regenerate your project.
+#
+# `cookiepatcher` is a convenient shim around `cookiecutter`
+# for regenerating projects (it will generate a .cookiecutterrc
+# automatically for any template). To use it:
+#
+#    pip install cookiepatcher
+#    cookiepatcher gh:sterlingpeet/cookiecutter-fprime-component ATmegaTime
+#
+# See:
+#    https://pypi.org/project/cookiepatcher
+#
+# Alternatively, you can run:
+#
+#    cookiecutter --overwrite-if-exists --config-file=ATmegaTime/.cookiecutterrc gh:sterlingpeet/cookiecutter-fprime-component
+
+default_context:
+
+    _template:                 '../../../../cookiecutter-fprime-component'
+    component_dir_name:        'ATmegaTime'
+    component_explicit_common: ''
+    component_explicit_component_suffix: 'Component'
+    component_impl_suffix:     ''
+    component_kind:            'passive'
+    component_multiplatform_support: 'no'
+    component_name:            'ATmega Time'
+    component_namespace:       'Svc'
+    component_path:            'ATmega/Svc'
+    component_path_to_fprime_root: '../..'
+    component_short_description: 'Provides Time reference via Arduino time functions.'
+    component_slug:            'ATmegaTime'
+    email:                     'sterling.peet@ae.gatech.edu'
+    full_name:                 'Sterling Peet'
+    license:                   'None'
