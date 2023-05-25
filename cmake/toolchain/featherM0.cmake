@@ -12,8 +12,6 @@ set(CMAKE_CROSSCOMPILING 1)
 set(FPRIME_USE_BAREMETAL_SCHEDULER OFF)
 set(ARDUINO_BUILD_PROPERTIES)
 
-add_compile_definitions(USE_BASIC_TIMER)
-
 set(ARDUINO_FQBN "adafruit:samd:adafruit_feather_m0")
 # Run the base arduino setup which should detect settings!
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake")

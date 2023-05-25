@@ -1,21 +1,22 @@
 #include <FpConfig.hpp>
-#include <Fw/Types/Assert.hpp>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <Fw/Logger/Logger.hpp>
 #include <FprimeArduino.hpp>
 
 namespace Arduino {
-U32 last_ms;
+U32 last_us;
+U32 u_interval;
 
 void HardwareRateDriver::start() {
-    last_ms = micros() / 1000;
+    last_us = micros();
+    u_interval = m_interval * 1000;
 }
 
 void HardwareRateDriver::cycle() {
-    if((micros() / 1000) - last_ms >= m_interval)
+    if((micros() - last_us) >= u_interval)
     {
         this->s_timerISR();
-        last_ms += m_interval;
+        last_us += u_interval;
     }
 }
 
