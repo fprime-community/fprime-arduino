@@ -55,6 +55,7 @@ function(set_arduino_build_settings)
     # Flags for each of the tools
     read_json(ARDUINO_AR_FLAGS "${WRAPPER_OUTPUT}" flags AR)
     read_json(CMAKE_EXE_LINKER_FLAGS_INIT "${WRAPPER_OUTPUT}" flags LINKER_EXE)
+    string(REPLACE "<TARGET_PATH>.map" "link.map" CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS_INIT}")
 
     # Convert lists to the INIT " " separated format
     foreach(LIST_VARIABLE IN ITEMS
@@ -65,12 +66,11 @@ function(set_arduino_build_settings)
 
     read_json(INCLUDES "${WRAPPER_OUTPUT}" includes CXX)
     include_directories(${INCLUDES})
-    if (NOT TARGET fprime_arduino_base_libraries)
-        add_library(fprime_arduino_base_libraries INTERFACE)
-        add_dependencies(fprime_arduino_base_libraries core fprime_arduino_loose_object_library)
-        target_link_libraries(fprime_arduino_base_libraries INTERFACE core fprime_arduino_loose_object_library fprime_arduino_patcher)
+    if (NOT TARGET fprime_arduino_libraries)
+        add_library(fprime_arduino_libraries INTERFACE)
     endif()
-    link_libraries(fprime_arduino_base_libraries)
+    link_libraries(fprime_arduino_libraries)
+    link_libraries(fprime_arduino_patcher)
     # Setup misc commands
     SET(CMAKE_C_ARCHIVE_CREATE "<CMAKE_AR> ${ARDUINO_AR_FLAGS} <TARGET> <OBJECTS>")
     SET(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> ${ARDUINO_AR_FLAGS} <TARGET> <OBJECTS>")
@@ -101,6 +101,8 @@ function(target_use_arduino_libraries)
     list(APPEND ARDUINO_LIBRARY_LIST_LOCAL ${ARGN})
     list(REMOVE_DUPLICATES ARDUINO_LIBRARY_LIST_LOCAL)
     set_property(GLOBAL PROPERTY ARDUINO_LIBRARY_LIST ${ARDUINO_LIBRARY_LIST_LOCAL})
+    list(APPEND MOD_DEPS fprime_arduino_libraries)
+    set(MOD_DEPS "${MOD_DEPS}" PARENT_SCOPE)
 endfunction(target_use_arduino_libraries)
 
 ####
@@ -111,7 +113,7 @@ endfunction(target_use_arduino_libraries)
 ####
 function(setup_arduino_libraries)
     get_property(ARDUINO_LIBRARY_LIST_LOCAL GLOBAL PROPERTY ARDUINO_LIBRARY_LIST)
-    prevent_prescan(${ARDUINO_LIBRARY_LIST_LOCAL} fprime-arduino-patcher core fprime_arduino_loose_object_library)
+    prevent_prescan(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
         --properties ${ARDUINO_BUILD_PROPERTIES} -j "${ARDUINO_WRAPPER_JSON_OUTPUT}"
@@ -123,36 +125,45 @@ function(setup_arduino_libraries)
     read_json(LIBRARIES "${WRAPPER_OUTPUT}" libraries)
     read_json(OBJECTS "${WRAPPER_OUTPUT}" objects)
 
-    # Setup an extra arduino libraries
-    add_library(fprime_arduino_patcher ${EXTRA_LIBRARY_SOURCE})
-    add_library(fprime_arduino_loose_object_library OBJECT IMPORTED GLOBAL)
-    set_target_properties(fprime_arduino_loose_object_library PROPERTIES IMPORTED_OBJECTS "${OBJECTS}")
-    target_include_directories(fprime_arduino_loose_object_library INTERFACE ${INCLUDES})
+    # Setup arduino missing C/C++ function patch library
+    if (NOT TARGET fprime_arduino_patcher)
+        add_library(fprime_arduino_patcher ${EXTRA_LIBRARY_SOURCE})
+        get_target_property(TARGET_LIBRARIES fprime_arduino_patcher LINK_LIBRARIES)
+        LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_libraries)
+        LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_patcher)
+        set_property(TARGET fprime_arduino_patcher PROPERTY LINK_LIBRARIES ${TARGET_LIBRARIES})
+    endif()
+
+    # Setup  library to capture loose object files from arduino-cli compile
+    if (NOT TARGET fprime_arduino_loose_object_library)
+        add_library(fprime_arduino_loose_object_library OBJECT IMPORTED GLOBAL)
+        set_target_properties(fprime_arduino_loose_object_library PROPERTIES IMPORTED_OBJECTS "${OBJECTS}")
+        target_include_directories(fprime_arduino_loose_object_library INTERFACE ${INCLUDES})
+        target_link_libraries(fprime_arduino_libraries INTERFACE fprime_arduino_loose_object_library)
+    endif()
 
     # Import all of the libraries including core
-    list(APPEND ARDUINO_LIBRARY_LIST_LOCAL core)
-    message(STATUS "${LIBRARIES}")
-    foreach(NEEDED_LIBRARY IN LISTS ARDUINO_LIBRARY_LIST_LOCAL)
-        set(FOUND OFF)
-        foreach(BUILT_LIBRARY IN LISTS LIBRARIES)
-            ends_with(IS_NEEDLE "${BUILT_LIBRARY}" "${NEEDED_LIBRARY}.a")
-            # If a matching library was built, use it
-            if (IS_NEEDLE)
-                message(STATUS "Adding Arduino Library: ${NEEDED_LIBRARY}")
-                add_library(${NEEDED_LIBRARY} STATIC IMPORTED GLOBAL)
-                set_target_properties(${NEEDED_LIBRARY} PROPERTIES IMPORTED_LOCATION "${BUILT_LIBRARY}")
-                set(FOUND ON)
-                break()
+    foreach(BUILT_LIBRARY IN LISTS LIBRARIES)
+        string(SUBSTRING "${BUILT_LIBRARY}" 0 1 MAYBE_DASH)
+        if (MAYBE_DASH STREQUAL "-")
+            message(STATUS "Adding Arduino Library Flag: ${BUILT_LIBRARY}")
+            target_link_libraries(fprime_arduino_libraries INTERFACE ${BUILT_LIBRARY})
+        else()
+            get_filename_component(LIBRARY_BASE "${BUILT_LIBRARY}" NAME_WE)
+
+            # Add new imported library
+            if (NOT TARGET ${LIBRARY_BASE})
+                message(STATUS "Adding Arduino Library: ${LIBRARY_BASE}")
+                add_library(${LIBRARY_BASE} STATIC IMPORTED GLOBAL)
+                set_target_properties(${LIBRARY_BASE} PROPERTIES IMPORTED_LOCATION "${BUILT_LIBRARY}")
+                add_dependencies(${LIBRARY_BASE} fprime_arduino_loose_object_library)
+                target_link_libraries(${LIBRARY_BASE} INTERFACE fprime_arduino_loose_object_library)
+
+                # Setup detected dependencies to the interface library
+                add_dependencies(fprime_arduino_libraries ${LIBRARY_BASE})
+                target_link_libraries(fprime_arduino_libraries INTERFACE ${LIBRARY_BASE})
             endif()
-        endforeach()
-        # If the matching library was not found, create an interface to the object library
-        if (NOT FOUND)
-            message(STATUS "Adding Arduino Interface: ${NEEDED_LIBRARY}")
-            add_library(${NEEDED_LIBRARY} INTERFACE)
         endif()
-        # Add dependencies and header information
-        add_dependencies(${NEEDED_LIBRARY} fprime_arduino_loose_object_library)
-        target_link_libraries(${NEEDED_LIBRARY} INTERFACE fprime_arduino_loose_object_library)
     endforeach()
     set(WRAPPER_OUTPUT "${WRAPPER_OUTPUT}" PARENT_SCOPE)
 endfunction(setup_arduino_libraries)
@@ -162,32 +173,27 @@ endfunction(setup_arduino_libraries)
 #
 # Attach the arduino libraries to a given target (e.g. executable/deployment). Additionally sets up finalization steps
 # for the executable (e.g. building hex files, calculating size, etc).
-#
-# Args:
-#    TARGET_NAME: target name to setup and build a hex file
 ####
-function(finalize_arduino_executable TARGET_NAME)
+function(finalize_arduino_executable)
     setup_arduino_libraries()
     prevent_prescan()
-
     # Add link dependency on
     target_link_libraries(
-        "${TARGET_NAME}"
-        PUBLIC $<TARGET_OBJECTS:fprime_arduino_loose_object_library> fprime_arduino_patcher
+        "${FPRIME_CURRENT_MODULE}"
+        PUBLIC fprime_arduino_libraries $<TARGET_OBJECTS:fprime_arduino_loose_object_library>
     )
     read_json(POST_COMMANDS "${WRAPPER_OUTPUT}" post)
     set(COMMAND_SET_ARGUMENTS)
     foreach(COMMAND IN LISTS POST_COMMANDS)
-        string(REPLACE "<TARGET_PATH>" "$<TARGET_FILE:${TARGET_NAME}>" COMMAND_WITH_INPUT "${COMMAND}")
-        string(REPLACE "<TARGET_NAME>" "$<TARGET_FILE_NAME:${TARGET_NAME}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
-        string(REPLACE "<TARGET_DIRECTORY>" "$<TARGET_FILE_DIR:${TARGET_NAME}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
+        string(REPLACE "<TARGET_PATH>" "$<TARGET_FILE:${FPRIME_CURRENT_MODULE}>" COMMAND_WITH_INPUT "${COMMAND}")
+        string(REPLACE "<TARGET_NAME>" "$<TARGET_FILE_NAME:${FPRIME_CURRENT_MODULE}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
+        string(REPLACE "<TARGET_DIRECTORY>" "$<TARGET_FILE_DIR:${FPRIME_CURRENT_MODULE}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
         string(REPLACE " " ";" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
-        list(APPEND COMMAND_SET_ARGUMENTS COMMAND ${COMMAND_WITH_INPUT})
+        list(APPEND COMMAND_SET_ARGUMENTS COMMAND ${COMMAND_WITH_INPUT} || true)
     endforeach()
-    message(STATUS ">>>>>${COMMAND_SET_ARGUMENTS}")
-    list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "copy_if_different" "$<TARGET_FILE:${TARGET_NAME}>*" "${CMAKE_INSTALL_PREFIX}/${TOOLCHAIN_NAME}/bin")
+    list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "copy_if_different" "$<TARGET_FILE:${FPRIME_CURRENT_MODULE}>*" "${CMAKE_INSTALL_PREFIX}/${TOOLCHAIN_NAME}/${FPRIME_CURRENT_MODULE}/bin")
     add_custom_command(
-        TARGET "${TARGET_NAME}" POST_BUILD ${COMMAND_SET_ARGUMENTS}
+        TARGET "${FPRIME_CURRENT_MODULE}" POST_BUILD ${COMMAND_SET_ARGUMENTS}
     )
 endfunction(finalize_arduino_executable)
 

@@ -29,7 +29,6 @@ function(ends_with OUTPUT_VAR STRING SUFFIX)
     endif()
 endfunction(ends_with)
 
-
 ####
 # Function `run_arduino_wrapper`:
 #

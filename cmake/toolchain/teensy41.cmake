@@ -14,5 +14,6 @@ set(ARDUINO_BUILD_PROPERTIES)
 
 # Teensy 40 is used to compile for the teensy 4.1 board
 set(ARDUINO_FQBN "teensy:avr:teensy41")
+add_compile_options(-DFPRIME_ARUDINO_SYNTHETIC_WRITE -DFPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW)
 # Run the base arduino setup which should detect settings!
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake")
