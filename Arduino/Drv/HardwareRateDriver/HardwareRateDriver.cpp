@@ -28,8 +28,12 @@ void HardwareRateDriver::s_timer(void* comp) {
     Svc::TimerVal now;
     now.take();
 #ifdef ARDUINO
-    __enable_irq(); //sei();  // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
-#endif
+#ifdef FREERTOS
+    sei();  // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
+#else
+    __enable_irq(); // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
+#endif // FREERTOS
+#endif // ARDUINO
     HardwareRateDriver* driver = reinterpret_cast<HardwareRateDriver*>(comp);
     // Check if it is time to run the group
     if(driver->isConnected_CycleOut_OutputPort(0))
