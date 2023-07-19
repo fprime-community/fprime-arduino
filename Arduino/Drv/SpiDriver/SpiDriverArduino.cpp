@@ -8,10 +8,11 @@
 #include <Arduino/Drv/SpiDriver/SpiDriver.hpp>
 #include <FpConfig.hpp>
 #include "Fw/Types/Assert.hpp"
+#include <FprimeArduino.hpp>
 
 namespace Arduino {
 
-  void SpiDriver::open(SPIClass *spi, SpiFrequency clock, SpiMode spiMode)
+  void SpiDriver::open(SPIClass *spi, SpiFrequency clock, NATIVE_INT_TYPE ss_pin, SpiMode spiMode, SpiBitOrder bitOrder)
   {
     FW_ASSERT(spi != nullptr);
 
@@ -36,9 +37,12 @@ namespace Arduino {
     }
 
     this->m_port_pointer = spi;
-    this->clock = clock;
-    this->spiMode = spiMode;
+    this->m_clock = clock;
+    this->m_spiMode = mode;
+    this->m_ss_pin = ss_pin;
+    this->m_bitOrder = bitOrder;
 
+    pinMode(m_ss_pin, Arduino::DEF_OUTPUT);
     spi->begin();
   }
 
@@ -55,9 +59,18 @@ namespace Arduino {
     FW_ASSERT(m_port_pointer != 0);
     SPIClass* spi_ptr = reinterpret_cast<SPIClass*>(m_port_pointer);
 
-    spi_ptr->beginTransaction(SPISettings(this->clock, MSBFIRST, this->spiMode));
-    spi_ptr->transfer(reinterpret_cast<U8*>(writeBuffer.getData()), reinterpret_cast<U8*>(readBuffer.getData()), writeBuffer.getSize());
+    if(this->m_bitOrder == SpiBitOrder::SPI_MSB_FIRST)
+      spi_ptr->beginTransaction(SPISettings(this->m_clock, MSBFIRST, this->m_spiMode));
+    else
+      spi_ptr->beginTransaction(SPISettings(this->m_clock, LSBFIRST, this->m_spiMode));
+
+    digitalWrite(m_ss_pin, Arduino::DEF_LOW);
+    spi_ptr->transfer(reinterpret_cast<U8*>(writeBuffer.getData()), writeBuffer.getSize());
+    digitalWrite(m_ss_pin, Arduino::DEF_HIGH);
+
     spi_ptr->endTransaction();
+
+    memcpy(readBuffer.getData(), writeBuffer.getData(), writeBuffer.getSize());
   }
 
 } // end namespace Arduino

@@ -10,6 +10,13 @@
 #include "Arduino/Drv/SpiDriver/SpiDriverComponentAc.hpp"
 #include <SPI.h>
 
+#ifdef SPI_MSBFIRST
+#define MSBFIRST SPI_MSBFIRST
+#endif
+#ifdef SPI_LSBFIRST
+#define LSBFIRST SPI_LSBFIRST
+#endif
+
 namespace Arduino {
 
   class SpiDriver :
@@ -34,6 +41,12 @@ namespace Arduino {
         SPI_MODE_CPOL_HIGH_CPHA_HIGH, ///< (CPOL = 1, CPHA = 1)
       };
 
+      enum SpiBitOrder
+      {
+        SPI_LSB_FIRST,
+        SPI_MSB_FIRST,
+      };
+
       // ----------------------------------------------------------------------
       // Construction, initialization, and destruction
       // ----------------------------------------------------------------------
@@ -48,7 +61,7 @@ namespace Arduino {
       //!
       ~SpiDriver();
 
-      void open(SPIClass *spi, SpiFrequency clock, SpiMode spiMode = SpiMode::SPI_MODE_CPOL_LOW_CPHA_LOW);
+      void open(SPIClass *spi, SpiFrequency clock, NATIVE_INT_TYPE ss_pin, SpiMode spiMode = SpiMode::SPI_MODE_CPOL_LOW_CPHA_LOW, SpiBitOrder bitOrder = SpiBitOrder::SPI_MSB_FIRST);
       void close();
 
     PRIVATE:
@@ -70,8 +83,10 @@ namespace Arduino {
 
       //! Stores the open SPI port, POINTER_CAST so Linux and Ardunio may use different types
       void* m_port_pointer;
-      SpiFrequency clock;
-      SpiMode spiMode;
+      SpiFrequency m_clock;
+      NATIVE_INT_TYPE m_ss_pin;
+      U8 m_spiMode;
+      SpiBitOrder m_bitOrder;
 
     };
 

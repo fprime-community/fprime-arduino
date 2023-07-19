@@ -10,7 +10,7 @@
 
 namespace Arduino {
 
-  void SpiDriver::open(SPIClass *spi, SpiFrequency clock, SpiMode spiMode)
+  void SpiDriver::open(SPIClass *spi, SpiFrequency clock, NATIVE_INT_TYPE ss_pin, SpiMode spiMode, SpiBitOrder bitOrder)
   {
 
   }
