@@ -138,7 +138,7 @@ function(setup_arduino_libraries)
     if (NOT TARGET fprime_arduino_loose_object_library)
         add_library(fprime_arduino_loose_object_library OBJECT IMPORTED GLOBAL)
         set_target_properties(fprime_arduino_loose_object_library PROPERTIES IMPORTED_OBJECTS "${OBJECTS}")
-        target_include_directories(fprime_arduino_loose_object_library INTERFACE ${INCLUDES})
+        target_include_directories(fprime_arduino_libraries INTERFACE ${INCLUDES})
         target_link_libraries(fprime_arduino_libraries INTERFACE fprime_arduino_loose_object_library)
     endif()
 
