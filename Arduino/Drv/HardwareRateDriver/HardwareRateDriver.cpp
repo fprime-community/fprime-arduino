@@ -28,7 +28,7 @@ void HardwareRateDriver::s_timer(void* comp) {
     Svc::TimerVal now;
     now.take();
 #ifdef ARDUINO
-#ifdef FREERTOS
+#if defined(FREERTOS) || defined(ATMEGA)
     sei();  // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
 #else
     __enable_irq(); // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
