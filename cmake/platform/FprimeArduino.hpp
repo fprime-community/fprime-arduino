@@ -5,7 +5,11 @@
 // ======================================================================
 #ifndef ARDUINOBLINK_FPRIMEARDUINO_HPP
 #define ARDUINOBLINK_FPRIMEARDUINO_HPP
+#undef DEPRECATED // Undefine in preparation for arduino's definition
 #include <Arduino.h>
+#undef DEPRECATED // Undefine arduino's definitions
+#define DEPRECATED(X,Y)
+
 /**
  * Arduino.h often uses #define constants to setup values like HIGH and LOW. This means that other tokens that contain
  * these #define constants get clobbered by the preprocessor. This remap pulls these tokens into enumeration constants,
