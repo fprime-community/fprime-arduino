@@ -16,7 +16,7 @@ void HardwareRateDriver::cycle() {
     if((micros() - last_us) >= interval_us)
     {
         this->s_timerISR();
-        last_us += m_interval;
+        last_us += interval_us;
     }
 }
 
