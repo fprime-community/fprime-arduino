@@ -8,16 +8,16 @@
  *
  * @author lestarch
  */
-#include <Arduino/ArduinoTime/ArduinoTimeImpl.hpp>
+#include <Arduino/ArduinoTime/ArduinoTime.hpp>
 #include <Fw/Time/Time.hpp>
 #include <FprimeArduino.hpp>
 
-namespace Svc {
+namespace Arduino {
 
-    ArduinoTimeImpl::ArduinoTimeImpl(const char* name) : TimeComponentBase(name) {} 
-    ArduinoTimeImpl::~ArduinoTimeImpl() {}
+    ArduinoTime::ArduinoTime(const char* name) : ArduinoTimeComponentBase(name) {} 
+    ArduinoTime::~ArduinoTime() {}
 
-    void ArduinoTimeImpl::timeGetPort_handler(
+    void ArduinoTime::timeGetPort_handler(
         NATIVE_INT_TYPE portNum, /*!< The port number*/
         Fw::Time &time /*!< The time to set */
     ) {
@@ -26,7 +26,7 @@ namespace Svc {
         time.set(msec/1000, usec);
     }
 
-    void ArduinoTimeImpl::init(NATIVE_INT_TYPE instance) {
-        TimeComponentBase::init(instance);
+    void ArduinoTime::init(NATIVE_INT_TYPE instance) {
+        ArduinoTimeComponentBase::init(instance);
     }
 }
