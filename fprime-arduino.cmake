@@ -1,4 +1,4 @@
-restrict_platforms(ArduinoFw)
+restrict_platforms(Generic)
 
 starts_with(IS_ESP32 "${ARDUINO_FQBN}" "esp32")
 starts_with(IS_RP2040 "${ARDUINO_FQBN}" "rp2040")
