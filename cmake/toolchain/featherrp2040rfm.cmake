@@ -4,10 +4,9 @@
 # RP2040 support.
 ####
 # System setup for Teensyduino
-set(CMAKE_SYSTEM_NAME "Generic")
+set(CMAKE_SYSTEM_NAME "ArduinoFw")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
-set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
 
 set(ARDUINO_FQBN "rp2040:rp2040:adafruit_feather_rfm")

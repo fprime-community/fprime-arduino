@@ -6,10 +6,9 @@
 # toolchain will build the core Teensy Arduino libraries, and include the headers as part of the target include headers.
 ####
 # System setup for Teensyduino
-set(CMAKE_SYSTEM_NAME "Generic")
+set(CMAKE_SYSTEM_NAME "ArduinoFw")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
-set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
 set(ARDUINO_BUILD_PROPERTIES)
 
