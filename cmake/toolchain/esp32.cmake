@@ -3,6 +3,9 @@
 #
 # ESP32 Dev Module support.
 ####
+set(CMAKE_CXX_STANDARD 20)
+add_compile_options(-std=c++20 -std=gnu++20) # Force C++20 standard
+
 set(CMAKE_SYSTEM_NAME "ArduinoFw")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)

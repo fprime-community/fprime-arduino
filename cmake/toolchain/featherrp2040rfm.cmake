@@ -1,9 +1,11 @@
 ####
-# thingplusrp2040.cmake:
+# featherrp2040rfm.cmake:
 #
 # RP2040 support.
 ####
-# System setup for Teensyduino
+set(CMAKE_CXX_STANDARD 17)
+add_compile_options(-std=c++17 -std=gnu++17) # Force C++17 standard
+
 set(CMAKE_SYSTEM_NAME "ArduinoFw")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
