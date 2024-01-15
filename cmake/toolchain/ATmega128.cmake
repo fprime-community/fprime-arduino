@@ -8,9 +8,10 @@
 
 
 # System setup for MegaCore
-set(CMAKE_SYSTEM_NAME "ArduinoFw")
+set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_SYSTEM_PROCESSOR "avr")
 set(CMAKE_CROSSCOMPILING 1)
+set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
 # set(ARDUINO_LIBRARIES "SPI.h" "Wire.h" "TimerOne.h")
 # set(ARDUINO_BUILD_PROPERTIES "build.extra_flags=-DTIMER1_A_PIN=13 -DTIMSK1=TIMSK")
