@@ -6,14 +6,9 @@
 #
 # Note: using PROJECT_NAME as EXECUTABLE_NAME
 ####
-if(FPRIME_ARDUINO)
-  set(SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/ArduinoTimeImpl.cpp")
-else()
-  set(SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/LinuxTimeImpl.cpp")
-endif()
-
-set(MOD_DEPS
-  Svc/Time
+set(SOURCE_FILES
+  "${CMAKE_CURRENT_LIST_DIR}/ArduinoTime.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/ArduinoTime.cpp"
 )
 
 register_fprime_module()

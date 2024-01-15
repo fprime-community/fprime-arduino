@@ -14,6 +14,6 @@ set(ARDUINO_BUILD_PROPERTIES)
 
 # Teensy 31 is used to compile for the teensy 3.2 board
 set(ARDUINO_FQBN "teensy:avr:teensy31")
-add_compile_options(-DFPRIME_ARUDINO_SYNTHETIC_WRITE -DFPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW)
+add_compile_options(-D_BOARD_TEENSY32 -DFPRIME_ARUDINO_SYNTHETIC_WRITE -DFPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW)
 # Run the base arduino setup which should detect settings!
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake")
