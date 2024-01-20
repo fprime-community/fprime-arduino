@@ -6,14 +6,15 @@
 # toolchain will build the core Teensy Arduino libraries, and include the headers as part of the target include headers.
 ####
 # System setup for Teensyduino
-set(CMAKE_SYSTEM_NAME "ArduinoFw")
+set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
+set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
 set(ARDUINO_BUILD_PROPERTIES)
 
 # Teensy 40 is used to compile for the teensy 4.1 board
 set(ARDUINO_FQBN "teensy:avr:teensy41")
-add_compile_options(-DFPRIME_ARUDINO_SYNTHETIC_WRITE -DFPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW)
+add_compile_options(-D_BOARD_TEENSY41 -DFPRIME_ARUDINO_SYNTHETIC_WRITE -DFPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW)
 # Run the base arduino setup which should detect settings!
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake")
