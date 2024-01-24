@@ -53,6 +53,11 @@ arduino-cli core install rp2040:rp2040
 ```
 
 ## Library Dependencies
+Required Dependencies:
+```shell
+arduino-cli lib install Time
+```
+
 If you will be using the `TcpClient` component, install:
 ```shell
 arduino-cli lib install WiFi
