@@ -2,6 +2,7 @@
 #define ARDUINOTIMEIMPL_HPP_
 
 #include <Arduino/ArduinoTime/ArduinoTimeComponentAc.hpp>
+#include <TimeLib.h>
 
 namespace Arduino {
 

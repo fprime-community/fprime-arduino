@@ -21,9 +21,10 @@ namespace Arduino {
         NATIVE_INT_TYPE portNum, /*!< The port number*/
         Fw::Time &time /*!< The time to set */
     ) {
-        U32 msec = millis();
-        U32 usec = micros();
-        time.set(msec/1000, usec);
+        time_t sec = now();
+        U32 msec = sec * 1000;
+        U32 usec = msec * 1000;
+        time.set(sec, usec);
     }
 
     void ArduinoTime::init(NATIVE_INT_TYPE instance) {

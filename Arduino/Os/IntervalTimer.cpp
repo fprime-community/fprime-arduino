@@ -3,6 +3,7 @@
 #include <time.h>
 #include <errno.h>
 #include <string.h>
+#include <TimeLib.h>
 #include <FprimeArduino.hpp>
 
 namespace Os {
@@ -16,11 +17,11 @@ namespace Os {
     }*/
 
     void IntervalTimer::getRawTime(RawTime& time) {
-        U32 msec = millis();
-        U32 usec = micros();
+        time_t sec = now();
+        U32 msec = sec * 1000;
 
-        time.upper = msec/1000;
-        time.lower = usec;
+        time.upper = msec / 1000;
+        time.lower = msec * 1000;
     }
 
     // Adapted from: http://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html

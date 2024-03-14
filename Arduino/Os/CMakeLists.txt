@@ -43,6 +43,7 @@ if (FPRIME_ARDUINO)
         "${CMAKE_CURRENT_LIST_DIR}/IntervalTimer.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/StreamLog.cpp"
     )
+    target_use_arduino_libraries("TimeLib")
     register_fprime_module()
 endif()
 

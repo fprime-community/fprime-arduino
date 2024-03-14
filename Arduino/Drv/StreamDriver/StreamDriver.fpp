@@ -15,7 +15,7 @@ module Arduino {
     output port deallocate: Fw.BufferSend
 
     @ Takes data to transmit out the UART device
-    guarded input port send: Drv.ByteStreamSend
+    guarded input port $send: Drv.ByteStreamSend
 
     @ Takes data to transmit out the UART device
     output port $recv: Drv.ByteStreamRecv
