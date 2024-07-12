@@ -5,6 +5,9 @@
 # Arduino framework in order to ensure that basic functions of the Teensy hardware platform are available. This
 # toolchain will build the core Teensy Arduino libraries, and include the headers as part of the target include headers.
 ####
+set(CMAKE_CXX_STANDARD 17)
+add_compile_options(-std=c++17 -std=gnu++17) # Force C++17 standard
+
 # System setup for Teensyduino
 set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
