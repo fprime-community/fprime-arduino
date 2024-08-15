@@ -64,6 +64,11 @@ function(set_arduino_build_settings)
         string(REPLACE ";" " " "${LIST_VARIABLE}" "${${LIST_VARIABLE}}")
     endforeach()
 
+    # Add additional linker flags if provided
+    if (ARDUINO_LINKER_FLAGS)
+        string(APPEND CMAKE_EXE_LINKER_FLAGS_INIT " ${ARDUINO_LINKER_FLAGS}")
+    endif()
+
     read_json(INCLUDES "${WRAPPER_OUTPUT}" includes CXX)
     include_directories(${INCLUDES})
     if (NOT TARGET fprime_arduino_libraries)
