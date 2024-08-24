@@ -6,11 +6,12 @@
  *  Modified April 2012 by Paul Stoffregen - portable to other AVR chips, use inline functions
  *  Modified again, June 2014 by Paul Stoffregen - support Teensy 3.x & even more AVR chips
  *  Modified July 2017 by Stoyko Dimitrov - added support for ATTiny85 except for the PWM functionality
- *
+ *  Modified August 2024 by Nathan Cheek - added support for ATmega128
+ *  
  *
  *  This is free software. You can redistribute it and/or modify it under
- *  the terms of Creative Commons Attribution 3.0 United States License.
- *  To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/us/
+ *  the terms of Creative Commons Attribution 3.0 United States License. 
+ *  To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/us/ 
  *  or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
  *
  */
@@ -52,7 +53,7 @@ class TimerOne
 	TIMSK |= _BV(OCIE1A);           //enable interrupt when OCR1A matches the timer value
 	setPeriod(microseconds);
     }
-    void setPeriod(unsigned long microseconds) __attribute__((always_inline)) {
+    void setPeriod(unsigned long microseconds) __attribute__((always_inline)) {		
 	const unsigned long cycles = microseconds * ratio;
 	if (cycles < TIMER1_RESOLUTION) {
 		clockSelectBits = _BV(CS10);
@@ -121,13 +122,13 @@ class TimerOne
 	OCR1C = pwmPeriod;
 	TCCR1 = _BV(CTC1) | clockSelectBits;
     }
-
+	
     //****************************
     //  Run Control
-    //****************************
+    //****************************	
     void start() __attribute__((always_inline)) {
 	TCCR1 = 0;
-	TCNT1 = 0;
+	TCNT1 = 0;		
 	resume();
     }
     void stop() __attribute__((always_inline)) {
@@ -139,13 +140,13 @@ class TimerOne
     void resume() __attribute__((always_inline)) {
 	TCCR1 = _BV(CTC1) | clockSelectBits;
     }
-
+	
     //****************************
     //  PWM outputs
     //****************************
 	//Not implemented yet for ATTiny85
 	//TO DO
-
+	
     //****************************
     //  Interrupt Function
     //****************************
@@ -168,21 +169,21 @@ class TimerOne
     static unsigned short pwmPeriod;
     static unsigned char clockSelectBits;
     static const byte ratio = (F_CPU)/ ( 1000000 );
-
+	
 #elif defined(__AVR__)
 
 #if defined (__AVR_ATmega8__) || defined (__AVR_ATmega128__)
   //in some io definitions for older microcontrollers TIMSK is used instead of TIMSK1
   #define TIMSK1 TIMSK
 #endif
-
+	
   public:
     //****************************
     //  Configuration
     //****************************
     void initialize(unsigned long microseconds=1000000) __attribute__((always_inline)) {
 	TCCR1B = _BV(WGM13);        // set mode as phase and frequency correct pwm, stop the timer
-	TCCR1A = 0;                 // clear control register A
+	TCCR1A = 0;                 // clear control register A 
 	setPeriod(microseconds);
     }
     void setPeriod(unsigned long microseconds) __attribute__((always_inline)) {
@@ -275,15 +276,14 @@ class TimerOne
     //****************************
     //  Interrupt Function
     //****************************
-
+	
     void attachInterrupt(void (*isr)()) __attribute__((always_inline)) {
 	isrCallback = isr;
-	
 	#if defined(__AVR_ATmega128__)
-		TIMSK1 |= _BV(TOIE1);
-		TIMSK1 &= ~(_BV(TICIE1) | _BV(OCIE1A) | _BV(OCIE1B));
+	TIMSK1 |= _BV(TOIE1);
+	TIMSK1 &= ~(_BV(TICIE1) | _BV(OCIE1A) | _BV(OCIE1B));
 	#else
-		TIMSK1 = _BV(TOIE1);
+	TIMSK1 = _BV(TOIE1);
 	#endif
     }
     void attachInterrupt(void (*isr)(), unsigned long microseconds) __attribute__((always_inline)) {
@@ -291,10 +291,10 @@ class TimerOne
 	attachInterrupt(isr);
     }
     void detachInterrupt() __attribute__((always_inline)) {
-    #if defined(__AVR_ATmega128__)
-		TIMSK1 &= ~(_BV(TOIE1) | _BV(TICIE1) | _BV(OCIE1A) | _BV(OCIE1B));
+	#if defined(__AVR_ATmega128__)
+	TIMSK1 &= ~(_BV(TOIE1) | _BV(TICIE1) | _BV(OCIE1A) | _BV(OCIE1B));
 	#else
-		TIMSK1 = 0;
+	TIMSK1 = 0;
 	#endif
     }
     static void (*isrCallback)();
@@ -339,10 +339,10 @@ class TimerOne
   // This is like a binary serch tree and no more than 3 conditions are evaluated.
   // I haven't checked if this becomes significantly longer ASM than the simple ladder.
   // It looks very similar to the ladder tho: same # of if's and else's
-
+ 
   /*
   // This code does not work properly in all cases :(
-  // https://github.com/PaulStoffregen/TimerOne/issues/17
+  // https://github.com/PaulStoffregen/TimerOne/issues/17 
   if (cycles < TIMER1_RESOLUTION * 16) {
     if (cycles < TIMER1_RESOLUTION * 4) {
       if (cycles < TIMER1_RESOLUTION) {
