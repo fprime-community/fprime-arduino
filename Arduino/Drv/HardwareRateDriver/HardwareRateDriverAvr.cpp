@@ -1,7 +1,7 @@
 #include <Fw/Types/BasicTypes.hpp>
 #include <ATmega/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <Arduino.h>
-#include <TimerOne.h>
+#include <ATmega/vendor/libraries/TimerOne/TimerOne.h>
 
 namespace Arduino {
 
