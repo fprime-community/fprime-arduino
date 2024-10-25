@@ -22,7 +22,7 @@ set(MOD_DEPS
 # layer to take advantage of all functions of F prime (threaded components included) while still
 # not using an OS. It is experimental technology, but it should work.
 ####
-if (FPRIME_ARDUINO)
+if (FPRIME_ARDUINO_YOLO)
     set(SOURCE_FILES
         # Common implementations
         "${FPRIME_FRAMEWORK_PATH}/Os/TaskCommon.cpp"
@@ -60,7 +60,7 @@ endif()
 # depend on one another forming a (weak) circular dependency. This is allowed in CMake 3.13 and
 # newer.
 ####
-if (FPRIME_ARDUINO)
+if (FPRIME_ARDUINO_YOLO)
     add_dependencies(Os Arduino_Os)
     target_link_libraries(Os PRIVATE Arduino_Os)
     target_link_libraries(Arduino_Os PUBLIC Os)

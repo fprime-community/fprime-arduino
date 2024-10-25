@@ -9,7 +9,7 @@ int _write( int handle, char *buf, int count) {
         output[i] = buf[i];
     }
     output[count] = '\0';
-    Fw::Logger::logMsg(output);
+    Fw::Logger::log(output);
     return count;
 }
 };

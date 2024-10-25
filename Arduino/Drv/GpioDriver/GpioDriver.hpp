@@ -46,13 +46,13 @@ class GpioDriver : public GpioDriverComponentBase {
 
     //! Handler implementation for gpioRead
     //!
-    void gpioRead_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                          Fw::Logic& state);
+    Drv::GpioStatus gpioRead_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
+                                     Fw::Logic& state);
 
     //! Handler implementation for gpioWrite
     //!
-    void gpioWrite_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                           const Fw::Logic& state);
+    Drv::GpioStatus gpioWrite_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
+                                      const Fw::Logic& state);
 
     //! device direction
     PlatformIntType m_pin;

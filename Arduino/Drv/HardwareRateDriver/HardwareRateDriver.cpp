@@ -21,8 +21,8 @@ void HardwareRateDriver::configure(U32 intervalMs) {
 }
 
 void HardwareRateDriver::s_timer(void* comp) {
-    Svc::TimerVal now;
-    now.take();
+    Os::RawTime now;
+    now.now();
     interrupts();  // Enable interrupts so UART RX interrupt handler can receive incoming bytes during remainder of this ISR
     HardwareRateDriver* driver = reinterpret_cast<HardwareRateDriver*>(comp);
     // Check if it is time to run the group
