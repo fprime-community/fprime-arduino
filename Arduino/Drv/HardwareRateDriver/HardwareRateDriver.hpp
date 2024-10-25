@@ -1,6 +1,6 @@
 #ifndef ARDUINO_DRV_HARDWARERATEDRIVER_HPP
 #define ARDUINO_DRV_HARDWARERATEDRIVER_HPP
-#include <Svc/Cycle/TimerVal.hpp>
+#include <Os/RawTime.hpp>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriverComponentAc.hpp>
 
 namespace Arduino {
@@ -14,13 +14,13 @@ namespace Arduino {
         public:
             /**
              * Construct the rate driver. Takes in a name (if configured) and a
-             * rate at which to drive.
+             * rate at witch to drive.
              * \param const char* compName: name of the component (only supply if configured)
              */
             HardwareRateDriver(const char* compName);
 
             /**
-             * Configure this component with the interval time in milliseconds.
+             * Configure theis component with the interval time in milliseconds.
              * \param U32 intervalMs: interval to ping in milliseconds
              */
             void configure(U32 intervalMs);
@@ -47,7 +47,7 @@ namespace Arduino {
             U32 m_interval;
         private:
             //!< Last time of run
-            Svc::TimerVal m_last;
+            Os::RawTime m_last;
             //!< Pointer to the driver
             static HardwareRateDriver* s_driver;
             //!< Static callback to the ISR triggered via a timer

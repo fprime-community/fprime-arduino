@@ -22,11 +22,20 @@ typedef uint32_t PlatformUIntType;
 typedef PlatformIntType PlatformIndexType;
 #define PRI_PlatformIndexType PRI_PlatformIntType
 
+typedef PlatformIndexType PlatformSignedSizeType;
+#define PRI_PlatformSignedSizeType PRI_PlatformIndexType
+
 typedef PlatformUIntType PlatformSizeType;
 #define PRI_PlatformSizeType PRI_PlatformUIntType
 
 typedef PlatformIntType PlatformAssertArgType;
 #define PRI_PlatformAssertArgType PRI_PlatformIntType
+
+typedef PlatformIntType PlatformTaskPriorityType;
+#define PRI_PlatformTaskPriorityType PRI_PlatformIntType
+
+typedef PlatformIntType PlatformQueuePriorityType;
+#define PRI_PlatformQueuePriorityType PRI_PlatformIntType
 
 #ifndef PLATFORM_POINTER_CAST_TYPE_DEFINED
   // Check for __SIZEOF_POINTER__ or cause error
