@@ -77,7 +77,7 @@ endfunction(run_arduino_wrapper)
 ###
 # Function `read_json`:
 #
-# A wrapper to help read JOSN data as native-cmake types.
+# A wrapper to help read JSON data as native-cmake types.
 #
 # Args:
 #  VARIABLE_NAME: variable to set

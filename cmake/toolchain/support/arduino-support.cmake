@@ -40,7 +40,7 @@ function(set_arduino_build_settings)
     # If it was not found, generate it
     if (NOT FOUND_LOCATION)
         set(FOUND_LOCATION "${ARDUINO_WRAPPER_JSON_OUTPUT}")
-        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} -j "${FOUND_LOCATION}")
+        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} "--board-options" ${ARDUINO_BOARD_OPTIONS} -j "${FOUND_LOCATION}")
     endif()
     file(READ "${FOUND_LOCATION}" WRAPPER_OUTPUT)
     # Compilers detection
@@ -63,6 +63,11 @@ function(set_arduino_build_settings)
             ARDUINO_AR_FLAGS CMAKE_EXE_LINKER_FLAGS_INIT)
         string(REPLACE ";" " " "${LIST_VARIABLE}" "${${LIST_VARIABLE}}")
     endforeach()
+
+    # Add additional linker flags if provided
+    if (ARDUINO_LINKER_FLAGS)
+        string(APPEND CMAKE_EXE_LINKER_FLAGS_INIT " ${ARDUINO_LINKER_FLAGS}")
+    endif()
 
     read_json(INCLUDES "${WRAPPER_OUTPUT}" includes CXX)
     include_directories(${INCLUDES})
@@ -116,7 +121,9 @@ function(setup_arduino_libraries)
     prevent_prescan(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
-        --properties ${ARDUINO_BUILD_PROPERTIES} -j "${ARDUINO_WRAPPER_JSON_OUTPUT}"
+        --properties ${ARDUINO_BUILD_PROPERTIES}
+        --board-options ${ARDUINO_BOARD_OPTIONS}
+        -j "${ARDUINO_WRAPPER_JSON_OUTPUT}"
         --generate-code
         --libraries ${ARDUINO_LIBRARY_LIST_LOCAL}
     )
@@ -134,7 +141,7 @@ function(setup_arduino_libraries)
         set_property(TARGET fprime_arduino_patcher PROPERTY LINK_LIBRARIES ${TARGET_LIBRARIES})
     endif()
 
-    # Setup  library to capture loose object files from arduino-cli compile
+    # Setup library to capture loose object files from arduino-cli compile
     if (NOT TARGET fprime_arduino_loose_object_library)
         add_library(fprime_arduino_loose_object_library OBJECT IMPORTED GLOBAL)
         set_target_properties(fprime_arduino_loose_object_library PROPERTIES IMPORTED_OBJECTS "${OBJECTS}")
