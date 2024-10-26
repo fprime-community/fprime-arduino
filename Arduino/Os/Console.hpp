@@ -16,7 +16,14 @@ namespace Console {
 //! ConsoleHandle class definition for Arduino implementations.
 //!
 struct ArduinoConsoleHandle : public ConsoleHandle {
-    Stream* m_stream = &Serial;
+    Stream* m_stream = nullptr;
+
+  public:
+    /**
+     * Sets the global m_stream arduino stream used to log Arudino messages through a hardware "Stream"
+     * like UART or I2C.
+     */
+    void setOutputStream(Stream* stream);
 };
 
 //! \brief Arduino implementation of Os::ConsoleInterface
@@ -60,12 +67,6 @@ class ArduinoConsole : public ConsoleInterface {
     //! \return raw console handle
     //!
     ConsoleHandle* getHandle() override;
-
-    /**
-     * Sets the global m_stream arduino stream used to log Arudino messages through a hardware "Stream"
-     * like UART or I2C.
-     */
-    void setOutputStream(Stream* stream);
 
   private:
     //! File handle for PosixFile

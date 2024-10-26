@@ -8,12 +8,12 @@ namespace Os {
 namespace Arduino {
 namespace Console {
 
-void ArduinoConsole::setOutputStream(Stream* stream) {
-    this->m_handle.m_stream = stream;
+void ArduinoConsoleHandle::setOutputStream(Stream* stream) {
+    this->m_stream = stream;
 }
 
 void ArduinoConsole::writeMessage(const CHAR* message, const FwSizeType size) {
-    if (this->m_handle.m_stream == NULL) {
+    if (this->m_handle.m_stream == nullptr) {
         return;
     }
 
