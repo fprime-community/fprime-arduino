@@ -1,6 +1,6 @@
 // ======================================================================
-// \title Os/Stub/Console.cpp
-// \brief stub implementation for Os::Console
+// \title Arduino/Os/Console.cpp
+// \brief Arduino implementation for Os::Console
 // ======================================================================
 #include <Arduino/Os/Console.hpp>
 
@@ -14,7 +14,6 @@ void ArduinoConsole::setOutputStream(Stream* stream) {
 }
 
 void ArduinoConsole::writeMessage(const CHAR *message, const FwSizeType size) {
-    Serial.println("test");
     if (this->m_handle.m_stream == NULL) {
         return;
     }

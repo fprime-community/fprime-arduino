@@ -8,6 +8,8 @@
 restrict_platforms(ArduinoFw)
 add_custom_target("${FPRIME_CURRENT_MODULE}")
 
+# add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/TaskRunner/")
+
 # -----------------------------------------
 ## Shared Section
 # -----------------------------------------
@@ -23,3 +25,5 @@ register_fprime_module(Os_Arduino_Shared)
 
 # Set up Arduino implementations
 add_fprime_supplied_os_module(Console Arduino)
+add_fprime_supplied_os_module(Task Arduino)
+add_fprime_supplied_os_module("Mutex;ConditionVariable" Arduino)

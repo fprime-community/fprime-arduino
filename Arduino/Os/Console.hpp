@@ -1,12 +1,12 @@
 // ======================================================================
-// \title Os/Stub/Console.hpp
-// \brief stub implementation for Os::Console, header and test definitions
+// \title Arduino/Os/Console.hpp
+// \brief Arduino implementation for Os::Console, header and test definitions
 // ======================================================================
 #include <cstdio>
 #include <Os/Console.hpp>
 #include <FprimeArduino.hpp>
-#ifndef OS_Stub_Console_HPP
-#define OS_Stub_Console_HPP
+#ifndef OS_Arduino_Console_HPP
+#define OS_Arduino_Console_HPP
 
 namespace Os {
 namespace Arduino {
