@@ -9,25 +9,24 @@
  * @author lestarch
  */
 #include <Arduino/ArduinoTime/ArduinoTime.hpp>
-#include <Fw/Time/Time.hpp>
 #include <FprimeArduino.hpp>
 
 namespace Arduino {
 
-    ArduinoTime::ArduinoTime(const char* name) : ArduinoTimeComponentBase(name) {} 
-    ArduinoTime::~ArduinoTime() {}
+ArduinoTime::ArduinoTime(const char* name) : ArduinoTimeComponentBase(name) {}
+ArduinoTime::~ArduinoTime() {}
 
-    void ArduinoTime::timeGetPort_handler(
-        NATIVE_INT_TYPE portNum, /*!< The port number*/
-        Fw::Time &time /*!< The time to set */
-    ) {
-        time_t sec = now();
-        U32 msec = sec * 1000;
-        U32 usec = msec * 1000;
-        time.set(sec, usec);
-    }
+void ArduinoTime::timeGetPort_handler(NATIVE_INT_TYPE portNum, /*!< The port number*/
+                                      Fw::Time& time           /*!< The time to set */
+) {
+    this->rawTime.now();
+    U32 sec = reinterpret_cast<Os::Arduino::RawTime::ArduinoRawTimeHandle*>(this->rawTime.getHandle())->m_sec_timespec;
+    U32 nsec = reinterpret_cast<Os::Arduino::RawTime::ArduinoRawTimeHandle*>(this->rawTime.getHandle())->m_nsec_timespec;
 
-    void ArduinoTime::init(NATIVE_INT_TYPE instance) {
-        ArduinoTimeComponentBase::init(instance);
-    }
+    time.set(sec, nsec);
 }
+
+void ArduinoTime::init(NATIVE_INT_TYPE instance) {
+    ArduinoTimeComponentBase::init(instance);
+}
+}  // namespace Arduino

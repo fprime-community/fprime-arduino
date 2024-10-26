@@ -11,7 +11,7 @@ choose_fprime_implementation(Os/File Os_File_Stub)
 choose_fprime_implementation(Os/Console Os_Console_Arduino)
 choose_fprime_implementation(Os/Cpu Os_Cpu_Stub)
 choose_fprime_implementation(Os/Memory Os_Memory_Stub)
-choose_fprime_implementation(Os/RawTime Os_RawTime_Stub)
+choose_fprime_implementation(Os/RawTime Os_RawTime_Arduino)
 
 # Include subdirectories
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Arduino/Os")

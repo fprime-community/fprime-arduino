@@ -8,6 +8,9 @@
 restrict_platforms(ArduinoFw)
 add_custom_target("${FPRIME_CURRENT_MODULE}")
 
+# Arduino library dependencies
+target_use_arduino_libraries("TimeLib")
+
 # -----------------------------------------
 ## Shared Section
 # -----------------------------------------
@@ -25,3 +28,4 @@ register_fprime_module(Os_Arduino_Shared)
 add_fprime_supplied_os_module(Console Arduino)
 add_fprime_supplied_os_module(Task Arduino)
 add_fprime_supplied_os_module("Mutex;ConditionVariable" Arduino)
+add_fprime_supplied_os_module(RawTime Arduino)
