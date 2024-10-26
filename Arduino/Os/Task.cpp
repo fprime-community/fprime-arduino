@@ -3,8 +3,8 @@
 // \brief Arduino implementations for Os::Task
 // ======================================================================
 #include "Arduino/Os/Task.hpp"
-#include <new>
 #include <Fw/Logger/Logger.hpp>
+#include <new>
 
 namespace Os {
 namespace Arduino {
@@ -39,10 +39,10 @@ Os::TaskHandle* ArduinoTask::getHandle() {
 Os::TaskInterface::Status ArduinoTask::start(const Os::TaskInterface::Arguments& arguments) {
     FW_ASSERT(arguments.m_routine != nullptr);
 
-    //Get a task handle, and set it up
-    ArduinoTaskHandle* handle = new(std::nothrow) ArduinoTaskHandle();
+    // Get a task handle, and set it up
+    ArduinoTaskHandle* handle = new (std::nothrow) ArduinoTaskHandle();
     if (handle == nullptr) {
-       return Os::TaskInterface::Status::INVALID_HANDLE;
+        return Os::TaskInterface::Status::INVALID_HANDLE;
     }
 
     // Set handle member variables
@@ -67,10 +67,7 @@ Os::Task::Status ArduinoTask::_delay(Fw::TimeInterval interval) {
     return Os::Task::Status::DELAY_ERROR;
 }
 
-TaskRunner::TaskRunner() :
-    m_index(0),
-    m_cont(true)
-{
+TaskRunner::TaskRunner() : m_index(0), m_cont(true) {
     for (U32 i = 0; i < TASK_REGISTRY_CAP; i++) {
         this->m_task_table[i] = 0;
     }
@@ -95,7 +92,7 @@ void TaskRunner::removeTask(Os::Task* task) {
         }
         // If we are less than the end of the array, shift variables over
         else if (i < TASK_REGISTRY_CAP - 1) {
-            this->m_task_table[i] = this->m_task_table[i+1];
+            this->m_task_table[i] = this->m_task_table[i + 1];
         }
         // If the last element, mark NULL
         else {
@@ -135,7 +132,6 @@ void TaskRunner::run() {
         m_cont = false;
     }
 }
-
 
 }  // namespace Task
 }  // namespace Arduino

@@ -8,16 +8,15 @@ namespace Os {
 namespace Arduino {
 namespace Console {
 
-
 void ArduinoConsole::setOutputStream(Stream* stream) {
     this->m_handle.m_stream = stream;
 }
 
-void ArduinoConsole::writeMessage(const CHAR *message, const FwSizeType size) {
+void ArduinoConsole::writeMessage(const CHAR* message, const FwSizeType size) {
     if (this->m_handle.m_stream == NULL) {
         return;
     }
-    
+
     FwSizeType capped_size = (size <= this->MAX_MESSAGE_SIZE) ? size : this->MAX_MESSAGE_SIZE;
     if (message != nullptr) {
         this->m_handle.m_stream->write(message, capped_size);
@@ -28,8 +27,6 @@ ConsoleHandle* ArduinoConsole::getHandle() {
     return &this->m_handle;
 }
 
-
-
-} // namespace Console
-} // namespace Arduino
-} // namespace Os
+}  // namespace Console
+}  // namespace Arduino
+}  // namespace Os

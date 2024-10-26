@@ -38,7 +38,7 @@ class ArduinoMutex : public MutexInterface {
     ArduinoMutexHandle m_handle;
 };
 
-} // namespace Mutex
-} // namespace Arduino
-} // namespace Os
-#endif // OS_ARDUINO_MUTEX_HPP
+}  // namespace Mutex
+}  // namespace Arduino
+}  // namespace Os
+#endif  // OS_ARDUINO_MUTEX_HPP

@@ -4,11 +4,11 @@
 // ======================================================================
 #ifndef OS_ARDUINO_ERRNO_HPP
 #define OS_ARDUINO_ERRNO_HPP
-#include "Os/File.hpp"
-#include "Os/Task.hpp"
-#include "Os/FileSystem.hpp"
 #include "Os/Directory.hpp"
+#include "Os/File.hpp"
+#include "Os/FileSystem.hpp"
 #include "Os/RawTime.hpp"
+#include "Os/Task.hpp"
 
 namespace Os {
 namespace Arduino {
@@ -49,6 +49,6 @@ Os::Task::Status arduino_status_to_task_status(PlatformIntType arduino_status);
 //!
 Os::Mutex::Status arduino_status_to_mutex_status(PlatformIntType arduino_status);
 
-}
-}
+}  // namespace Arduino
+}  // namespace Os
 #endif

@@ -2,9 +2,10 @@
 // \title Arduino/Os/Console.hpp
 // \brief Arduino implementation for Os::Console, header and test definitions
 // ======================================================================
-#include <cstdio>
-#include <Os/Console.hpp>
 #include <FprimeArduino.hpp>
+#include <Os/Console.hpp>
+#include <cstdio>
+
 #ifndef OS_Arduino_Console_HPP
 #define OS_Arduino_Console_HPP
 
@@ -15,7 +16,7 @@ namespace Console {
 //! ConsoleHandle class definition for Arduino implementations.
 //!
 struct ArduinoConsoleHandle : public ConsoleHandle {
-  Stream* m_stream = &Serial;
+    Stream* m_stream = &Serial;
 };
 
 //! \brief Arduino implementation of Os::ConsoleInterface
@@ -49,7 +50,7 @@ class ArduinoConsole : public ConsoleInterface {
     //!
     //! \param message: raw message to write
     //! \param size: size of the message to write to the console
-    void writeMessage(const CHAR *message, const FwSizeType size) override;
+    void writeMessage(const CHAR* message, const FwSizeType size) override;
 
     //! \brief returns the raw console handle
     //!
@@ -58,7 +59,7 @@ class ArduinoConsole : public ConsoleInterface {
     //!
     //! \return raw console handle
     //!
-    ConsoleHandle *getHandle() override;
+    ConsoleHandle* getHandle() override;
 
     /**
      * Sets the global m_stream arduino stream used to log Arudino messages through a hardware "Stream"
@@ -72,8 +73,9 @@ class ArduinoConsole : public ConsoleInterface {
 
     FwSizeType MAX_MESSAGE_SIZE = 128;
 };
-} // namespace Console
-} // namespace Arduino
-} // namespace Os
 
-#endif // OS_Arduino_Console_HPP
+}  // namespace Console
+}  // namespace Arduino
+}  // namespace Os
+
+#endif  // OS_Arduino_Console_HPP

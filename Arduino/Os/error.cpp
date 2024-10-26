@@ -5,7 +5,7 @@
 #include <Arduino/Os/error.hpp>
 
 namespace Os {
-namespace Ardunio {
+namespace Arduino {
 
 File::Status errno_to_file_status(PlatformIntType errno_input) {
     // TODO
@@ -37,10 +37,10 @@ Task::Status arduino_status_to_task_status(PlatformIntType arduino_status) {
     return status;
 }
 
-Mutex::Status arduino_status_to_mutex_status(PlatformIntType arduino_status){
+Mutex::Status arduino_status_to_mutex_status(PlatformIntType arduino_status) {
     // TODO
     Mutex::Status status = Mutex::Status::ERROR_OTHER;
     return status;
 }
-}
-}
+}  // namespace Arduino
+}  // namespace Os
