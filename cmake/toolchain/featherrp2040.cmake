@@ -11,7 +11,7 @@ set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
 set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
-
+set(FPRIME_ARDUINO_EXECUTABLE_SUFFIX ".elf")
 set(ARDUINO_FQBN "rp2040:rp2040:adafruit_feather")
 add_compile_options(-D_BOARD_FEATHERRP2040 -DUSE_BASIC_TIMER)
 # Run the base arduino setup which should detect settings!
