@@ -8,8 +8,6 @@
 restrict_platforms(ArduinoFw)
 add_custom_target("${FPRIME_CURRENT_MODULE}")
 
-# add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/TaskRunner/")
-
 # -----------------------------------------
 ## Shared Section
 # -----------------------------------------
