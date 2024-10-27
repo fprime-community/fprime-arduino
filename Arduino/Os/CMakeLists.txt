@@ -11,19 +11,6 @@ add_custom_target("${FPRIME_CURRENT_MODULE}")
 # Arduino library dependencies
 target_use_arduino_libraries("TimeLib")
 
-# -----------------------------------------
-## Shared Section
-# -----------------------------------------
-
-set(SOURCE_FILES
-    "${CMAKE_CURRENT_LIST_DIR}/error.cpp"
-)
-set(HEADER_FILES
-    "${CMAKE_CURRENT_LIST_DIR}/error.hpp"
-)
-set(MOD_DEPS config)
-register_fprime_module(Os_Arduino_Shared)
-
 # Set up Arduino implementations
 add_fprime_supplied_os_module(Console Arduino)
 add_fprime_supplied_os_module(RawTime Arduino)
