@@ -26,6 +26,4 @@ register_fprime_module(Os_Arduino_Shared)
 
 # Set up Arduino implementations
 add_fprime_supplied_os_module(Console Arduino)
-add_fprime_supplied_os_module(Task Arduino)
-add_fprime_supplied_os_module("Mutex;ConditionVariable" Arduino)
 add_fprime_supplied_os_module(RawTime Arduino)
