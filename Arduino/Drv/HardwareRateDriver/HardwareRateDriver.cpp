@@ -1,4 +1,4 @@
-#include <ATmega/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
+#include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <FpConfig.hpp>
 #ifdef ARDUINO
 #include <FprimeArduino.hpp>  // Needed for call to sei()

@@ -14,13 +14,13 @@ namespace Arduino {
         public:
             /**
              * Construct the rate driver. Takes in a name (if configured) and a
-             * rate at which to drive.
+             * rate at witch to drive.
              * \param const char* compName: name of the component (only supply if configured)
              */
             HardwareRateDriver(const char* compName);
 
             /**
-             * Configure this component with the interval time in milliseconds.
+             * Configure theis component with the interval time in milliseconds.
              * \param U32 intervalMs: interval to ping in milliseconds
              */
             void configure(U32 intervalMs);

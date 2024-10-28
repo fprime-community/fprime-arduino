@@ -45,19 +45,17 @@ class GpioDriver : public GpioDriverComponentBase {
     // ----------------------------------------------------------------------
 
     //! Handler implementation for gpioRead
-    //!
-    Drv::GpioStatus gpioRead_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                                     Fw::Logic& state);
+    Drv::GpioStatus gpioRead_handler(FwIndexType portNum,  //!< The port number
+                                     Fw::Logic& state) override;
 
     //! Handler implementation for gpioWrite
-    //!
-    Drv::GpioStatus gpioWrite_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                                      const Fw::Logic& state);
+    Drv::GpioStatus gpioWrite_handler(FwIndexType portNum,  //!< The port number
+                                      const Fw::Logic& state) override;
 
     //! device direction
     PlatformIntType m_pin;
 };
 
-}  // end namespace Drv
+}  // namespace Arduino
 
 #endif

@@ -5,14 +5,12 @@
 # rebuild of the Arduino framework in order to ensure that all the code can compile into a sensible
 # binary. This file sets up the Os layer to support all of that.
 ####
-set(SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/Console.cpp")
-set(HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/Console.hpp")
-set(MOD_DEPS)
-register_fprime_module(Os_Console_Arduino)
-register_fprime_implementation(Os/Console Os_Console_Arduino "${CMAKE_CURRENT_LIST_DIR}/DefaultConsole.cpp")
+restrict_platforms(ArduinoFw)
+add_custom_target("${FPRIME_CURRENT_MODULE}")
 
-set(SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/RawTime.cpp")
-set(HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/RawTime.hpp")
-set(MOD_DEPS)
-register_fprime_module(Os_RawTime_Arduino)
-register_fprime_implementation(Os/RawTime Os_RawTime_Arduino "${CMAKE_CURRENT_LIST_DIR}/DefaultRawTime.cpp")
+# Arduino library dependencies
+target_use_arduino_libraries("TimeLib")
+
+# Set up Arduino implementations
+add_fprime_supplied_os_module(Console Arduino)
+add_fprime_supplied_os_module(RawTime Arduino)

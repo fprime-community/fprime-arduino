@@ -5,20 +5,22 @@ elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
 else()
     set(ARDUINO_TYPES_DIR "${CMAKE_CURRENT_LIST_DIR}/types/basic")
 endif()
+
 set(CMAKE_EXECUTABLE_SUFFIX "${FPRIME_ARDUINO_EXECUTABLE_SUFFIX}" CACHE INTERNAL "" FORCE)
-# fprime implementations
-choose_fprime_implementation(Os/Mutex Os/Mutex/Stub)
-choose_fprime_implementation(Os/Queue Os/Generic/PriorityQueue)
 
-# Baremetal support layer implementations
-choose_fprime_implementation(Os/File Os/File/Stub)
-choose_fprime_implementation(Os/Task Os/Task/Baremetal)
-choose_fprime_implementation(Os/Cpu Os/Cpu/Baremetal)
-choose_fprime_implementation(Os/Memory Os/Memory/Baremetal)
+# Add FPrime OSAL Implementations
+choose_fprime_implementation(Os/File Os_File_Stub)
+choose_fprime_implementation(Os/Queue Os_Generic_PriorityQueue)
 
-# Arduino specific implementations
-choose_fprime_implementation(Os/RawTime Os/RawTime/Arduino)
-choose_fprime_implementation(Os/Console Os/Console/Arduino)
+# Add Baremetal OSAL Implementations
+choose_fprime_implementation(Os/Cpu Os_Cpu_Baremetal)
+choose_fprime_implementation(Os/Memory Os_Memory_Baremetal)
+choose_fprime_implementation(Os/Mutex Os_Mutex_Baremetal)
+choose_fprime_implementation(Os/Task Os_Task_Baremetal)
+
+# Add Arduino OSAL Implementations
+choose_fprime_implementation(Os/Console Os_Console_Arduino)
+choose_fprime_implementation(Os/RawTime Os_RawTime_Arduino)
 
 message(STATUS "[fprime-arduino] Including Types Directory: ${ARDUINO_TYPES_DIR}")
 include_directories("${ARDUINO_TYPES_DIR}" "${CMAKE_CURRENT_LIST_DIR}")

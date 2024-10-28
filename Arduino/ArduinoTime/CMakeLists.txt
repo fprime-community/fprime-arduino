@@ -11,7 +11,5 @@ set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/ArduinoTime.cpp"
 )
 
-target_use_arduino_libraries("TimeLib")
-
 register_fprime_module()
 

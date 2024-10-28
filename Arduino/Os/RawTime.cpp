@@ -1,68 +1,66 @@
 // ======================================================================
 // \title Arduino/Os/RawTime.cpp
-// \brief stub implementation for Os::RawTime
+// \brief Arduino implementation for Os::RawTime
 // ======================================================================
 #include "Arduino/Os/RawTime.hpp"
-#include "FprimeArduino.hpp"
+
 namespace Os {
 namespace Arduino {
 
-//! \brief check is a is newer than b
-bool isNewer(const ArduinoRawTimeHandle& a, const ArduinoRawTimeHandle& b) {
-    return ((a.m_seconds > b.m_seconds) ||
-           ((a.m_seconds == b.m_seconds) && (a.m_micros >= b.m_seconds)));
+void setDateTime(U32 hour, U32 min, U32 sec, U32 day, U32 month, U32 year) {
+    setTime(hour, min, sec, day, month, year);
 }
 
 RawTimeHandle* ArduinoRawTime::getHandle() {
     return &this->m_handle;
 }
 
-RawTime::Status ArduinoRawTime::now() {
-    U32 milliseconds_now = millis();
-    U32 microseconds_now = micros() % 1000000;
-    U32 milliseconds_no_seconds = milliseconds_now % 1000;
-    // Microsecond portion and millisecond portion don't agree, assume roll-over and ask for milliseconds again
-    if (milliseconds_no_seconds != (microseconds_now/1000)) {
-        microseconds_now = millis();
-    }
-    this->m_handle.m_micros = microseconds_now % 1000000;
-    this->m_handle.m_seconds = milliseconds_now / 1000;
+ArduinoRawTime::Status ArduinoRawTime::now() {
+    this->m_handle.m_sec_timespec = ::now();  //TODO: nseconds?
     return Status::OP_OK;
 }
 
-RawTime::Status ArduinoRawTime::getTimeInterval(const Os::RawTime& other, Fw::TimeInterval& interval) const {
-    interval.set(0, 0);
-    const ArduinoRawTimeHandle& my_handle = this->m_handle;
-    const ArduinoRawTimeHandle& other_handle = static_cast<const ArduinoRawTimeHandle&>(*const_cast<Os::RawTime&>(other).getHandle());
+ArduinoRawTime::Status ArduinoRawTime::getTimeInterval(const Os::RawTime& other, Fw::TimeInterval& interval) const {
+    time_t t1 = this->m_handle.m_sec_timespec;
+    time_t t2 = static_cast<ArduinoRawTimeHandle*>(const_cast<Os::RawTime&>(other).getHandle())->m_sec_timespec;
 
-    const ArduinoRawTimeHandle& newer = isNewer(my_handle, other_handle) ? my_handle : other_handle;
-    const ArduinoRawTimeHandle& older = isNewer(my_handle, other_handle) ? other_handle : my_handle;
-
-    if (newer.m_micros < older.m_micros) {
-        interval.set(newer.m_seconds - older.m_seconds - 1, 1000000 + newer.m_micros - older.m_micros);
-    } else {
-        interval.set(newer.m_seconds - older.m_seconds, newer.m_micros - older.m_micros);
+    // Guarantee t1 is the later time to make the calculation below easier
+    if (t1 < t2) {
+        t1 = static_cast<ArduinoRawTimeHandle*>(const_cast<Os::RawTime&>(other).getHandle())->m_sec_timespec;
+        t2 = this->m_handle.m_sec_timespec;
     }
 
+    // Here we have guaranteed that t1 > t2, so there is no underflow
+    U32 sec = static_cast<U32>(t1 - t2);
+
+    interval.set(sec, 0);
     return Status::OP_OK;
 }
 
 Fw::SerializeStatus ArduinoRawTime::serialize(Fw::SerializeBufferBase& buffer) const {
-    Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
-    status = buffer.serialize(this->m_handle.m_seconds);
-    if (status == Fw::FW_SERIALIZE_OK) {
-        status = buffer.serialize(this->m_handle.m_micros);
-    }
-    return status;
+    static_assert(ArduinoRawTime::SERIALIZED_SIZE >= 2 * sizeof(U32),
+                  "ArduinoRawTime implementation requires at least 2*sizeof(U32) serialization size");
+    //TODO: this is a U64
+    //TODO: add nseconds
+    return buffer.serialize(static_cast<U32>(this->m_handle.m_sec_timespec));
 }
 
 Fw::SerializeStatus ArduinoRawTime::deserialize(Fw::SerializeBufferBase& buffer) {
-    Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
-    status = buffer.deserialize(this->m_handle.m_seconds);
-    if (status == Fw::FW_SERIALIZE_OK) {
-        status = buffer.deserialize(this->m_handle.m_micros);
+    static_assert(ArduinoRawTime::SERIALIZED_SIZE >= 2 * sizeof(U32),
+                  "ArduinoRawTime implementation requires at least 2*sizeof(U32) serialization size");
+
+    U32 sec = 0;
+    //TODO: this is a U64
+    //TODO: add nseconds
+    Fw::SerializeStatus status = buffer.deserialize(sec);
+    if (status != Fw::SerializeStatus::FW_SERIALIZE_OK) {
+        return status;
     }
-    return status;
+
+    this->m_handle.m_sec_timespec = sec;
+
+    return Fw::SerializeStatus::FW_SERIALIZE_OK;
 }
+
 }  // namespace Arduino
 }  // namespace Os
