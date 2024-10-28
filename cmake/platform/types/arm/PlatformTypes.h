@@ -22,9 +22,6 @@ typedef uint32_t PlatformUIntType;
 typedef PlatformIntType PlatformIndexType;
 #define PRI_PlatformIndexType PRI_PlatformIntType
 
-typedef PlatformIndexType PlatformSignedSizeType;
-#define PRI_PlatformSignedSizeType PRI_PlatformIndexType
-
 typedef PlatformUIntType PlatformSizeType;
 #define PRI_PlatformSizeType PRI_PlatformUIntType
 

@@ -8,18 +8,13 @@
 #include <FprimeArduino.hpp>
 #include "Fw/Types/BasicTypes.hpp"
 #include "Fw/Types/Assert.hpp"
-#include "Fw/Logger/Logger.hpp"
 
 namespace Arduino {
 
 void StreamDriver::configure(Stream* streamDriver) {
-    Fw::Logger::log("CONFIGURE: %p\n", streamDriver);
-    delay(1000);
     FW_ASSERT(streamDriver != nullptr);
     m_port_pointer = streamDriver;
     if (this->isConnected_ready_OutputPort(0)) {
-        Fw::Logger::log("READY OUT\n");
-        delay(1000);
         this->ready_out(0);
     }
 }
