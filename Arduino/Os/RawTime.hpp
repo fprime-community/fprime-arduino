@@ -2,25 +2,22 @@
 // \title Arduino/Os/RawTime.hpp
 // \brief Arduino definitions for Os::RawTime
 // ======================================================================
-#ifndef OS_ARDUINO_RAWTIME_HPP
-#define OS_ARDUINO_RAWTIME_HPP
+#ifndef OS_STUB_RAWTIME_HPP
+#define OS_STUB_RAWTIME_HPP
 
 #include "Os/RawTime.hpp"
-#include <TimeLib.h>
 
 namespace Os {
 namespace Arduino {
 
-void setDateTime(U32 hour, U32 min, U32 sec, U32 day, U32 month, U32 year);
-
 struct ArduinoRawTimeHandle : public RawTimeHandle {
-  time_t m_sec_timespec = 0;
-  time_t m_nsec_timespec = 0;
+    U32 m_seconds;
+    U32 m_micros;
 };
 
-//! \brief Arduino implementation of Os::RawTime
+//! \brief stub implementation of Os::RawTime
 //!
-//! Arduino implementation of `RawTimeInterface`.
+//! Stub implementation of `RawTimeInterface`.
 //!
 class ArduinoRawTime : public RawTimeInterface {
   public:
@@ -60,11 +57,11 @@ class ArduinoRawTime : public RawTimeInterface {
     //! \brief Serialize the contents of the RawTimeInterface object into a buffer.
     //!
     //! This function serializes the contents of the RawTimeInterface object into the provided
-    //! buffer.
+    //! buffer. 
     //!
     //! \note The serialization must fit within `FW_RAW_TIME_SERIALIZATION_MAX_SIZE` bytes. This value is
     //! defined in FpConfig.h. For example, Posix systems use a pair of U32 (sec, nanosec) and can therefore
-    //! serialize in 8 bytes. Should an OSAL implementation require more than this, the project must increase
+    //! serialize in 8 bytes. Should an OSAL implementation require more than this, the project must increase 
     //! that value in its config/ folder.
     //!
     //! \param buffer The buffer to serialize the contents into.
@@ -78,7 +75,7 @@ class ArduinoRawTime : public RawTimeInterface {
     //!
     //! \note The serialization must fit within `FW_RAW_TIME_SERIALIZATION_MAX_SIZE` bytes. This value is
     //! defined in FpConfig.h. For example, Posix systems use a pair of U32 (sec, nanosec) and can therefore
-    //! serialize in 8 bytes. Should an OSAL implementation require more than this, the project must increase
+    //! serialize in 8 bytes. Should an OSAL implementation require more than this, the project must increase 
     //! that value in its config/ folder.
     //!
     //! \param buffer The buffer to deserialize the contents from.
@@ -86,10 +83,10 @@ class ArduinoRawTime : public RawTimeInterface {
     Fw::SerializeStatus deserialize(Fw::SerializeBufferBase& buffer) override;
 
   private:
-    //! Handle for ArduinoRawTime
+    //! Handle for StubRawTime
     ArduinoRawTimeHandle m_handle;
 };
 
-}  // namespace Arduino
-}  // namespace Os
-#endif  // OS_ARDUINO_RAWTIME_HPP
+} // namespace Arduino
+} // namespace Os
+#endif // OS_STUB_RAWTIME_HPP
