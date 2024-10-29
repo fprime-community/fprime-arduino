@@ -43,7 +43,7 @@ void ArduinoTime::getTime_handler(NATIVE_INT_TYPE portNum, /*!< The port number*
 void ArduinoTime ::setTime(U32 year, U8 month, U8 day, U8 hour, U8 minute, U8 second) {
     year = (year > std::numeric_limits<int>::max()) ? std::numeric_limits<int>::max() : year;
     Fw::Time before_set = this->getTime();
-    ::setTime(year, month, day, hour, minute, second);
+    ::setTime(hour, minute, second, day, month, year);
     Fw::Time after_set = this->getTime();
     this->log_ACTIVITY_HI_TimeUpdate(before_set.getSeconds(), before_set.getUSeconds(), before_set.getTimeBase(),
                                   after_set.getSeconds(), after_set.getUSeconds(), after_set.getTimeBase());
