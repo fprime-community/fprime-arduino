@@ -17,7 +17,7 @@ LifeLed ::LifeLed(const char* const compName) : LifeLedComponentBase(compName), 
 
 LifeLed ::~LifeLed() {}
 
-void LifeLed::configure(pin_size_t pin) {
+void LifeLed::configure(PlatformIntType pin) {
     this->m_pin = pin;
     pinMode(this->m_pin, Arduino::DEF_OUTPUT);
     digitalWrite(this->m_pin, Arduino::DEF_LOW);

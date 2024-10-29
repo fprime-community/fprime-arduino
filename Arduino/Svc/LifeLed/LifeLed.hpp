@@ -27,7 +27,7 @@ class LifeLed : public LifeLedComponentBase {
     ~LifeLed();
 
     //! Set the arduino pin to own
-    void configure(pin_size_t pin=Arduino::DEF_LED_BUILTIN);
+    void configure(PlatformIntType pin=Arduino::DEF_LED_BUILTIN);
 
     //! Set the pin state
     void set(const Fw::On::T& on_off);
@@ -45,7 +45,7 @@ class LifeLed : public LifeLedComponentBase {
                      NATIVE_UINT_TYPE context  //!< The call order
                      ) override;
     U16 m_blink_count;
-    pin_size_t m_pin;
+    PlatformIntType m_pin;
     bool m_configured;
 };
 

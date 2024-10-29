@@ -118,7 +118,7 @@ endfunction(target_use_arduino_libraries)
 ####
 function(setup_arduino_libraries)
     get_property(ARDUINO_LIBRARY_LIST_LOCAL GLOBAL PROPERTY ARDUINO_LIBRARY_LIST)
-    skip_on_sub_build(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
+    #skip_on_sub_build(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
         --properties ${ARDUINO_BUILD_PROPERTIES}
@@ -185,7 +185,9 @@ endfunction(setup_arduino_libraries)
 function(finalize_arduino_executable)
     setup_arduino_libraries()
     include(API)
-    skip_on_sub_build()
+    if (DEFINED FPRIME_SUBBOUILD_TARGETS)
+        return()
+    endif()
     # Add link dependency on
     target_link_libraries(
         "${FPRIME_CURRENT_MODULE}"
