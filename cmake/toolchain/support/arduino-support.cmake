@@ -17,7 +17,10 @@ set(FPRIME_ARDUINO TRUE)
 set(ARDUINO_WRAPPER_JSON_OUTPUT "${CMAKE_BINARY_DIR}/arduino-cli-compiler-settings.json")
 set(EXTRA_LIBRARY_SOURCE "${CMAKE_CURRENT_LIST_DIR}/sources/extras.cpp")
 
-
+# Set the executable suffix if not defined
+if (NOT DEFINED FPRIME_ARDUINO_EXECUTABLE_SUFFIX)
+    set(FPRIME_ARDUINO_EXECUTABLE_SUFFIX ".elf")
+endif()
 ####
 # Function `set_arduino_build_settings`:
 #

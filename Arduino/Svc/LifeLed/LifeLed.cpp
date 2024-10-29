@@ -18,6 +18,7 @@ LifeLed ::LifeLed(const char* const compName) : LifeLedComponentBase(compName), 
 LifeLed ::~LifeLed() {}
 
 void LifeLed::configure(PlatformIntType pin) {
+    FW_ASSERT(pin >= 0); // LED_BUILTIN is likely undefined, please provide an LED or discontinue use of this module
     this->m_pin = pin;
     pinMode(this->m_pin, Arduino::DEF_OUTPUT);
     digitalWrite(this->m_pin, Arduino::DEF_LOW);
