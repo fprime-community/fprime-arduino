@@ -1,6 +1,6 @@
 # Arduino CLI Installation Guide
 
-This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino buuld system. This assumes a virtual environment has been setup for your project.
+This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino build system. This assumes a virtual environment has been setup for your project.
 
 > Activate the project virtual environment now.
 
@@ -18,16 +18,6 @@ pip install arduino-cli-cmake-wrapper
 
 ## Setup arduino-cli for select Arduino boards
 
-The following list of boards were tested. You are free to add your own board manager URL to your configuration if you are using a board that is not listed here:
-  - PJRC Teensy (Teensy 3.2, Teensy 4.0, Teensy 4.1)
-  - Raspberry Pi Pico (RP2040)
-  - Raspberry Pi Pico W (RP2040)
-  - Adafruit Feather M0
-  - Adafruit Feather RP2040
-  - SparkFun Thing Plus RP2040
-  - ESP32 Dev Module (currently broken)
-  - ATmega128 (with external memory, not the stock 2K memory)
-
 Initialize the arduino-cli configuration file.
 ```shell
 arduino-cli config init
@@ -37,20 +27,35 @@ Below are board manager URLs for select Arduino boards. You are not required to 
 ```shell
 arduino-cli config add board_manager.additional_urls https://www.pjrc.com/teensy/package_teensy_index.json
 arduino-cli config add board_manager.additional_urls https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+arduino-cli config add board_manager.additional_urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
 arduino-cli config add board_manager.additional_urls https://mcudude.github.io/MegaCore/package_MCUdude_MegaCore_index.json
 arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+arduino-cli config add board_manager.additional_urls https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
 ```
 
 Install the new board packages. Only install the ones you have added to your board manager in the previous step.
 ```shell
 arduino-cli core update-index
+arduino-cli core install arduino:avr
 arduino-cli core install teensy:avr
 arduino-cli core install adafruit:samd
-arduino-cli core install esp32:esp32
+arduino-cli core install adafruit:nrf52
+arduino-cli core install esp32:esp32@2.0.9
+arduino-cli core install esp8266:esp8266
 arduino-cli core install MegaCore:avr
 arduino-cli core install rp2040:rp2040
+arduino-cli core install STMicroelectronics:stm32
 ```
+
+> ESP32: As of 10/27/2024, versions newer than `esp32:esp32@2.0.9` will not work.
+
+If you are building the Adafruit NRF52 boards and are on Linux, you must also install:
+```sh
+pip install adafruit-nrfutil
+```
+
+[The following list](https://github.com/fprime-community/fprime-arduino/tree/main/docs/board-list) shows the tested boards successfully running an F Prime deployment.
 
 ## Library Dependencies
 Required Dependencies:
@@ -64,4 +69,7 @@ arduino-cli lib install WiFi
 ```
 
 ## Adding udev rules (Linux Only)
-Add udev rules. Download/save the `.rules` files located [here](./rules/) for your selected board(s) into `/etc/udev/rules.d/`.
+Add udev rules. Download/save the `.rules` files located [here](https://github.com/fprime-community/fprime-arduino/tree/main/docs/rules) for your selected board(s) into `/etc/udev/rules.d/`.
+
+
+### Next Step: [Building and Running the Base Deployment on Hardware](./run-base-deployment.md)
