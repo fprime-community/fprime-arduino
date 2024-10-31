@@ -55,7 +55,7 @@ If you are building the Adafruit NRF52 boards and are on Linux, you must also in
 pip install adafruit-nrfutil
 ```
 
-[The following list](https://github.com/fprime-community/fprime-arduino/tree/main/docs/board-list) shows the tested boards successfully running an F Prime deployment.
+[The following list](./board-list.md) shows the tested boards successfully running an F Prime deployment.
 
 ## Library Dependencies
 Required Dependencies:
