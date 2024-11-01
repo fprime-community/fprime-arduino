@@ -1,5 +1,7 @@
 # ESP32 Dev Module
 
+Hold down the `BOOT` button on the ESP32. Don't let go. Then run the commands below:
+
 ```sh
 chmod 0777 /dev/ttyACM0
 
@@ -14,3 +16,18 @@ python3 ~/Library/Arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py --c
 > Change `/dev/ttyACM0` (`/dev/tty.usbmodem12345` for MacOS) to the correct serial device connected to the ESP32.
 >
 > Note: Change `tmp8lcl76bw` to the actual temporary file name located in `build-fprime-automatic-esp32/arduino-cli-sketch`
+
+Once you see that data is being written (example shown below), you can let go of the button.
+
+```
+Writing at 0x00010000... (10 %)
+Writing at 0x0001bbae... (20 %)
+Writing at 0x0002425b... (30 %)
+Writing at 0x000298e1... (40 %)
+Writing at 0x0002eb67... (50 %)
+Writing at 0x00033f5b... (60 %)
+Writing at 0x0003ca7a... (70 %)
+Writing at 0x000465db... (80 %)
+Writing at 0x0004bc47... (90 %)
+Writing at 0x00051160... (100 %)
+```

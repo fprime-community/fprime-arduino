@@ -21,3 +21,4 @@ The following boards were successfully deployed with a basic [`LedBlinker`](http
 | Adafruit Circuit Playground Bluefruit  | nRF52840               | circuitplaybluefruit   | 10/30/2024  | 3.5.0      | adafruit:nrf52@1.6.1        | [README](./uploading/nRF52840.md)     |
 | Adafruit Feather nRF52840              | nRF52840               | featherNRF52840        | 10/30/2024  | 3.5.0      | adafruit:nrf52@1.6.1        | [README](./uploading/nRF52840.md)     |
 | Adafruit Metro M4 Grand Central        | SAMD51 ARM Cortex-M4   | grandcentral           | 10/30/2024  | 3.5.0      | adafruit:samd@1.7.16        | [README](./uploading/cortexM4.md)     |
+| ESP32 Dev Module                       | ESP32                  | esp32                  | 10/31/2024  | 3.5.0      | esp32:esp32@2.0.9           | [README](./uploading/esp32.md)        |
