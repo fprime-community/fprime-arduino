@@ -1,5 +1,7 @@
 if(NOT DEFINED ARDUINO_FQBN)
     message(FATAL_ERROR "Must defined arduino FQBN")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm32")
+    set(ARDUINO_TYPES_DIR "${CMAKE_CURRENT_LIST_DIR}/types/arm32") 
 elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
     set(ARDUINO_TYPES_DIR "${CMAKE_CURRENT_LIST_DIR}/types/arm") 
 else()

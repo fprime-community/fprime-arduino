@@ -1,0 +1,7 @@
+extern "C" {
+    #include <cstdarg>
+    #include <stdio.h>
+
+    int snprintf(char *buf, size_t size, const char *fmt, ...);
+    int vsnprintf(char *s, size_t n, const char *format, va_list ap);
+} // extern "C"

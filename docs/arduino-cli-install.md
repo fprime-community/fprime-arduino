@@ -58,6 +58,7 @@ Install the new board packages. Only install the ones you have added to your boa
 ```sh
 arduino-cli core update-index
 arduino-cli core install arduino:avr
+arduino-cli core install arduino:sam
 arduino-cli core install teensy:avr
 arduino-cli core install adafruit:samd
 arduino-cli core install adafruit:nrf52
