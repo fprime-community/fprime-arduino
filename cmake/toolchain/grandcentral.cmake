@@ -1,19 +1,16 @@
 ####
-# featherrp2040rfm.cmake:
+# grandcentral.cmake:
 #
-# RP2040 support.
+# Adafruit Metro M4 Grand Central support.
 ####
-cmake_minimum_required(VERSION 3.26)
-set(CMAKE_CXX_STANDARD 17)
-add_compile_options(-std=c++17 -std=gnu++17) # Force C++17 standard
-
 set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_SYSTEM_PROCESSOR "arm")
 set(CMAKE_CROSSCOMPILING 1)
 set(FPRIME_PLATFORM "ArduinoFw")
 set(FPRIME_USE_BAREMETAL_SCHEDULER ON)
+set(ARDUINO_BUILD_PROPERTIES)
 
-set(ARDUINO_FQBN "rp2040:rp2040:adafruit_feather_rfm")
-add_compile_options(-D_BOARD_FEATHERRP2040RFM -DUSE_BASIC_TIMER)
+set(ARDUINO_FQBN "adafruit:samd:adafruit_grandcentral_m4")
+add_compile_options(-D_BOARD_GRAND_CENTRAL -DUSE_BASIC_TIMER)
 # Run the base arduino setup which should detect settings!
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake")

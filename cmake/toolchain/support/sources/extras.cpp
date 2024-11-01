@@ -16,6 +16,7 @@ int _write( int handle, char *buf, int count) {
 #endif
 
 #ifdef FPRIME_ARUDINO_SYNTHETIC_NEW_NOTHROW
+#include <stdlib.h> // for malloc
 #include <new>
 namespace std {
     const std::nothrow_t nothrow;
