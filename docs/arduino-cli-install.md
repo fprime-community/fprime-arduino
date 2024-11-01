@@ -1,30 +1,50 @@
 # Arduino CLI Installation Guide
 
-This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino build system. This assumes a virtual environment has been setup for your project.
+This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wrapper` tools used to bridge F Prime and the Arduino build system. This assumes a virtual environment has been setup for your project.
 
 > Activate the project virtual environment now.
 
 ## Install arduino-cli
-```shell
+
+This command downloads `arduino-cli` and installs the binary into the existing (and activated) virtual environment.
+```sh
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=$VIRTUAL_ENV/bin sh
 ```
 
-This command downloads `arduino-cli` and installs the binary into the existing (and activated) virtual environment.
+## Install Required Packages and Arduino Libraries
 
-## Install arduino-cli-wrapper
-```shell
-pip install arduino-cli-cmake-wrapper
+### Pip
+
+Install all required `pip` packages using the [`requirements.txt`](../requirements.txt) file
+```sh
+pip install -r fprime-arduino/requirements.txt
 ```
+
+### Arduino
+
+Required Arduino library dependencies:
+```sh
+arduino-cli lib install Time
+```
+
+If you will be using the `Arduino.TcpClient` component, install:
+```sh
+arduino-cli lib install WiFi
+```
+
+## List of Tested Boards
+
+[The following list](./board-list.md) shows all the boards that successfully ran an F Prime deployment.
 
 ## Setup arduino-cli for select Arduino boards
 
 Initialize the arduino-cli configuration file.
-```shell
+```sh
 arduino-cli config init
 ```
 
-Below are board manager URLs for select Arduino boards. You are not required to add all of these boards, but you are free to do so.
-```shell
+Below are board manager URLs for tested Arduino boards. You are not required to add all of these boards, but you are free to do so. You can view the list of addtional boards [here](https://github.com/per1234/inoplatforms/blob/main/ino-hardware-package-list.tsv) if you wish to test F Prime on boards that were not tested above.
+```sh
 arduino-cli config add board_manager.additional_urls https://www.pjrc.com/teensy/package_teensy_index.json
 arduino-cli config add board_manager.additional_urls https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -35,7 +55,7 @@ arduino-cli config add board_manager.additional_urls https://github.com/stm32dui
 ```
 
 Install the new board packages. Only install the ones you have added to your board manager in the previous step.
-```shell
+```sh
 arduino-cli core update-index
 arduino-cli core install arduino:avr
 arduino-cli core install teensy:avr
@@ -55,21 +75,9 @@ If you are building the Adafruit NRF52 boards and are on Linux, you must also in
 pip install adafruit-nrfutil
 ```
 
-[The following list](./board-list.md) shows the tested boards successfully running an F Prime deployment.
-
-## Library Dependencies
-Required Dependencies:
-```shell
-arduino-cli lib install Time
-```
-
-If you will be using the `TcpClient` component, install:
-```shell
-arduino-cli lib install WiFi
-```
-
 ## Adding udev rules (Linux Only)
 Add udev rules. Download/save the `.rules` files located [here](https://github.com/fprime-community/fprime-arduino/tree/main/docs/rules) for your selected board(s) into `/etc/udev/rules.d/`.
 
+## Uploading Deployment to Hardware
 
-### Next Step: [Building and Running the Base Deployment on Hardware](./run-base-deployment.md)
+Upon successful build of an F Prime deployment, it is time to upload it to your board. The steps differ between boards. Refer to the [board list's](./board-list.md) `Upload Guide` column READMEs for guidance.
