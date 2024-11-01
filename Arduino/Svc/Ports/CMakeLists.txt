@@ -4,9 +4,11 @@
 # SOURCE_FILES: combined list of source and autocoding diles
 # MOD_DEPS: (optional) module dependencies
 #
+# Note: using PROJECT_NAME as EXECUTABLE_NAME
 ####
 set(SOURCE_FILES
-    "${CMAKE_CURRENT_LIST_DIR}/GpioDriver.fpp"
-    "${CMAKE_CURRENT_LIST_DIR}/GpioDriver.cpp"
+  "${CMAKE_CURRENT_LIST_DIR}/SetTime.fpp"
 )
+
 register_fprime_module()
+

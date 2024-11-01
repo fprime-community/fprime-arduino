@@ -17,7 +17,10 @@ set(FPRIME_ARDUINO TRUE)
 set(ARDUINO_WRAPPER_JSON_OUTPUT "${CMAKE_BINARY_DIR}/arduino-cli-compiler-settings.json")
 set(EXTRA_LIBRARY_SOURCE "${CMAKE_CURRENT_LIST_DIR}/sources/extras.cpp")
 
-
+# Set the executable suffix if not defined
+if (NOT DEFINED FPRIME_ARDUINO_EXECUTABLE_SUFFIX)
+    set(FPRIME_ARDUINO_EXECUTABLE_SUFFIX ".elf")
+endif()
 ####
 # Function `set_arduino_build_settings`:
 #
@@ -118,7 +121,7 @@ endfunction(target_use_arduino_libraries)
 ####
 function(setup_arduino_libraries)
     get_property(ARDUINO_LIBRARY_LIST_LOCAL GLOBAL PROPERTY ARDUINO_LIBRARY_LIST)
-    prevent_prescan(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
+    #skip_on_sub_build(${ARDUINO_LIBRARY_LIST_LOCAL} fprime_arduino_patcher fprime_arduino_loose_object_library)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
         --properties ${ARDUINO_BUILD_PROPERTIES}
@@ -135,6 +138,7 @@ function(setup_arduino_libraries)
     # Setup arduino missing C/C++ function patch library
     if (NOT TARGET fprime_arduino_patcher)
         add_library(fprime_arduino_patcher ${EXTRA_LIBRARY_SOURCE})
+        add_dependencies(fprime_arduino_patcher config)
         get_target_property(TARGET_LIBRARIES fprime_arduino_patcher LINK_LIBRARIES)
         LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_libraries)
         LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_patcher)
@@ -183,7 +187,10 @@ endfunction(setup_arduino_libraries)
 ####
 function(finalize_arduino_executable)
     setup_arduino_libraries()
-    prevent_prescan()
+    include(API)
+    if (DEFINED FPRIME_SUBBOUILD_TARGETS)
+        return()
+    endif()
     # Add link dependency on
     target_link_libraries(
         "${FPRIME_CURRENT_MODULE}"
@@ -196,7 +203,7 @@ function(finalize_arduino_executable)
         string(REPLACE "<TARGET_NAME>" "$<TARGET_FILE_NAME:${FPRIME_CURRENT_MODULE}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
         string(REPLACE "<TARGET_DIRECTORY>" "$<TARGET_FILE_DIR:${FPRIME_CURRENT_MODULE}>" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
         string(REPLACE " " ";" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
-        list(APPEND COMMAND_SET_ARGUMENTS COMMAND ${COMMAND_WITH_INPUT} || true)
+        list(APPEND COMMAND_SET_ARGUMENTS COMMAND ${COMMAND_WITH_INPUT} || "${CMAKE_COMMAND}" "-E" "echo" "[ARDUINO WRAPPER POST BUILD WARNING] Error in executing: ${COMMAND_WITH_INPUT}")
     endforeach()
     list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "copy_if_different" "$<TARGET_FILE:${FPRIME_CURRENT_MODULE}>*" "${CMAKE_INSTALL_PREFIX}/${TOOLCHAIN_NAME}/${FPRIME_CURRENT_MODULE}/bin")
     add_custom_command(

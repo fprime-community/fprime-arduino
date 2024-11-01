@@ -1,6 +1,6 @@
 #ifndef ARDUINO_DRV_HARDWARERATEDRIVER_HPP
 #define ARDUINO_DRV_HARDWARERATEDRIVER_HPP
-#include <Svc/Cycle/TimerVal.hpp>
+#include <Os/RawTime.hpp>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriverComponentAc.hpp>
 
 namespace Arduino {
@@ -47,7 +47,7 @@ namespace Arduino {
             U32 m_interval;
         private:
             //!< Last time of run
-            Svc::TimerVal m_last;
+            Os::RawTime m_last;
             //!< Pointer to the driver
             static HardwareRateDriver* s_driver;
             //!< Static callback to the ISR triggered via a timer

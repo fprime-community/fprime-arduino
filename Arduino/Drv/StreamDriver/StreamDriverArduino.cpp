@@ -6,7 +6,6 @@
 
 #include <Arduino/Drv/StreamDriver/StreamDriver.hpp>
 #include <FprimeArduino.hpp>
-#include <Os/Log.hpp>
 #include "Fw/Types/BasicTypes.hpp"
 #include "Fw/Types/Assert.hpp"
 

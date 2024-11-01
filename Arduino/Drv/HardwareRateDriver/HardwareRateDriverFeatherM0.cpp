@@ -10,7 +10,7 @@ Adafruit_ZeroTimer s_itimer = Adafruit_ZeroTimer(3);
 void HardwareRateDriver::start() {
     U32 seconds = m_interval / 1000;
     U32 freq = 1 / seconds;
-    Fw::Logger::logMsg("Starting base rate group clock with period of %" PRIu32 " seconds", seconds);
+    Fw::Logger::log("Starting base rate group clock with period of %" PRIu32 " seconds\n", seconds);
 
     // Set up the flexible divider/compare
     U16 divider  = 1;
