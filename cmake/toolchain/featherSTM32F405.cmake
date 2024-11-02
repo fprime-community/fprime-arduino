@@ -19,7 +19,6 @@ add_compile_options(
     -D_BOARD_FEATHER_STM32F405
     -DVARIANT_H=\"variant_FEATHER_F405.h\"
     -DNUM_DIGITAL_PINS=20
-    -DNO_ONBOARD_LED
     -DUSE_BASIC_TIMER
 )
 # Run the base arduino setup which should detect settings!
