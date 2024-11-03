@@ -129,7 +129,7 @@ ArduinoDirectory::Status ArduinoDirectory::read(char* fileNameBuffer, FwSizeType
 
     (void)Fw::StringUtils::string_copy(fileNameBuffer, fd.name(), bufSize);
 
-    this->close();
+    fd.close();
     return Status::OP_OK;
 }
 
