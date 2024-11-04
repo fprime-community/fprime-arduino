@@ -10,7 +10,7 @@ namespace Arduino {
 //! \brief check is a is newer than b
 bool isNewer(const ArduinoRawTimeHandle& a, const ArduinoRawTimeHandle& b) {
     return ((a.m_seconds > b.m_seconds) ||
-           ((a.m_seconds == b.m_seconds) && (a.m_micros >= b.m_seconds)));
+           ((a.m_seconds == b.m_seconds) && (a.m_micros >= b.m_micros)));
 }
 
 RawTimeHandle* ArduinoRawTime::getHandle() {
