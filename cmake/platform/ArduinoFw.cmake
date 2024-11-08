@@ -8,8 +8,17 @@ endif()
 
 set(CMAKE_EXECUTABLE_SUFFIX "${FPRIME_ARDUINO_EXECUTABLE_SUFFIX}" CACHE INTERNAL "" FORCE)
 
+# Check if Arduino Libraries Installed
+arduino_lib_installed("SD" LIB_SD_INSTALLED)
+
 # Add FPrime OSAL Implementations
-choose_fprime_implementation(Os/File Os_File_Stub)
+if (LIB_SD_INSTALLED)
+    message(STATUS "[fprime-arduino] SD Library found. Including SD File OS")
+    choose_fprime_implementation(Os/File Os_File_Arduino)
+else()
+    message(STATUS "[fprime-arduino] SD Library not found. Including Stub File OS")
+    choose_fprime_implementation(Os/File Os_File_Stub)
+endif()
 choose_fprime_implementation(Os/Queue Os_Generic_PriorityQueue)
 
 # Add Baremetal OSAL Implementations
