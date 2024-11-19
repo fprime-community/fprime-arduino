@@ -12,7 +12,8 @@ namespace Os {
 namespace Arduino {
 
 struct ArduinoDirectoryHandle : public DirectoryHandle {
-  ::File m_dir = 0;
+  ::File m_dir;
+  bool opened = false;
 };
 
 //! \brief Arduino implementation of Os::Directory

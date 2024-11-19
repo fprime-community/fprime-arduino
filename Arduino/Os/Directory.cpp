@@ -95,6 +95,7 @@ ArduinoDirectory::Status ArduinoDirectory::open(const char* path, OpenMode mode)
             return Status::OTHER_ERROR;
     }
 
+    this->m_handle.opened = true;
     return Status::OP_OK;
 }
 
@@ -105,7 +106,7 @@ ArduinoDirectory::Status ArduinoDirectory::rewind() {
 ArduinoDirectory::Status ArduinoDirectory::read(char* fileNameBuffer, FwSizeType bufSize) {
     FW_ASSERT(fileNameBuffer);
 
-    if (!this->m_handle.m_dir) {
+    if (!this->m_handle.opened) {
         return Status::NOT_OPENED;
     }
 
@@ -134,9 +135,9 @@ ArduinoDirectory::Status ArduinoDirectory::read(char* fileNameBuffer, FwSizeType
 }
 
 void ArduinoDirectory::close() {
-    if (this->m_handle.m_dir) {
+    if (this->m_handle.opened) {
         this->m_handle.m_dir.close();
-        this->m_handle.m_dir = 0;
+        this->m_handle.opened = false;
     }
 }
 

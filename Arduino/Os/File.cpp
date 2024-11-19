@@ -42,18 +42,19 @@ ArduinoFile::Status ArduinoFile::open(const char* filepath, ArduinoFile::Mode op
         return Status::OTHER_ERROR;
     }
 
+    this->m_handle.opened = true;
     return Status::OP_OK;
 }
 
 void ArduinoFile::close() {
-    if (this->m_handle.m_fd) {
+    if (this->m_handle.opened) {
         this->m_handle.m_fd.close();
-        this->m_handle.m_fd = 0;
+        this->m_handle.opened = false;
     }
 }
 
 ArduinoFile::Status ArduinoFile::size(FwSignedSizeType& size_result) {
-    if (!this->m_handle.m_fd) {
+    if (!this->m_handle.opened) {
         size_result = 0;
         return Status::NOT_OPENED;
     }
@@ -64,7 +65,7 @@ ArduinoFile::Status ArduinoFile::size(FwSignedSizeType& size_result) {
 }
 
 ArduinoFile::Status ArduinoFile::position(FwSignedSizeType& position_result) {
-    if (!this->m_handle.m_fd) {
+    if (!this->m_handle.opened) {
         position_result = 0;
         return Status::NOT_OPENED;
     }
@@ -80,7 +81,7 @@ ArduinoFile::Status ArduinoFile::preallocate(FwSignedSizeType offset, FwSignedSi
 }
 
 ArduinoFile::Status ArduinoFile::seek(FwSignedSizeType offset, SeekType seekType) {
-    if (!this->m_handle.m_fd) {
+    if (!this->m_handle.opened) {
         return Status::NOT_OPENED;
     }
 
@@ -99,7 +100,7 @@ ArduinoFile::Status ArduinoFile::flush() {
 ArduinoFile::Status ArduinoFile::read(U8* buffer, FwSignedSizeType& size, ArduinoFile::WaitType wait) {
     FW_ASSERT(buffer);
 
-    if (!this->m_handle.m_fd) {
+    if (!this->m_handle.opened) {
         size = 0;
         return Status::NOT_OPENED;
     }
@@ -119,7 +120,7 @@ ArduinoFile::Status ArduinoFile::read(U8* buffer, FwSignedSizeType& size, Arduin
 }
 
 ArduinoFile::Status ArduinoFile::write(const U8* buffer, FwSignedSizeType& size, ArduinoFile::WaitType wait) {
-    if (!this->m_handle.m_fd) {
+    if (!this->m_handle.opened) {
         size = 0;
         return Status::NOT_OPENED;
     }

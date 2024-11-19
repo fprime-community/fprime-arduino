@@ -11,7 +11,8 @@ namespace Os {
 namespace Arduino {
 
 struct ArduinoFileHandle : public FileHandle {
-  ::File m_fd = 0;
+  ::File m_fd;
+  bool opened = false;
 };
 
 //! \brief Arduino implementation of Os::File
