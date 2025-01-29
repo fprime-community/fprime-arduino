@@ -43,7 +43,7 @@ function(set_arduino_build_settings)
     # If it was not found, generate it
     if (NOT FOUND_LOCATION)
         set(FOUND_LOCATION "${ARDUINO_WRAPPER_JSON_OUTPUT}")
-        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} "--board-options" ${ARDUINO_BOARD_OPTIONS} -j "${FOUND_LOCATION}")
+        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} -j "${FOUND_LOCATION}")
     endif()
     file(READ "${FOUND_LOCATION}" WRAPPER_OUTPUT)
     # Compilers detection
@@ -125,7 +125,6 @@ function(setup_arduino_libraries)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
         --properties ${ARDUINO_BUILD_PROPERTIES}
-        --board-options ${ARDUINO_BOARD_OPTIONS}
         -j "${ARDUINO_WRAPPER_JSON_OUTPUT}"
         --generate-code
         --libraries ${ARDUINO_LIBRARY_LIST_LOCAL}
