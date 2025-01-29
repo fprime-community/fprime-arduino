@@ -9,11 +9,11 @@ endif()
 set(CMAKE_EXECUTABLE_SUFFIX "${FPRIME_ARDUINO_EXECUTABLE_SUFFIX}" CACHE INTERNAL "" FORCE)
 
 # Add FPrime OSAL Implementations
-choose_fprime_implementation(Os/File Os_File_Stub)
 choose_fprime_implementation(Os/Queue Os_Generic_PriorityQueue)
 
 # Add Baremetal OSAL Implementations
 choose_fprime_implementation(Os/Cpu Os_Cpu_Baremetal)
+choose_fprime_implementation(Os/File Os_File_Baremetal)
 choose_fprime_implementation(Os/Memory Os_Memory_Baremetal)
 choose_fprime_implementation(Os/Mutex Os_Mutex_Baremetal)
 choose_fprime_implementation(Os/Task Os_Task_Baremetal)
