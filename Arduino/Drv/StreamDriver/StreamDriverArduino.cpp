@@ -32,7 +32,7 @@ void StreamDriver ::write_data(Fw::Buffer& fwBuffer) {
 void StreamDriver ::read_data(Fw::Buffer& fwBuffer) {
     Stream* stream_ptr = reinterpret_cast<Stream*>(m_port_pointer);
     int byte = 0;
-    NATIVE_UINT_TYPE count = 0;
+    Fw::Buffer::SizeType count = 0;
     U8* raw_data = reinterpret_cast<U8*>(fwBuffer.getData());
     while ((stream_ptr->available() > 0) && (count < fwBuffer.getSize()) && ((byte = stream_ptr->read()) != -1)) {
         *(raw_data + count) = static_cast<U8>(byte);

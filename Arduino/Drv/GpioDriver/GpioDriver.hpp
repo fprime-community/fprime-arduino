@@ -29,7 +29,7 @@ class GpioDriver : public GpioDriverComponentBase {
 
     //! Initialize object GpioDriver
     //!
-    void init(const NATIVE_INT_TYPE instance = 0 /*!< The instance number*/
+    void init(const FwEnumStoreType instance = 0 /*!< The instance number*/
     );
 
     //! Destroy object GpioDriver
@@ -37,7 +37,7 @@ class GpioDriver : public GpioDriverComponentBase {
     ~GpioDriver();
 
     //! open GPIO
-    bool open(NATIVE_INT_TYPE gpio, GpioDirection direction);
+    bool open(FwIndexType gpio, GpioDirection direction);
 
   private:
     // ----------------------------------------------------------------------
@@ -53,7 +53,7 @@ class GpioDriver : public GpioDriverComponentBase {
                                       const Fw::Logic& state) override;
 
     //! device direction
-    PlatformIntType m_pin;
+    FwIndexType m_pin;
 };
 
 }  // namespace Arduino

@@ -1,4 +1,4 @@
-#include <FpConfig.hpp>
+#include <config/FpConfig.hpp>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <Fw/Logger/Logger.hpp>
 #include <FprimeArduino.hpp>
