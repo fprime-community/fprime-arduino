@@ -1,12 +1,6 @@
 
 /**
- * \brief PlatformTypes.h C-compatible type definitions for Linux/Darwin
- *
- * PlatformTypes.h is typically published by platform developers to define
- * the standard available arithmetic types for use in fprime. This standard
- * types header is designed to support standard Linux/Darwin (unix) distributions
- * running on x86, x86_64, arm, and arm64 machines and using the standard gcc/clang
- * compilers shipped with the operating system.
+ * \brief PlatformTypes.h: an implementation of basic types for the Arduino system.
  */
 #ifndef PLATFORM_TYPES_H_
 #define PLATFORM_TYPES_H_

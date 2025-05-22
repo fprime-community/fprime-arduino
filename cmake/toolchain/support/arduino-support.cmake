@@ -43,7 +43,7 @@ function(set_arduino_build_settings)
     # If it was not found, generate it
     if (NOT FOUND_LOCATION)
         set(FOUND_LOCATION "${ARDUINO_WRAPPER_JSON_OUTPUT}")
-        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} "--board-options" ${ARDUINO_BOARD_OPTIONS} -j "${FOUND_LOCATION}")
+        run_arduino_wrapper("-b" "${ARDUINO_FQBN}" "--properties" ${ARDUINO_BUILD_PROPERTIES} -j "${FOUND_LOCATION}")
     endif()
     file(READ "${FOUND_LOCATION}" WRAPPER_OUTPUT)
     # Compilers detection
@@ -125,7 +125,6 @@ function(setup_arduino_libraries)
     run_arduino_wrapper(
         -b "${ARDUINO_FQBN}"
         --properties ${ARDUINO_BUILD_PROPERTIES}
-        --board-options ${ARDUINO_BOARD_OPTIONS}
         -j "${ARDUINO_WRAPPER_JSON_OUTPUT}"
         --generate-code
         --libraries ${ARDUINO_LIBRARY_LIST_LOCAL}
@@ -138,7 +137,8 @@ function(setup_arduino_libraries)
     # Setup arduino missing C/C++ function patch library
     if (NOT TARGET fprime_arduino_patcher)
         add_library(fprime_arduino_patcher ${EXTRA_LIBRARY_SOURCE})
-        add_dependencies(fprime_arduino_patcher config)
+        add_dependencies(fprime_arduino_patcher __fprime_config default_config)
+        target_link_libraries(fprime_arduino_patcher PUBLIC Fw_Types __fprime_config default_config)
         get_target_property(TARGET_LIBRARIES fprime_arduino_patcher LINK_LIBRARIES)
         LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_libraries)
         LIST(REMOVE_ITEM TARGET_LIBRARIES fprime_arduino_patcher)
@@ -167,11 +167,9 @@ function(setup_arduino_libraries)
                 message(STATUS "Adding Arduino Library: ${LIBRARY_BASE}")
                 add_library(${LIBRARY_BASE} STATIC IMPORTED GLOBAL)
                 set_target_properties(${LIBRARY_BASE} PROPERTIES IMPORTED_LOCATION "${BUILT_LIBRARY}")
-                add_dependencies(${LIBRARY_BASE} fprime_arduino_loose_object_library)
                 target_link_libraries(${LIBRARY_BASE} INTERFACE fprime_arduino_loose_object_library)
 
                 # Setup detected dependencies to the interface library
-                add_dependencies(fprime_arduino_libraries ${LIBRARY_BASE})
                 target_link_libraries(fprime_arduino_libraries INTERFACE ${LIBRARY_BASE})
             endif()
         endif()
