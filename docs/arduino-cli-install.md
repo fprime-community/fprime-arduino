@@ -81,3 +81,34 @@ Add udev rules. Download/save the `.rules` files located [here](https://github.c
 ## Uploading Deployment to Hardware
 
 Upon successful build of an F Prime deployment, it is time to upload it to your board. The steps differ between boards. Refer to the [board list's](./board-list.md) `Upload Guide` column READMEs for guidance.
+
+### Windows WSL 2
+
+> [!NOTE]
+> If you are running Windows WSL 2, follow the steps below to mount your board as a USB device within WSL 2.
+
+List your connected USB devices and find the `BUSID` of your board.
+```powershell
+# Windows Powershell
+usbipd list
+```
+
+If the `STATE` of that device is not `Shared`, run:
+```powershell
+# Windows Powershell
+usbipd bind --busid <BUSID>
+```
+
+Attach the device to the WSL2 instance.
+```powershell
+# Windows Powershell
+usbipd attach --wsl --build <BUSID>
+```
+
+Now your board should be accessible in WSL2 via one of the `/dev/tty` devices.
+
+You can detatch the device from WSL2 back into your host machine by running:
+```powershell
+# Windows Powershell
+usbipd detach --busid <BUSID>
+```

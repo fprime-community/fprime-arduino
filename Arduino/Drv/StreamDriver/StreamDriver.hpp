@@ -7,9 +7,9 @@
 #ifndef StreamDriver_HPP
 #define StreamDriver_HPP
 
+#include <FprimeArduino.hpp>
 #include "Arduino/Drv/StreamDriver/StreamDriverComponentAc.hpp"
 #include "Os/Task.hpp"
-#include <FprimeArduino.hpp>
 
 namespace Arduino {
 // Allow for setting serial ports on linux from the inputs
@@ -53,12 +53,12 @@ class StreamDriver : public StreamDriverComponentBase {
     //! Handler implementation for send
     //!
     void send_handler(const FwIndexType portNum, /*!< The port number*/
-                                 Fw::Buffer& fwBuffer) override;
+                      Fw::Buffer& fwBuffer) override;
 
     //! Handler implementation for schedIn
     //!
     void schedIn_handler(const FwIndexType portNum, /*!< The port number*/
-                         U32 context       /*!< The call order*/
+                         U32 context                /*!< The call order*/
     );
 
     //! Port number to open

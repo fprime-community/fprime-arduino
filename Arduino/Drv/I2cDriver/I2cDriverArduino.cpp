@@ -4,27 +4,24 @@
 // \brief  cpp file for I2cDriver component implementation class
 // ======================================================================
 
-
 #include <Arduino/Drv/I2cDriver/I2cDriver.hpp>
-#include <FpConfig.hpp>
 #include "Fw/Types/Assert.hpp"
 
 namespace Arduino {
 
-  void I2cDriver::open(TwoWire *wire) {
+void I2cDriver::open(TwoWire* wire) {
     FW_ASSERT(wire != nullptr);
     m_port_pointer = wire;
     wire->begin();
-  }
+}
 
-  void I2cDriver::close() {
+void I2cDriver::close() {
     FW_ASSERT(m_port_pointer != 0);
     TwoWire* wire_ptr = reinterpret_cast<TwoWire*>(m_port_pointer);
     wire_ptr->end();
-  }
+}
 
-  Drv::I2cStatus I2cDriver::read_data(U32 addr, Fw::Buffer& fwBuffer)
-  {
+Drv::I2cStatus I2cDriver::read_data(U32 addr, Fw::Buffer& fwBuffer) {
     TwoWire* wire_ptr = reinterpret_cast<TwoWire*>(m_port_pointer);
 
     wire_ptr->requestFrom(static_cast<U8>(addr), fwBuffer.getSize());
@@ -39,10 +36,9 @@ namespace Arduino {
     fwBuffer.setSize(count);
 
     return Drv::I2cStatus::I2C_OK;
-  }
+}
 
-  Drv::I2cStatus I2cDriver::write_data(U32 addr, Fw::Buffer& fwBuffer)
-  {
+Drv::I2cStatus I2cDriver::write_data(U32 addr, Fw::Buffer& fwBuffer) {
     FW_ASSERT(m_port_pointer != 0);
     TwoWire* wire_ptr = reinterpret_cast<TwoWire*>(m_port_pointer);
 
@@ -51,6 +47,6 @@ namespace Arduino {
     wire_ptr->endTransmission();
 
     return Drv::I2cStatus::I2C_OK;
-  }
+}
 
-} // end namespace Arduino
+}  // end namespace Arduino
