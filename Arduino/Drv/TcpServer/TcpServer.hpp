@@ -26,7 +26,7 @@ class TcpServer final : public TcpServerComponentBase {
     ~TcpServer();
 
     // For WiFi if available
-    SocketIpStatus configure(const char* ssid, const char* password, U16 port, FwSizeType buffer_size=1024);
+    SocketIpStatus configure(const char* ssid, const char* password, U16 port=50000, FwSizeType buffer_size=1024);
 
     /**
      * \brief start the socket read task to start producing data

@@ -3,7 +3,18 @@
 TCP Server for Arduino
 
 ## Usage Examples
-Add usage examples here
+
+### Configure comDriver
+
+```cpp
+comDriver.configure("wifi-ssid", "wifi-password", 50000);
+```
+
+### F Prime GDS
+
+```sh
+fprime-gds -n --dictionary <path-to-dictionary.json> --ip-client --ip-address <ip-address-of-arduino-board>
+```
 
 ### Diagrams
 Add diagrams here
