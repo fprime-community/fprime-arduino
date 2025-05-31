@@ -3,7 +3,18 @@
 TcpClient for Arduino board with WiFi support
 
 ## Usage Examples
-Add usage examples here
+
+### Configure comDriver
+
+```cpp
+comDriver.configure("wifi-ssid", "wifi-password", "gds-ip-address", 50000);
+```
+
+### F Prime GDS
+
+```sh
+fprime-gds -n --dictionary <path-to-dictionary.json>
+```
 
 ### Diagrams
 Add diagrams here

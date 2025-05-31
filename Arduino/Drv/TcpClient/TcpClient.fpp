@@ -2,23 +2,13 @@ module Arduino {
     @ TcpClient for Arduino board with WiFi support
     passive component TcpClient {
 
-        @ Polling for receiving data
-        sync input port schedIn: Svc.Sched
+        include "../../../../fprime/Drv/Interfaces/ByteStreamDriverInterface.fppi"
 
-        @ Indicates the driver has connected to the UART device
-        output port ready: Drv.ByteStreamReady
-
-        @Allocate new buffer
+        @ Allocation for received data
         output port allocate: Fw.BufferGet
 
-        @return the allocated buffer
+        @ Deallocation of allocated buffers
         output port deallocate: Fw.BufferSend
-
-        @ Takes data to transmit out the UART device
-        guarded input port $send: Drv.ByteStreamSend
-
-        @ Takes data to transmit out the UART device
-        output port $recv: Drv.ByteStreamRecv
 
     }
 }

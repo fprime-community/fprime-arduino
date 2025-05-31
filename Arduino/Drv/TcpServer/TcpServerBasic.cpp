@@ -8,7 +8,7 @@
 
 namespace Arduino {
 
-SocketIpStatus TcpServer::configure(const char* ssid, const char* password, U16 port) {
+SocketIpStatus TcpServer::configure(const char* ssid, const char* password, U16 port, FwSizeType buffer_size) {
     // Not implemented
     return SocketIpStatus::SOCK_INVALID_CALL;
 }
@@ -25,12 +25,6 @@ SocketIpStatus TcpServer::send(const U8* data, U32 size) {
 
 void TcpServer::readLoop() {
     return;  // Not implemented
-}
-
-void TcpServer::readTask(void* pointer) {
-    FW_ASSERT(pointer);
-    TcpServer* self = reinterpret_cast<TcpServer*>(pointer);
-    self->readLoop();
 }
 
 }  // namespace Arduino

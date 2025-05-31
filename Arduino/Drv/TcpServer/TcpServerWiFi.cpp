@@ -62,7 +62,7 @@ SocketIpStatus TcpServer::send(const U8* data, U32 size) {
     FwSizeType sentBytes = reinterpret_cast<WiFiClient*>(this->m_socket.fd)->write(data, size);
 
     if (sentBytes != size) {
-        return SocketIpStatus::SOCK_INTERRUPTED_TRY_AGAIN;  // Only sent partial data, try again.
+        return SocketIpStatus::SOCK_INTERRUPTED_TRY_AGAIN;  // Failed to send data
     }
 
     return SocketIpStatus::SOCK_SUCCESS;
