@@ -48,6 +48,8 @@ class TcpServer final : public TcpServerComponentBase {
 
     SocketIpStatus send(const U8* data, U32 size);
 
+    SocketIpStatus reconnect();
+
   protected:
     /**
      * \brief receive off the TCP socket

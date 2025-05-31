@@ -27,6 +27,12 @@ void TcpServer::start(const Fw::StringBase &name,
     FW_ASSERT(Os::Task::OP_OK == stat, static_cast<FwAssertArgType>(stat));
 }
 
+void TcpServer::readTask(void* pointer) {
+    FW_ASSERT(pointer);
+    TcpServer* self = reinterpret_cast<TcpServer*>(pointer);
+    self->readLoop();
+}
+
 // ----------------------------------------------------------------------
 // Handler implementations for typed input ports
 // ----------------------------------------------------------------------

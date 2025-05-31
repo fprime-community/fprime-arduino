@@ -13,14 +13,18 @@ SocketIpStatus TcpServer::configure(const char* ssid, const char* password, U16 
     return SocketIpStatus::SOCK_INVALID_CALL;
 }
 
+SocketIpStatus TcpServer::reconnect() {
+    // Not implemented
+    return SocketIpStatus::SOCK_INVALID_CALL;
+}
+
 SocketIpStatus TcpServer::send(const U8* data, U32 size) {
     // Not implemented
     return SocketIpStatus::SOCK_INVALID_CALL;
 }
 
 void TcpServer::readLoop() {
-    // Not implemented
-    return;
+    return;  // Not implemented
 }
 
 void TcpServer::readTask(void* pointer) {
