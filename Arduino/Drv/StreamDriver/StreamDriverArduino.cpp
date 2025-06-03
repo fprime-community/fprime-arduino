@@ -6,8 +6,8 @@
 
 #include <Arduino/Drv/StreamDriver/StreamDriver.hpp>
 #include <FprimeArduino.hpp>
-#include "Fw/Types/BasicTypes.hpp"
 #include "Fw/Types/Assert.hpp"
+#include "Fw/Types/BasicTypes.hpp"
 
 namespace Arduino {
 
@@ -25,8 +25,7 @@ void StreamDriver::configure(Stream* streamDriver) {
 
 void StreamDriver ::write_data(Fw::Buffer& fwBuffer) {
     FW_ASSERT(m_port_pointer != 0);
-    reinterpret_cast<Stream*>(m_port_pointer)
-        ->write(reinterpret_cast<U8*>(fwBuffer.getData()), fwBuffer.getSize());
+    reinterpret_cast<Stream*>(m_port_pointer)->write(reinterpret_cast<U8*>(fwBuffer.getData()), fwBuffer.getSize());
 }
 
 void StreamDriver ::read_data(Fw::Buffer& fwBuffer) {

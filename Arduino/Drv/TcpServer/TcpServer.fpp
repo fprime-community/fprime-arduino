@@ -1,6 +1,6 @@
 module Arduino {
-    @ TcpClient for Arduino board with WiFi support
-    passive component TcpClient {
+    @ TCP Server for Arduino board with WiFi support
+    passive component TcpServer {
 
         include "../../../../fprime/Drv/Interfaces/ByteStreamDriverInterface.fppi"
 
