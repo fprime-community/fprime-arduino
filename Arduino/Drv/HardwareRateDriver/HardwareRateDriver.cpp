@@ -1,7 +1,7 @@
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <config/FpConfig.hpp>
 #ifdef ARDUINO
-#include <FprimeArduino.hpp>  // Needed for call to sei()
+#include <config/FprimeArduino.hpp>  // Needed for call to sei()
 #endif
 
 namespace Arduino {
