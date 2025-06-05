@@ -189,6 +189,7 @@ function(finalize_arduino_executable)
     if (DEFINED FPRIME_SUBBOUILD_TARGETS)
         return()
     endif()
+    set_target_properties("${FPRIME_CURRENT_MODULE}" PROPERTIES SUFFIX ".elf")
     # Add link dependency on
     target_link_libraries(
         "${FPRIME_CURRENT_MODULE}"
