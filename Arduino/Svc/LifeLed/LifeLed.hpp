@@ -8,7 +8,7 @@
 #define Arduino_LifeLed_HPP
 
 #include "Arduino/Svc/LifeLed/LifeLedComponentAc.hpp"
-#include "FprimeArduino.hpp"
+#include <config/FprimeArduino.hpp>
 #include "Fw/Types/OnEnumAc.hpp"
 
 namespace Arduino {
