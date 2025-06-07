@@ -2,7 +2,11 @@
 
 This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wrapper` tools used to bridge F Prime and the Arduino build system. This assumes a virtual environment has been setup for your project.
 
-> Activate the project virtual environment now.
+Activate the project virtual environment now.
+
+```sh
+. fprime-venv/bin/activate
+```
 
 ## Install arduino-cli
 
@@ -12,13 +16,6 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.
 ```
 
 ## Install Required Packages and Arduino Libraries
-
-### Pip
-
-Install all required `pip` packages using the [`requirements.txt`](../requirements.txt) file
-```sh
-pip install -r fprime-arduino/requirements.txt
-```
 
 ### Arduino
 
@@ -42,6 +39,9 @@ Initialize the arduino-cli configuration file.
 ```sh
 arduino-cli config init
 ```
+
+> [!NOTE]
+> If you already have the `arduino-cli` initialized from a previous project, you may skip this section. You will know if `arduino-cli` is already initialized if you run the above command and get the message: `Config file already exists, use --overwrite to discard the existing one.` If you wish to install other boards that you do not currently have installed, you may continue through this section.
 
 Below are board manager URLs for tested Arduino boards. You are not required to add all of these boards, but you are free to do so. You can view the list of addtional boards [here](https://github.com/per1234/inoplatforms/blob/main/ino-hardware-package-list.tsv) if you wish to test F Prime on boards that were not tested above.
 ```sh
@@ -68,6 +68,7 @@ arduino-cli core install rp2040:rp2040
 arduino-cli core install STMicroelectronics:stm32
 ```
 
+> [!WARNING]
 > ESP32: As of 10/27/2024, versions newer than `esp32:esp32@2.0.9` will not work.
 
 If you are building the Adafruit NRF52 boards and are on Linux, you must also install:
