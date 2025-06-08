@@ -10,5 +10,8 @@ module Arduino {
         @ Deallocation of allocated buffers
         output port deallocate: Fw.BufferSend
 
+        @ Polling for receiving data
+        sync input port schedIn: Svc.Sched
+
     }
 }

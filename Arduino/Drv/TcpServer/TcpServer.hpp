@@ -26,25 +26,7 @@ class TcpServer final : public TcpServerComponentBase {
     ~TcpServer();
 
     // For WiFi if available
-    SocketIpStatus configure(const char* ssid, const char* password, U16 port=50000, FwSizeType buffer_size=1024);
-
-    /**
-     * \brief start the socket read task to start producing data
-     *
-     * Starts up the socket reading task and when reopen was configured, will open up the socket.
-     *
-     * \note: users must now use `setAutomaticOpen` to configure the socket to automatically open connections. The
-     *        default behavior is to automatically open connections.
-     *
-     * \param name: name of the task
-     * \param priority: priority of the started task. See: Os::Task::start. Default: TASK_DEFAULT, not prioritized
-     * \param stack: stack size provided to the task. See: Os::Task::start. Default: TASK_DEFAULT, posix threads default
-     * \param cpuAffinity: cpu affinity provided to task. See: Os::Task::start. Default: TASK_DEFAULT, don't care
-     */
-    void start(const Fw::StringBase& name,
-               const Os::Task::ParamType priority = Os::Task::TASK_DEFAULT,
-               const Os::Task::ParamType stack = Os::Task::TASK_DEFAULT,
-               const Os::Task::ParamType cpuAffinity = Os::Task::TASK_DEFAULT);
+    SocketIpStatus configure(const char* ssid, const char* password, U16 port = 50000, FwSizeType buffer_size = 1024);
 
     SocketIpStatus send(const U8* data, U32 size);
 
@@ -55,12 +37,6 @@ class TcpServer final : public TcpServerComponentBase {
      * \brief receive off the TCP socket
      */
     virtual void readLoop();
-    /**
-     * \brief a task designed to read from the socket and output incoming data
-     *
-     * \param pointer: pointer to "this" component
-     */
-    static void readTask(void* pointer);
 
   private:
     // ----------------------------------------------------------------------
@@ -80,6 +56,12 @@ class TcpServer final : public TcpServerComponentBase {
     void send_handler(FwIndexType portNum,  //!< The port number
                       Fw::Buffer& fwBuffer  //!< The buffer
                       ) override;
+
+    //! Handler implementation for schedIn
+    //!
+    void schedIn_handler(const FwIndexType portNum, /*!< The port number*/
+                         U32 context                /*!< The call order*/
+    );
 
   protected:
     Os::Task m_task;

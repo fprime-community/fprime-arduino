@@ -16,23 +16,6 @@ TcpServer ::TcpServer(const char* const compName) : TcpServerComponentBase(compN
 
 TcpServer ::~TcpServer() {}
 
-void TcpServer::start(const Fw::StringBase &name,
-                                  const Os::Task::ParamType priority,
-                                  const Os::Task::ParamType stack,
-                                  const Os::Task::ParamType cpuAffinity) {
-    FW_ASSERT(m_task.getState() == Os::Task::State::NOT_STARTED);  // It is a coding error to start this task multiple times
-    // Note: the first step is for the IP socket to open the port
-    Os::Task::Arguments arguments(name, TcpServer::readTask, this, priority, stack, cpuAffinity);
-    Os::Task::Status stat = m_task.start(arguments);
-    FW_ASSERT(Os::Task::OP_OK == stat, static_cast<FwAssertArgType>(stat));
-}
-
-void TcpServer::readTask(void* pointer) {
-    FW_ASSERT(pointer);
-    TcpServer* self = reinterpret_cast<TcpServer*>(pointer);
-    self->readLoop();
-}
-
 // ----------------------------------------------------------------------
 // Handler implementations for typed input ports
 // ----------------------------------------------------------------------
@@ -54,6 +37,10 @@ void TcpServer ::send_handler(FwIndexType portNum, Fw::Buffer& fwBuffer) {
     }
     // Return the buffer and status to the caller
     this->sendReturnOut_out(0, fwBuffer, returnStatus);
+}
+
+void TcpServer ::schedIn_handler(const FwIndexType portNum, U32 context) {
+    this->readLoop();
 }
 
 }  // namespace Arduino

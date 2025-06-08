@@ -4,12 +4,12 @@ The following boards were successfully deployed with a basic [`LedBlinker`](http
 
 | Board Name                             | Chip                   | Toolchain              | Date Tested | F´ Version | arduino-cli Board Version   | Upload Guide                          |
 |----------------------------------------|------------------------|------------------------|-------------|------------|-----------------------------|---------------------------------------|
-| Teensy 4.1                             | ARM Cortex-M7          | teensy41               | 10/30/2024  | 3.5.0      | teensy:avr@1.59.0           | [README](./uploading/teensy.md)       |
-| Teensy 4.0                             | ARM Cortex-M7          | teensy40               | 10/30/2024  | 3.5.0      | teensy:avr@1.59.0           | [README](./uploading/teensy.md)       |
+| Teensy 4.1                             | ARM Cortex-M7          | teensy41               | 06/07/2025  | 4.0.0      | teensy:avr@1.59.0           | [README](./uploading/teensy.md)       |
+| Teensy 4.0                             | ARM Cortex-M7          | teensy40               | 06/07/2025  | 4.0.0      | teensy:avr@1.59.0           | [README](./uploading/teensy.md)       |
 | Teensy 3.2                             | ARM Cortex-M4          | teensy32               | 10/30/2024  | 3.5.0      | teensy:avr@1.59.0           | [README](./uploading/teensy.md)       |
-| Raspberry Pi Pico                      | RP2040                 | rpipico                | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
-| Raspberry Pi Pico W                    | RP2040                 | rpipicow               | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
-| Raspberry Pi Pico 2                    | RP2350                 | rpipico2               | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
+| Raspberry Pi Pico                      | RP2040                 | rpipico                | 06/07/2025  | 4.0.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
+| Raspberry Pi Pico W                    | RP2040                 | rpipicow               | 06/07/2025  | 4.0.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
+| Raspberry Pi Pico 2                    | RP2350                 | rpipico2               | 06/07/2025  | 4.0.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
 | Adafruit KB2040                        | RP2040                 | kb2040                 | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
 | Adafruit Feather RP2040                | RP2040                 | featherrp2040          | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
 | Adafruit Feather RP2040 RFM            | RP2040                 | featherrp2040rfm       | 10/30/2024  | 3.5.0      | rp2040:rp2040@4.2.0         | [README](./uploading/rp2040_2350.md)  |
