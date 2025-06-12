@@ -109,9 +109,54 @@ function(target_use_arduino_libraries)
     list(APPEND ARDUINO_LIBRARY_LIST_LOCAL ${ARGN})
     list(REMOVE_DUPLICATES ARDUINO_LIBRARY_LIST_LOCAL)
     set_property(GLOBAL PROPERTY ARDUINO_LIBRARY_LIST ${ARDUINO_LIBRARY_LIST_LOCAL})
-    list(APPEND MOD_DEPS fprime_arduino_libraries)
-    set(MOD_DEPS "${MOD_DEPS}" PARENT_SCOPE)
 endfunction(target_use_arduino_libraries)
+
+function(arduino_lib_installed)
+    # Extract the last argument as the result variable
+    list(LENGTH ARGN arg_count)
+    math(EXPR last_index "${arg_count} - 1")
+    list(GET ARGN ${last_index} result)
+
+    # Extract all other arguments as the libraries to check
+    list(REMOVE_AT ARGN ${last_index})
+    list(APPEND ARDUINO_LIBRARY_TO_CHECK ${ARGN})
+
+    find_program(ARDUINO_CLI NAMES arduino-cli)
+    if (NOT ARDUINO_CLI)
+        message(FATAL_ERROR "arduino-cli is required to be on PATH for arduino-support toolchain")
+    elseif (NOT DEFINED ARDUINO_FQBN)
+        message(FATAL_ERROR "Variable ARDUINO_FQDN must be set to use arduino-support")
+    endif()
+    set(EXECUTE_ARGS
+        "${ARDUINO_CLI}" "lib" "list" --fqbn "${ARDUINO_FQBN}"
+    )
+    # Execute the python wrapper
+    execute_process(COMMAND
+        ${EXECUTE_ARGS}
+        OUTPUT_VARIABLE RET_OUTPUT
+        RESULT_VARIABLE RET_CODE
+    )
+    # Split the output into lines
+    string(REGEX MATCHALL "[^\r\n]+" RET_OUTPUT_LINES "${RET_OUTPUT}")
+
+    # Extract the first column (library names) from each line
+    set(LIBRARY_NAMES "")
+    foreach(line IN LISTS RET_OUTPUT_LINES)
+        string(REGEX MATCH "^[^ ]+" library_name "${line}")
+        list(APPEND LIBRARY_NAMES "${library_name}")
+    endforeach()
+
+    set(is_installed TRUE)
+    foreach(LIBRARY IN LISTS ARDUINO_LIBRARY_TO_CHECK)
+        list(FIND LIBRARY_NAMES "${LIBRARY}" found_index)
+        if (found_index EQUAL -1)
+            set(is_installed FALSE)
+            break()
+        endif()
+    endforeach()
+
+    set(${result} ${is_installed} PARENT_SCOPE)
+endfunction(arduino_lib_installed)
 
 ####
 # Function `setup_arduino_linking`:
