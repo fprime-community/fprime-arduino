@@ -68,6 +68,15 @@ class ArduinoFileSystem : public FileSystemInterface {
     //! \return Status of the operation
     Status _getFreeSpace(const char* path, FwSizeType& totalBytes, FwSizeType& freeBytes) override;
 
+    //! \brief Get the type of the path (file, directory, etc.)
+    //!
+    //! It is invalid to pass `nullptr` as the path.
+    //!
+    //! \param path The path to check
+    //! \param pathType Reference to store the path type
+    //! \return Status of the operation
+    Status _getPathType(const char* path, PathType& pathType) override;
+
     //! \brief Get the current working directory
     //!
     //! Writes the current working directory path to the provided buffer of size bufferSize.

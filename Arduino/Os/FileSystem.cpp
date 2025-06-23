@@ -40,6 +40,22 @@ ArduinoFileSystem::Status ArduinoFileSystem::_rename(const char* originPath, con
     return stat;
 }
 
+ArduinoFileSystem::Status ArduinoFileSystem::_getPathType(const char* path, PathType& pathType) {
+    ::File fd = SD.open(path);
+    if (!fd) {
+        return Status::INVALID_PATH;
+    }
+
+    if (fd.isDirectory()) {
+        pathType = PathType::DIRECTORY;
+    } else {
+        pathType = PathType::FILE;
+    }
+
+    fd.close();
+    return Status::OP_OK;
+}
+
 ArduinoFileSystem::Status ArduinoFileSystem::_getWorkingDirectory(char* path, FwSizeType bufferSize) {
     return Status::NOT_SUPPORTED;
 }
