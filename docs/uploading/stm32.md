@@ -2,7 +2,7 @@
 
 These steps were tested and successfully uploaded for the following boards:
 - NUCLEO-H723ZG
-
+- NUCLEO-F401RE
 
 
 ```sh
