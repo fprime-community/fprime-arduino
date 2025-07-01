@@ -3,7 +3,7 @@
 // \brief stub implementation for Os::RawTime
 // ======================================================================
 #include "Arduino/Os/RawTime.hpp"
-#include "FprimeArduino.hpp"
+#include "config/FprimeArduino.hpp"
 namespace Os {
 namespace Arduino {
 

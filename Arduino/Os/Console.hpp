@@ -5,7 +5,7 @@
 #ifndef OS_Stub_Console_HPP
 #define OS_Stub_Console_HPP
 #include <Os/Console.hpp>
-#include <FprimeArduino.hpp>
+#include <config/FprimeArduino.hpp>
 namespace Os {
 namespace Arduino {
 

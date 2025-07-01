@@ -7,9 +7,9 @@
 #ifndef StreamDriver_HPP
 #define StreamDriver_HPP
 
+#include <config/FprimeArduino.hpp>
 #include "Arduino/Drv/StreamDriver/StreamDriverComponentAc.hpp"
 #include "Os/Task.hpp"
-#include <FprimeArduino.hpp>
 
 namespace Arduino {
 // Allow for setting serial ports on linux from the inputs
@@ -41,24 +41,28 @@ class StreamDriver : public StreamDriverComponentBase {
     //! Read the actual data
     void read_data(Fw::Buffer& fwBuffer);
     //! Write the actual data
-    void write_data(Fw::Buffer& fwBuffer);
+    void write_data(Fw::Buffer& serBuffer);
     // ----------------------------------------------------------------------
     // Handler implementations for user-defined typed input ports
     // ----------------------------------------------------------------------
 
+    //! Handler for handling buffer returns
+    //!
+    void recvReturnIn_handler(FwIndexType portNum, Fw::Buffer& fwBuffer);
+
     //! Handler implementation for send
     //!
-    Drv::SendStatus send_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                                 Fw::Buffer& fwBuffer) override;
+    void send_handler(const FwIndexType portNum, /*!< The port number*/
+                      Fw::Buffer& fwBuffer) override;
 
     //! Handler implementation for schedIn
     //!
-    void schedIn_handler(const NATIVE_INT_TYPE portNum, /*!< The port number*/
-                         NATIVE_UINT_TYPE context       /*!< The call order*/
+    void schedIn_handler(const FwIndexType portNum, /*!< The port number*/
+                         U32 context                /*!< The call order*/
     );
 
     //! Port number to open
-    NATIVE_UINT_TYPE m_port_number;
+    FwIndexType m_port_number;
     //! Stores the open stream port, POINTER_CAST so Linux and Ardunio may use different types
     void* m_port_pointer;
 };
