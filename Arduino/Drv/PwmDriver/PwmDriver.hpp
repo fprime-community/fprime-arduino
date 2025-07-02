@@ -11,47 +11,38 @@
 
 namespace Arduino {
 
-  class PwmDriver :
-    public PwmDriverComponentBase
-  {
+class PwmDriver : public PwmDriverComponentBase {
+  public:
+    // ----------------------------------------------------------------------
+    // Construction, initialization, and destruction
+    // ----------------------------------------------------------------------
 
-    public:
+    //! Construct object PwmDriver
+    //!
+    PwmDriver(const char* const compName /*!< The component name*/
+    );
 
-      // ----------------------------------------------------------------------
-      // Construction, initialization, and destruction
-      // ----------------------------------------------------------------------
+    //! Destroy object PwmDriver
+    //!
+    ~PwmDriver();
 
-      //! Construct object PwmDriver
-      //!
-      PwmDriver(
-          const char *const compName /*!< The component name*/
-      );
+    //! Setup PWM Pin
+    //!
+    void open(FwIndexType gpio);
 
-      //! Destroy object PwmDriver
-      //!
-      ~PwmDriver();
+  private:
+    // ----------------------------------------------------------------------
+    // Handler implementations for user-defined typed input ports
+    // ----------------------------------------------------------------------
 
-      //! Setup PWM Pin
-      //!
-      void open(NATIVE_INT_TYPE gpio);
+    //! Handler implementation for setDutyCycle
+    //!
+    Fw::Success setDutyCycle_handler(const FwIndexType portNum, /*!< The port number*/
+                                     U8 dutyCycle);
 
-    PRIVATE:
+    PlatformIntType m_pin;
+};
 
-      // ----------------------------------------------------------------------
-      // Handler implementations for user-defined typed input ports
-      // ----------------------------------------------------------------------
-
-      //! Handler implementation for setDutyCycle
-      //!
-      Fw::Success setDutyCycle_handler(
-          const NATIVE_INT_TYPE portNum, /*!< The port number*/
-          U8 dutyCycle 
-      );
-
-      PlatformIntType m_pin;
-
-    };
-
-} // end namespace Arduino
+}  // end namespace Arduino
 
 #endif

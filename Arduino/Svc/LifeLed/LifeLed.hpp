@@ -8,7 +8,7 @@
 #define Arduino_LifeLed_HPP
 
 #include "Arduino/Svc/LifeLed/LifeLedComponentAc.hpp"
-#include "FprimeArduino.hpp"
+#include <config/FprimeArduino.hpp>
 #include "Fw/Types/OnEnumAc.hpp"
 
 namespace Arduino {
@@ -27,13 +27,12 @@ class LifeLed : public LifeLedComponentBase {
     ~LifeLed();
 
     //! Set the arduino pin to own
-    void configure(PlatformIntType pin=Arduino::DEF_LED_BUILTIN);
+    void configure(PlatformIntType pin = Arduino::DEF_LED_BUILTIN);
 
     //! Set the pin state
     void set(const Fw::On::T& on_off);
 
-
-  PRIVATE:
+  private:
     // ----------------------------------------------------------------------
     // Handler implementations for user-defined typed input ports
     // ----------------------------------------------------------------------
@@ -41,8 +40,8 @@ class LifeLed : public LifeLedComponentBase {
     //! Handler implementation for run
     //!
     //! Rate group port
-    void run_handler(NATIVE_INT_TYPE portNum,  //!< The port number
-                     NATIVE_UINT_TYPE context  //!< The call order
+    void run_handler(FwIndexType portNum,  //!< The port number
+                     U32 context           //!< The call order
                      ) override;
     U16 m_blink_count;
     PlatformIntType m_pin;

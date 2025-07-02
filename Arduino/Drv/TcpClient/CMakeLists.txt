@@ -6,14 +6,16 @@
 # UT_SOURCE_FILES: list of source files for unit tests
 #
 ####
-if (NOT ARDUINO_WIFI_ENABLED)
-    return()
-endif()
 set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/TcpClient.fpp"
   "${CMAKE_CURRENT_LIST_DIR}/TcpClient.cpp"
 )
 
-target_use_arduino_libraries("WiFi")
+if (ARDUINO_WIFI_ENABLED)
+    list(APPEND SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/TcpClientWiFi.cpp")
+    target_use_arduino_libraries("WiFi")
+else()
+    list(APPEND SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/TcpClientBasic.cpp")
+endif()
 
 register_fprime_module()

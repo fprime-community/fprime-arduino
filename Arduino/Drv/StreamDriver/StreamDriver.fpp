@@ -5,19 +5,13 @@ module Arduino {
     @ Polling for receiving data
     sync input port schedIn: Svc.Sched
 
-    @ Indicates the driver has connected to the UART device
-    output port ready: Drv.ByteStreamReady
-
-    @Allocate new buffer
+    @ Allocation port used for allocating memory in the receive task
     output port allocate: Fw.BufferGet
 
-    @return the allocated buffer
+    @ Deallocation of allocated buffers
     output port deallocate: Fw.BufferSend
 
-    @ Takes data to transmit out the UART device
-    guarded input port $send: Drv.ByteStreamSend
-
-    @ Takes data to transmit out the UART device
-    output port $recv: Drv.ByteStreamRecv
+    @ TODO: Update once interfaces are fully supported in fpp
+    include "../../../../fprime/Drv/Interfaces/ByteStreamDriverInterface.fppi"
   }
 }

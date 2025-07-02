@@ -10,7 +10,7 @@
  */
 #include <Arduino/Svc/ArduinoTime/ArduinoTime.hpp>
 #include <TimeLib.h>
-#include <FprimeArduino.hpp>
+#include <config/FprimeArduino.hpp>
 
 namespace Arduino {
 
@@ -20,7 +20,7 @@ constexpr  U32 MICROSECONDS_PER_SECOND = 1000000;
 ArduinoTime::ArduinoTime(const char* name) : ArduinoTimeComponentBase(name) {}
 ArduinoTime::~ArduinoTime() {}
 
-void ArduinoTime::getTime_handler(NATIVE_INT_TYPE portNum, /*!< The port number*/
+void ArduinoTime::getTime_handler(FwIndexType portNum, /*!< The port number*/
                                       Fw::Time& time           /*!< The time to set */
 ) {
     time_t time_seconds = 0;

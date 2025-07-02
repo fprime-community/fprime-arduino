@@ -8,6 +8,12 @@
 restrict_platforms(ArduinoFw)
 add_custom_target("${FPRIME_CURRENT_MODULE}")
 
+arduino_lib_installed("SD" LIB_SD_INSTALLED)
+
 # Set up Arduino implementations
-add_fprime_supplied_os_module(Console Arduino)
-add_fprime_supplied_os_module(RawTime Arduino)
+register_os_implementation("Console" Arduino)
+register_os_implementation("RawTime" Arduino)
+if (LIB_SD_INSTALLED)
+    target_use_arduino_libraries("SD")
+    register_os_implementation("File;FileSystem;Directory" Arduino_SD)
+endif()

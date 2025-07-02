@@ -8,7 +8,7 @@
 #define I2cDriver_HPP
 
 #include "Arduino/Drv/I2cDriver/I2cDriverComponentAc.hpp"
-#include <FprimeArduino.hpp>
+#include <config/FprimeArduino.hpp>
 #include <Wire.h>
 
 namespace Arduino {
@@ -50,7 +50,7 @@ namespace Arduino {
       //! Handler implementation for read
       //!
       Drv::I2cStatus read_handler(
-          const NATIVE_INT_TYPE portNum, /*!< The port number*/
+          const FwIndexType portNum, /*!< The port number*/
           U32 addr, /*!< 
       I2C slave device address
       */
@@ -62,7 +62,7 @@ namespace Arduino {
       //! Handler implementation for write
       //!
       Drv::I2cStatus write_handler(
-          const NATIVE_INT_TYPE portNum, /*!< The port number*/
+          const FwIndexType portNum, /*!< The port number*/
           U32 addr, /*!< 
       I2C slave device address
       */

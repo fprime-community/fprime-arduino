@@ -10,10 +10,8 @@ set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/SpiDriver.fpp"
   "${CMAKE_CURRENT_LIST_DIR}/SpiDriver.cpp"
 )
-if(FPRIME_ARDUINO)
-    list(APPEND SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/SpiDriverArduino.cpp")
-    target_use_arduino_libraries("SPI")
-else()
-    list(APPEND SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/SpiDriverLinux.cpp")
-endif()
+
+list(APPEND SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/SpiDriverArduino.cpp")
+target_use_arduino_libraries("SPI")
+
 register_fprime_module()

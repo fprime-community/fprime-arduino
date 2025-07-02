@@ -5,7 +5,6 @@
 // ======================================================================
 
 #include "Arduino/Drv/I2cNodeDriver/I2cNodeDriver.hpp"
-#include "FpConfig.hpp"
 #include "Fw/Types/Assert.hpp"
 
 namespace Arduino {
@@ -19,9 +18,9 @@ I2cNodeDriver ::I2cNodeDriver(const char* const compName) : I2cNodeDriverCompone
 
 I2cNodeDriver ::~I2cNodeDriver() {}
 
-void I2cNodeDriver ::configure(const U16 address, TwoWire &wire) {
+void I2cNodeDriver ::configure(const U16 address, TwoWire& wire) {
     FW_ASSERT(this->m_wire == nullptr);
-    FW_ASSERT(I2cNodeDriver::s_component == nullptr); // Cannot run multiple I2cNodes at once
+    FW_ASSERT(I2cNodeDriver::s_component == nullptr);  // Cannot run multiple I2cNodes at once
     this->m_wire = &wire;
     I2cNodeDriver ::s_component = this;
     this->m_wire->begin(address);
@@ -31,14 +30,14 @@ void I2cNodeDriver ::configure(const U16 address, TwoWire &wire) {
 
 void I2cNodeDriver ::write(int size) {
     FW_ASSERT(this->m_wire != nullptr);
-    FW_ASSERT(this->m_wire->available() >= size); // If size was reported available, then at least that size must be
+    FW_ASSERT(this->m_wire->available() >= size);  // If size was reported available, then at least that size must be
     this->m_wire->readBytes(this->m_buffer, size);
     Fw::Buffer writeData(this->m_buffer, size);
     this->write_out(0, this->m_address, writeData);
 }
 
 void I2cNodeDriver ::writeCallback(int size) {
-    FW_ASSERT(I2cNodeDriver::s_component != nullptr); // To reach this statement, this variable must be set
+    FW_ASSERT(I2cNodeDriver::s_component != nullptr);  // To reach this statement, this variable must be set
     I2cNodeDriver::s_component->write(size);
 }
 
@@ -50,7 +49,7 @@ void I2cNodeDriver ::read() {
 }
 
 void I2cNodeDriver ::readCallback() {
-    FW_ASSERT(I2cNodeDriver::s_component != nullptr); // To reach this statement, this variable must be set
+    FW_ASSERT(I2cNodeDriver::s_component != nullptr);  // To reach this statement, this variable must be set
     I2cNodeDriver::s_component->read();
 }
 
