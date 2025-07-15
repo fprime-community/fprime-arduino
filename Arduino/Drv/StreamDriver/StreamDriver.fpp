@@ -11,6 +11,6 @@ module Arduino {
     @ Deallocation of allocated buffers
     output port deallocate: Fw.BufferSend
 
-    import ByteStreamDriver
+    import Drv.ByteStreamDriver
   }
 }
