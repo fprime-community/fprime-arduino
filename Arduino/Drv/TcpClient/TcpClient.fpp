@@ -2,7 +2,7 @@ module Arduino {
     @ TcpClient for Arduino board with WiFi support
     passive component TcpClient {
 
-        import ByteStreamDriver
+        import Drv.ByteStreamDriver
 
         @ Allocation for received data
         output port allocate: Fw.BufferGet

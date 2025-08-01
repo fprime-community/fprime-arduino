@@ -7,7 +7,7 @@
 #ifndef StreamDriver_HPP
 #define StreamDriver_HPP
 
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include "Arduino/Drv/StreamDriver/StreamDriverComponentAc.hpp"
 #include "Os/Task.hpp"
 

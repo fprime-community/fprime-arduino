@@ -10,7 +10,7 @@
  */
 #include <Arduino/Svc/ArduinoTime/ArduinoTime.hpp>
 #include <TimeLib.h>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 
 namespace Arduino {
 

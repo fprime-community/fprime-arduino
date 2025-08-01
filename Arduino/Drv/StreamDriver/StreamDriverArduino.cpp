@@ -5,7 +5,7 @@
 // ======================================================================
 
 #include <Arduino/Drv/StreamDriver/StreamDriver.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include "Fw/Types/Assert.hpp"
 #include "Fw/Types/BasicTypes.hpp"
 
