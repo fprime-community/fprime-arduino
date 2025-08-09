@@ -41,7 +41,7 @@ class StreamDriver : public StreamDriverComponentBase {
     //! Read the actual data
     void read_data(Fw::Buffer& fwBuffer);
     //! Write the actual data
-    void write_data(Fw::Buffer& serBuffer);
+    Drv::ByteStreamStatus write_data(Fw::Buffer& serBuffer);
     // ----------------------------------------------------------------------
     // Handler implementations for user-defined typed input ports
     // ----------------------------------------------------------------------
@@ -52,8 +52,8 @@ class StreamDriver : public StreamDriverComponentBase {
 
     //! Handler implementation for send
     //!
-    void send_handler(const FwIndexType portNum, /*!< The port number*/
-                      Fw::Buffer& fwBuffer) override;
+    Drv::ByteStreamStatus send_handler(const FwIndexType portNum, /*!< The port number*/
+                                       Fw::Buffer& fwBuffer) override;
 
     //! Handler implementation for schedIn
     //!

@@ -23,9 +23,10 @@ void StreamDriver::configure(Stream* streamDriver) {
 // Handler implementations for user-defined typed input ports
 // ----------------------------------------------------------------------
 
-void StreamDriver ::write_data(Fw::Buffer& fwBuffer) {
+Drv::ByteStreamStatus StreamDriver ::write_data(Fw::Buffer& fwBuffer) {
     FW_ASSERT(m_port_pointer != 0);
-    reinterpret_cast<Stream*>(m_port_pointer)->write(reinterpret_cast<U8*>(fwBuffer.getData()), fwBuffer.getSize());
+    size_t bytes_written = reinterpret_cast<Stream*>(m_port_pointer)->write(reinterpret_cast<U8*>(fwBuffer.getData()), fwBuffer.getSize());
+    return (bytes_written == fwBuffer.getSize()) ? Drv::ByteStreamStatus::OP_OK : Drv::ByteStreamStatus::OTHER_ERROR;
 }
 
 void StreamDriver ::read_data(Fw::Buffer& fwBuffer) {

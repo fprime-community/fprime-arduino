@@ -8,7 +8,7 @@
 #define Arduino_I2cNodeDriver_HPP
 
 #include <Wire.h>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include "Arduino/Drv/I2cNodeDriver/I2cNodeDriverComponentAc.hpp"
 
 namespace Arduino {
