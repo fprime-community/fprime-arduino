@@ -76,7 +76,7 @@ class TcpClient : public TcpClientComponentBase {
      * \param portNum: fprime port number of the incoming port call
      * \param fwBuffer: buffer containing data to be sent
      */
-    void send_handler(const FwIndexType portNum, Fw::Buffer& fwBuffer) override;
+    Drv::ByteStreamStatus send_handler(const FwIndexType portNum, Fw::Buffer& fwBuffer) override;
 
     //! Handler implementation for recvReturnIn
     //!

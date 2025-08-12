@@ -5,7 +5,7 @@
 // ======================================================================
 
 #include <Arduino/Drv/AnalogDriver/AnalogDriver.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 
 namespace Arduino {
 

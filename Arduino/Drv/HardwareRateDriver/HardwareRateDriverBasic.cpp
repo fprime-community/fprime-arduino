@@ -1,7 +1,7 @@
 #include <config/FpConfig.hpp>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
 #include <Fw/Logger/Logger.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 
 namespace Arduino {
 static U32 last_us;

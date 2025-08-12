@@ -53,9 +53,9 @@ class TcpServer final : public TcpServerComponentBase {
     //! Handler implementation for send
     //!
     //! Invoke this port to send data out the driver
-    void send_handler(FwIndexType portNum,  //!< The port number
-                      Fw::Buffer& fwBuffer  //!< The buffer
-                      ) override;
+    Drv::ByteStreamStatus send_handler(FwIndexType portNum,  //!< The port number
+                                       Fw::Buffer& fwBuffer  //!< The buffer
+                                       ) override;
 
     //! Handler implementation for schedIn
     //!

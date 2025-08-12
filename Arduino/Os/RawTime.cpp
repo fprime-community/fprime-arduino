@@ -3,7 +3,7 @@
 // \brief stub implementation for Os::RawTime
 // ======================================================================
 #include "Arduino/Os/RawTime.hpp"
-#include "config/FprimeArduino.hpp"
+#include "Arduino/config/FprimeArduino.hpp"
 namespace Os {
 namespace Arduino {
 
@@ -47,7 +47,7 @@ RawTime::Status ArduinoRawTime::getTimeInterval(const Os::RawTime& other, Fw::Ti
     return Status::OP_OK;
 }
 
-Fw::SerializeStatus ArduinoRawTime::serialize(Fw::SerializeBufferBase& buffer) const {
+Fw::SerializeStatus ArduinoRawTime::serializeTo(Fw::SerializeBufferBase& buffer) const {
     Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
     status = buffer.serialize(this->m_handle.m_seconds);
     if (status == Fw::FW_SERIALIZE_OK) {
@@ -56,7 +56,7 @@ Fw::SerializeStatus ArduinoRawTime::serialize(Fw::SerializeBufferBase& buffer) c
     return status;
 }
 
-Fw::SerializeStatus ArduinoRawTime::deserialize(Fw::SerializeBufferBase& buffer) {
+Fw::SerializeStatus ArduinoRawTime::deserializeFrom(Fw::SerializeBufferBase& buffer) {
     Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
     status = buffer.deserialize(this->m_handle.m_seconds);
     if (status == Fw::FW_SERIALIZE_OK) {

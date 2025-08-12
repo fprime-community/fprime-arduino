@@ -6,7 +6,7 @@
 
 #include <Arduino/Drv/GpioDriver/GpioDriver.hpp>
 #include <config/FpConfig.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 
 namespace Arduino {
 

@@ -11,7 +11,6 @@ module Arduino {
     @ Deallocation of allocated buffers
     output port deallocate: Fw.BufferSend
 
-    @ TODO: Update once interfaces are fully supported in fpp
-    include "../../../../fprime/Drv/Interfaces/ByteStreamDriverInterface.fppi"
+    import Drv.ByteStreamDriver
   }
 }

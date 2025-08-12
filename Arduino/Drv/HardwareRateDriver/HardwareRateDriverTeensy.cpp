@@ -1,6 +1,6 @@
 #include <IntervalTimer.h>
 #include <Arduino/Drv/HardwareRateDriver/HardwareRateDriver.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include <Fw/Logger/Logger.hpp>
 
 namespace Arduino {

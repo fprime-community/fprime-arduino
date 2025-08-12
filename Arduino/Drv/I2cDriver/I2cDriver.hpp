@@ -8,7 +8,7 @@
 #define I2cDriver_HPP
 
 #include "Arduino/Drv/I2cDriver/I2cDriverComponentAc.hpp"
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include <Wire.h>
 
 namespace Arduino {
@@ -36,7 +36,7 @@ namespace Arduino {
       //!
       ~I2cDriver();
 
-    PRIVATE:
+    private:
 
       //! Read the actual data
       Drv::I2cStatus read_data(U32 addr, Fw::Buffer& fwBuffer);

@@ -5,7 +5,7 @@
 // ======================================================================
 
 #include <Arduino/Drv/SpiDriver/SpiDriver.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include "Fw/Types/Assert.hpp"
 
 namespace Arduino {

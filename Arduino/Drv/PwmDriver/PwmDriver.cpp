@@ -5,7 +5,7 @@
 // ======================================================================
 
 #include <Arduino/Drv/PwmDriver/PwmDriver.hpp>
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 
 namespace Arduino {
 

@@ -38,7 +38,7 @@ class ArduinoTime : public ArduinoTimeComponentBase {
                          U8 second             //!< The current second (0-59)
                          ) override;
 
-  PRIVATE:
+  private:
     // ----------------------------------------------------------------------
     // Handler implementations for commands
     // ----------------------------------------------------------------------

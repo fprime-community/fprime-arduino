@@ -24,7 +24,7 @@ void TcpClient ::schedIn_handler(const FwIndexType portNum, U32 context) {
 // Handler implementations for user-defined typed input ports
 // ----------------------------------------------------------------------
 
-void TcpClient::send_handler(const FwIndexType portNum, Fw::Buffer& fwBuffer) {
+Drv::ByteStreamStatus TcpClient::send_handler(const FwIndexType portNum, Fw::Buffer& fwBuffer) {
     SocketIpStatus status = this->send(fwBuffer.getData(), fwBuffer.getSize());
     Drv::ByteStreamStatus returnStatus;
     switch (status) {
@@ -38,8 +38,7 @@ void TcpClient::send_handler(const FwIndexType portNum, Fw::Buffer& fwBuffer) {
             returnStatus = Drv::ByteStreamStatus::OTHER_ERROR;
             break;
     }
-    // Return the buffer and status to the caller
-    this->sendReturnOut_out(0, fwBuffer, returnStatus);
+    return returnStatus;
 }
 
 void TcpClient::recvReturnIn_handler(FwIndexType portNum, Fw::Buffer& fwBuffer) {
