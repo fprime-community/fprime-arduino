@@ -61,10 +61,17 @@ class StreamDriver : public StreamDriverComponentBase {
                          U32 context                /*!< The call order*/
     );
 
+    enum ConnectionStatus {
+      DISCONNECTED,
+      CONNECTED
+    };
+
     //! Port number to open
     FwIndexType m_port_number;
     //! Stores the open stream port, POINTER_CAST so Linux and Ardunio may use different types
     void* m_port_pointer;
+    //! Stores the current connection status
+    ConnectionStatus connection_status;
 };
 
 }  // end namespace Arduino
