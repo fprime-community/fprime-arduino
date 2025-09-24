@@ -6,5 +6,7 @@ module Arduino {
 
         guarded input port read: Drv.I2c
 
+        guarded input port writeRead: Drv.I2cWriteRead
+
     }
 }

@@ -14,7 +14,9 @@ namespace Arduino {
 // ----------------------------------------------------------------------
 
 StreamDriver ::StreamDriver(const char* compName)
-    : StreamDriverComponentBase(compName), m_port_number(0), m_port_pointer(nullptr) {}
+    : StreamDriverComponentBase(compName), m_port_number(0), m_port_pointer(nullptr) {
+        connection_status = ConnectionStatus::DISCONNECTED;
+    }
 
 StreamDriver ::~StreamDriver(void) {}
 
@@ -26,12 +28,20 @@ void StreamDriver::recvReturnIn_handler(FwIndexType portNum, Fw::Buffer& fwBuffe
     this->deallocate_out(0, fwBuffer);
 }
 
-Drv::ByteStreamStatus StreamDriver ::send_handler(const FwIndexType portNum, Fw::Buffer& serBuffer) {
-    (void) write_data(serBuffer);
-    return Drv::ByteStreamStatus::OP_OK;
+Drv::ByteStreamStatus StreamDriver ::send_handler(const FwIndexType portNum, Fw::Buffer& serBuffer) {    
+    Drv::ByteStreamStatus status = write_data(serBuffer);
+    if (status != Drv::ByteStreamStatus::OP_OK) {
+        connection_status = ConnectionStatus::DISCONNECTED;
+    }
+    return status;
 }
 
 void StreamDriver ::schedIn_handler(const FwIndexType portNum, U32 context) {
+    //If the connection was previously disconnected but is now available, re-configure
+    if ((connection_status == ConnectionStatus::DISCONNECTED) && Serial) {
+        connection_status = ConnectionStatus::CONNECTED;
+        configure(&Serial);
+    }
     if (not reinterpret_cast<Stream*>(m_port_pointer)->available()) {
         return;
     }

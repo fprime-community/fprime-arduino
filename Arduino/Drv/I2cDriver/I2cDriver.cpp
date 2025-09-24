@@ -35,4 +35,17 @@ Drv::I2cStatus I2cDriver ::write_handler(const FwIndexType portNum, U32 addr, Fw
     return write_data(addr, serBuffer);
 }
 
+Drv::I2cStatus I2cDriver ::writeRead_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& writeBuffer, Fw::Buffer& readBuffer) {
+    // Ensure buffer is not a nullptr
+    FW_ASSERT(writeBuffer.getData());
+    FW_ASSERT(readBuffer.getData());
+
+    Drv::I2cStatus status = write_data(addr, writeBuffer);
+    if (status == Drv::I2cStatus::I2C_OK) {
+        return read_data(addr, readBuffer);
+    }
+
+    return Drv::I2cStatus::I2C_OTHER_ERR;
+}
+
 }  // end namespace Arduino
