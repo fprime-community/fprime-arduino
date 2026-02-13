@@ -22,6 +22,7 @@ void I2cDriver::close() {
 }
 
 Drv::I2cStatus I2cDriver::read_data(U32 addr, Fw::Buffer& fwBuffer) {
+    FW_ASSERT(m_port_pointer != 0);
     TwoWire* wire_ptr = reinterpret_cast<TwoWire*>(m_port_pointer);
 
     wire_ptr->requestFrom(static_cast<U8>(addr), fwBuffer.getSize());
@@ -47,6 +48,14 @@ Drv::I2cStatus I2cDriver::write_data(U32 addr, Fw::Buffer& fwBuffer) {
     wire_ptr->endTransmission();
 
     return Drv::I2cStatus::I2C_OK;
+}
+
+Drv::I2cStatus I2cDriver::writeRead_data(U32 addr, Fw::Buffer& writeBuffer, Fw::Buffer& readBuffer) {
+    Drv::I2cStatus write_status = write_data(addr, writeBuffer);
+    if (write_status != Drv::I2cStatus::I2C_OK) {
+        return write_status;
+    }
+    return read_data(addr, readBuffer);
 }
 
 }  // end namespace Arduino

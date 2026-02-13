@@ -42,34 +42,31 @@ namespace Arduino {
       Drv::I2cStatus read_data(U32 addr, Fw::Buffer& fwBuffer);
       //! Write the actual data
       Drv::I2cStatus write_data(U32 addr, Fw::Buffer& fwBuffer);
+      //! Write and read the actual data
+      Drv::I2cStatus writeRead_data(U32 addr, Fw::Buffer& writeBuffer, Fw::Buffer& readBuffer);
 
       // ----------------------------------------------------------------------
       // Handler implementations for user-defined typed input ports
       // ----------------------------------------------------------------------
 
-      //! Handler implementation for read
-      //!
-      Drv::I2cStatus read_handler(
-          const FwIndexType portNum, /*!< The port number*/
-          U32 addr, /*!< 
-      I2C slave device address
-      */
-          Fw::Buffer &serBuffer /*!< 
-      Buffer with data to read/write to/from
-      */
-      );
-
       //! Handler implementation for write
       //!
-      Drv::I2cStatus write_handler(
-          const FwIndexType portNum, /*!< The port number*/
-          U32 addr, /*!< 
-      I2C slave device address
-      */
-          Fw::Buffer &serBuffer /*!< 
-      Buffer with data to read/write to/from
-      */
-      );
+      Drv::I2cStatus write_handler(const FwIndexType portNum, /*!< The port number*/
+                                  U32 addr,
+                                  Fw::Buffer& serBuffer);
+
+      //! Handler implementation for read
+      //!
+      Drv::I2cStatus read_handler(const FwIndexType portNum, /*!< The port number*/
+                                  U32 addr,
+                                  Fw::Buffer& serBuffer);
+
+      //! Handler implementation for writeRead
+      //!
+      Drv::I2cStatus writeRead_handler(const FwIndexType portNum, /*!< The port number*/
+                                      U32 addr,
+                                      Fw::Buffer& writeBuffer,
+                                      Fw::Buffer& readBuffer);
 
       //! Stores the open wire port, POINTER_CAST so Linux and Ardunio may use different types
       void* m_port_pointer;
