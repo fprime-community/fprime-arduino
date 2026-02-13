@@ -47,20 +47,20 @@ RawTime::Status ArduinoRawTime::getTimeInterval(const Os::RawTime& other, Fw::Ti
     return Status::OP_OK;
 }
 
-Fw::SerializeStatus ArduinoRawTime::serializeTo(Fw::SerializeBufferBase& buffer) const {
+Fw::SerializeStatus ArduinoRawTime::serializeTo(Fw::SerialBufferBase& buffer, Fw::Endianness mode) const {
     Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
-    status = buffer.serialize(this->m_handle.m_seconds);
+    status = buffer.serializeFrom(this->m_handle.m_seconds, mode);
     if (status == Fw::FW_SERIALIZE_OK) {
-        status = buffer.serialize(this->m_handle.m_micros);
+        status = buffer.serializeFrom(this->m_handle.m_micros, mode);
     }
     return status;
 }
 
-Fw::SerializeStatus ArduinoRawTime::deserializeFrom(Fw::SerializeBufferBase& buffer) {
+Fw::SerializeStatus ArduinoRawTime::deserializeFrom(Fw::SerialBufferBase& buffer, Fw::Endianness mode) {
     Fw::SerializeStatus status = Fw::SerializeStatus::FW_SERIALIZE_OK;
-    status = buffer.deserialize(this->m_handle.m_seconds);
+    status = buffer.deserializeTo(this->m_handle.m_seconds, mode);
     if (status == Fw::FW_SERIALIZE_OK) {
-        status = buffer.deserialize(this->m_handle.m_micros);
+        status = buffer.deserializeTo(this->m_handle.m_micros, mode);
     }
     return status;
 }
