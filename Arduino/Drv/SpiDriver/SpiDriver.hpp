@@ -68,6 +68,13 @@ class SpiDriver : public SpiDriverComponentBase {
     // Handler implementations for user-defined typed input ports
     // ----------------------------------------------------------------------
 
+    //! Handler implementation for SpiWriteRead
+    //!
+    Drv::SpiStatus SpiWriteRead_handler(const FwIndexType portNum, /*!< The port number*/
+                                        Fw::Buffer& writeBuffer,
+                                        Fw::Buffer& readBuffer);
+
+    // @ DEPRECATED: Use SpiWriteRead port instead (same operation with a return value)
     //! Handler implementation for SpiReadWrite
     //!
     void SpiReadWrite_handler(const FwIndexType portNum, /*!< The port number*/

@@ -21,18 +21,26 @@ I2cDriver ::~I2cDriver() {}
 // Handler implementations for user-defined typed input ports
 // ----------------------------------------------------------------------
 
-Drv::I2cStatus I2cDriver ::read_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& serBuffer) {
+Drv::I2cStatus I2cDriver::read_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& serBuffer) {
     // Ensure buffer is not a nullptr
     FW_ASSERT(serBuffer.getData());
 
     return read_data(addr, serBuffer);
 }
 
-Drv::I2cStatus I2cDriver ::write_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& serBuffer) {
+Drv::I2cStatus I2cDriver::write_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& serBuffer) {
     // Ensure buffer is not a nullptr
     FW_ASSERT(serBuffer.getData());
 
     return write_data(addr, serBuffer);
+}
+
+Drv::I2cStatus I2cDriver::writeRead_handler(const FwIndexType portNum, U32 addr, Fw::Buffer& writeBuffer, Fw::Buffer& readBuffer) {
+    // Ensure buffers are not nullptr
+    FW_ASSERT(writeBuffer.getData());
+    FW_ASSERT(readBuffer.getData());
+
+    return writeRead_data(addr, writeBuffer, readBuffer);
 }
 
 }  // end namespace Arduino
