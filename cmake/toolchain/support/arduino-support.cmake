@@ -72,13 +72,25 @@ function(set_arduino_build_settings)
         string(APPEND CMAKE_EXE_LINKER_FLAGS_INIT " ${ARDUINO_LINKER_FLAGS}")
     endif()
 
+    # Quote any linker flag paths containing parentheses to avoid shell syntax errors
+    string(REGEX REPLACE "([^ ]*[(][^ ]*)" "\"\\1\"" CMAKE_EXE_LINKER_FLAGS_INIT "${CMAKE_EXE_LINKER_FLAGS_INIT}")
+
     read_json(INCLUDES "${WRAPPER_OUTPUT}" includes CXX)
     include_directories(${INCLUDES})
     if (NOT TARGET fprime_arduino_libraries)
         add_library(fprime_arduino_libraries INTERFACE)
     endif()
+
+    # Some Arduino cores emit an @.../sketch/build.opt argfile in their compile
+    # flags but do not create it during the detection-only wrapper pass.
+    set(ARDUINO_BUILD_OPT_FILE "${CMAKE_BINARY_DIR}/arduino-cli-sketch/sketch/build.opt")
+    get_filename_component(ARDUINO_BUILD_OPT_DIR "${ARDUINO_BUILD_OPT_FILE}" DIRECTORY)
+    file(MAKE_DIRECTORY "${ARDUINO_BUILD_OPT_DIR}")
+    if (NOT EXISTS "${ARDUINO_BUILD_OPT_FILE}")
+        file(WRITE "${ARDUINO_BUILD_OPT_FILE}" "")
+    endif()
+
     link_libraries(fprime_arduino_libraries)
-    link_libraries(fprime_arduino_patcher)
     # Setup misc commands
     SET(CMAKE_C_ARCHIVE_CREATE "<CMAKE_AR> ${ARDUINO_AR_FLAGS} <TARGET> <OBJECTS>")
     SET(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> ${ARDUINO_AR_FLAGS} <TARGET> <OBJECTS>")
@@ -238,7 +250,10 @@ function(finalize_arduino_executable)
     # Add link dependency on
     target_link_libraries(
         "${FPRIME_CURRENT_MODULE}"
-        PUBLIC fprime_arduino_libraries $<TARGET_OBJECTS:fprime_arduino_loose_object_library>
+        PUBLIC
+            fprime_arduino_patcher
+            fprime_arduino_libraries
+            $<TARGET_OBJECTS:fprime_arduino_loose_object_library>
     )
     read_json(POST_COMMANDS "${WRAPPER_OUTPUT}" post)
     set(COMMAND_SET_ARGUMENTS)
@@ -249,7 +264,9 @@ function(finalize_arduino_executable)
         string(REPLACE " " ";" COMMAND_WITH_INPUT "${COMMAND_WITH_INPUT}")
         list(APPEND COMMAND_SET_ARGUMENTS COMMAND ${COMMAND_WITH_INPUT} || "${CMAKE_COMMAND}" "-E" "echo" "[ARDUINO WRAPPER POST BUILD WARNING] Error in executing: ${COMMAND_WITH_INPUT}")
     endforeach()
-    list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "copy_if_different" "$<TARGET_FILE:${FPRIME_CURRENT_MODULE}>*" "${CMAKE_INSTALL_PREFIX}/${TOOLCHAIN_NAME}/${FPRIME_CURRENT_MODULE}/bin")
+    set(ARDUINO_ARTIFACT_DIR "${CMAKE_INSTALL_PREFIX}/${TOOLCHAIN_NAME}/${FPRIME_CURRENT_MODULE}/bin")
+    list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "make_directory" "${ARDUINO_ARTIFACT_DIR}")
+    list(APPEND COMMAND_SET_ARGUMENTS COMMAND "${CMAKE_COMMAND}" "-E" "copy_if_different" "$<TARGET_FILE:${FPRIME_CURRENT_MODULE}>*" "${ARDUINO_ARTIFACT_DIR}")
     add_custom_command(
         TARGET "${FPRIME_CURRENT_MODULE}" POST_BUILD ${COMMAND_SET_ARGUMENTS}
     )

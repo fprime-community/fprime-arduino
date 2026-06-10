@@ -24,3 +24,11 @@ namespace std {
 void* operator new(unsigned int size, std::nothrow_t const&){ return malloc(size); }
 void* operator new[](unsigned int size, std::nothrow_t const&){ return malloc(size); }
 #endif
+
+#if defined(ARDUINO_ARCH_STM32)
+extern "C" void setup(void) __attribute__((weak));
+extern "C" void loop(void) __attribute__((weak));
+
+extern "C" void setup(void) {}
+extern "C" void loop(void) {}
+#endif

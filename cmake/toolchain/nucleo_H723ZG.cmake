@@ -10,8 +10,15 @@ add_compile_options(-std=c++17 -std=gnu++17) # Force C++17 standard
 set(CMAKE_SYSTEM_NAME "Generic") 
 set(CMAKE_SYSTEM_PROCESSOR "arm") 
 set(CMAKE_CROSSCOMPILING 1) 
-set(FPRIME_PLATFORM "ArduinoFw") 
-set(FPRIME_USE_BAREMETAL_SCHEDULER ON) 
+
+if(NOT DEFINED FPRIME_PLATFORM)
+    set(FPRIME_PLATFORM "ArduinoFw") 
+endif()
+
+if(NOT DEFINED FPRIME_USE_BAREMETAL_SCHEDULER)
+    set(FPRIME_USE_BAREMETAL_SCHEDULER ON) 
+endif()
+
 set(ARDUINO_BUILD_PROPERTIES) 
 
 # Prevent test program compiling 
@@ -25,6 +32,13 @@ add_compile_options(
 -DVARIANT_H=\"variant_NUCLEO_H723ZG.h\" 
 -DUSE_BASIC_TIMER 
 ) 
+message("--------------------------------------------------------------------")
+message("----------------------- CONFIGURATION VALUES -----------------------")
+message("--------------------------------------------------------------------")
+message("FPRIME_USE_BAREMETAL_SCHEDULER: ${FPRIME_USE_BAREMETAL_SCHEDULER} ")
+message("FPRIME_PLATFORM: ${FPRIME_PLATFORM} ")
+message("---------------------------------------------------------------------")
+
 
 # Run the base arduino setup which should detect settings! 
 include("${CMAKE_CURRENT_LIST_DIR}/support/arduino-support.cmake") 

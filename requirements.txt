@@ -1,2 +1,2 @@
 cmake>=3.26.4
-arduino-cli-cmake-wrapper==0.2.0a1
+arduino-cli-cmake-wrapper @ git+https://github.com/CubeSTEP/arduino-cli-cmake-wrapper.git@main
