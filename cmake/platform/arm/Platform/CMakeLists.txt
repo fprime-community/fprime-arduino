@@ -12,11 +12,13 @@ register_fprime_config(
         Os_File_Stub
         Os_Generic_PriorityQueue
         Os_Mutex_Stub
+        Os_CountingSemaphore_Stub
         Os_Cpu_Baremetal
         Os_Memory_Baremetal
         Os_Task_Baremetal
         Os_Console_Arduino
         Os_RawTime_Arduino
         Fw_StringFormat_snprintf
+        Fw_StringScan_sscanf
     INTERFACE # No buildable files generated
 )

@@ -7,6 +7,10 @@
 
 #include "Os/FileSystem.hpp"
 #include <SD.h>
+// Arduino.h, included by SD.h, may define a one-argument DEPRECATED (the RP2040 core does). Restore the F Prime
+// definition that fprime headers such as Os/Directory.hpp use.
+#undef DEPRECATED
+#define DEPRECATED(func, message) func __attribute__((deprecated(message)))
 
 namespace Os {
 namespace Arduino {

@@ -7,10 +7,10 @@
 namespace Os {
 namespace Arduino {
 
-//! \brief check is a is newer than b
+//! \brief check if a is newer than b
 bool isNewer(const ArduinoRawTimeHandle& a, const ArduinoRawTimeHandle& b) {
     return ((a.m_seconds > b.m_seconds) ||
-           ((a.m_seconds == b.m_seconds) && (a.m_micros >= b.m_seconds)));
+           ((a.m_seconds == b.m_seconds) && (a.m_micros >= b.m_micros)));
 }
 
 RawTimeHandle* ArduinoRawTime::getHandle() {
@@ -23,7 +23,7 @@ RawTime::Status ArduinoRawTime::now() {
     U32 milliseconds_no_seconds = milliseconds_now % 1000;
     // Microsecond portion and millisecond portion don't agree, assume roll-over and ask for milliseconds again
     if (milliseconds_no_seconds != (microseconds_now/1000)) {
-        microseconds_now = millis();
+        milliseconds_now = millis();
     }
     this->m_handle.m_micros = microseconds_now % 1000000;
     this->m_handle.m_seconds = milliseconds_now / 1000;
